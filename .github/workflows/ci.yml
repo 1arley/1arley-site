@@ -1,0 +1,97 @@
+name: ci-workflow
+
+on:
+    pull_request:
+        branches: ["dev", "main"]
+    workflow_dispatch:
+
+jobs:
+    install-dependencies:
+        name: "Setup and Install Dependencies"
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Clean stale workspace files
+              run: git clean -ffdx
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22.x"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Cache node_modules
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: node-modules-v2-${{ hashFiles('package-lock.json') }}
+
+    lint:
+        name: "Code Linting (ESLint)"
+        needs: install-dependencies
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Clean stale workspace files
+              run: git clean -ffdx
+              
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22.x"
+
+            - name: Restore node_modules
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: node-modules-v2-${{ hashFiles('package-lock.json') }}
+
+            - name: Debug Next config files
+              run: find . -path './node_modules' -prune -o -type f -name 'next.config.*' -print
+
+            - name: Run ESLint
+              run: npm run lint
+
+    build:
+        name: "Build Application"
+        needs: lint
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Clean stale workspace files
+              run: git clean -ffdx
+              
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22.x"
+
+            - name: Restore node_modules
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: node-modules-v2-${{ hashFiles('package-lock.json') }}
+
+            - name: Build Application
+              run: npm run build
+
+    docker-build:
+        name: "Container Image Build"
+        needs: build
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Build Docker image
+              uses: docker/build-push-action@v6
+              with:
+                  context: .
+                  file: ./Dockerfile
+                  push: false
+                  tags: ci/site-bcc-front:latest

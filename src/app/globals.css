@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 14% 7%;
+    --foreground: 210 17% 82%;
+
+    --card: 220 14% 10%;
+    --card-foreground: 210 17% 82%;
+
+    --popover: 220 14% 10%;
+    --popover-foreground: 210 17% 82%;
+
+    --primary: 214 100% 34%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 12% 14%;
+    --secondary-foreground: 210 17% 82%;
+
+    --muted: 220 12% 12%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 199 72% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --magenta: 326 87% 55%;
+    --magenta-foreground: 0 0% 100%;
+
+    --cyan: 199 72% 55%;
+    --cyan-foreground: 0 0% 100%;
+
+    --navy: 220 50% 16%;
+    --navy-foreground: 0 0% 95%;
+
+    --green: 142 71% 45%;
+    --green-foreground: 0 0% 100%;
+
+    --orange: 25 95% 53%;
+    --orange-foreground: 0 0% 100%;
+
+    --border: 220 12% 15%;
+    --input: 220 12% 15%;
+    --ring: 212 92% 58%;
+
+    --radius: 0.75rem;
+
+    --glass-bg: 220 14% 10% / 0.8;
+    --glass-border: 220 12% 20% / 0.5;
+    --glass-blur: 20px;
+    --glass-shadow: 0 8px 32px hsl(0 0% 0% / 0.4);
+
+    --gradient-primary: linear-gradient(135deg, hsl(214 100% 34%), hsl(199 72% 45%));
+    --gradient-accent: linear-gradient(135deg, hsl(326 87% 55%), hsl(214 100% 34%));
+    --gradient-hero: linear-gradient(160deg, hsl(220 14% 4%) 0%, hsl(220 20% 8%) 50%, hsl(220 14% 10%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(220 14% 12% / 0.5), hsl(220 14% 8% / 0.2));
+
+    --sidebar-background: 220 14% 8%;
+    --sidebar-foreground: 210 17% 82%;
+    --sidebar-primary: 212 92% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 12% 13%;
+    --sidebar-accent-foreground: 210 17% 82%;
+    --sidebar-border: 220 12% 17%;
+    --sidebar-ring: 212 92% 58%;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  code, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid hsl(var(--glass-border));
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-card {
+    background: hsl(220 14% 10% / 0.9);
+    border: 1px solid hsl(220 12% 18%);
+    border-radius: var(--radius);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tech-card {
+    background: hsl(220 14% 9%);
+    border: 1px solid hsl(220 12% 16%);
+    border-radius: var(--radius);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tech-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--card-accent, hsl(199 72% 55%));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-accent-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-glow-cyan {
+    color: hsl(199 72% 55%);
+    text-shadow: 0 0 30px hsl(199 72% 55% / 0.3);
+  }
+
+  .text-glow-magenta {
+    color: hsl(326 87% 55%);
+    text-shadow: 0 0 30px hsl(326 87% 55% / 0.3);
+  }
+
+  .text-glow-green {
+    color: hsl(142 71% 45%);
+    text-shadow: 0 0 30px hsl(142 71% 45% / 0.3);
+  }
+
+  .text-glow-orange {
+    color: hsl(25 95% 53%);
+    text-shadow: 0 0 30px hsl(25 95% 53% / 0.3);
+  }
+
+  .gradient-bg {
+    background: var(--gradient-hero);
+  }
+
+  .btn-primary-gradient {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(220 12% 14%) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(220 12% 14%) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(hsl(220 12% 20%) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsl(0 0% 0% / 0.03) 2px,
+      hsl(0 0% 0% / 0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    .glass-card:hover {
+      border-color: hsl(212 92% 58% / 0.3);
+      box-shadow: 0 0 20px hsl(212 92% 58% / 0.06);
+      transform: translateY(-2px);
+    }
+
+    .tech-card:hover::before {
+      opacity: 1;
+    }
+
+    .tech-card:hover {
+      border-color: hsl(220 12% 22%);
+      background: hsl(220 14% 11%);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px hsl(0 0% 0% / 0.3);
+    }
+
+    .btn-primary-gradient:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px hsl(214 100% 34% / 0.4);
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  @media (hover: hover) {
+    input[type="date"]::-webkit-calendar-picker-indicator:hover,
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+      opacity: 1;
+    }
+  }
+}

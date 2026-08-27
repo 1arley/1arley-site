@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.sw?
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Documentation
+README.md
+README.pt-br.md
+backend_integration_docs.md
+editable_components.md
+
+# Misc
+*.md
+coverage
+.nyc_output
+
+# Infrastructure (handled externally)
+nginx.conf

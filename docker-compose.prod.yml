@@ -1,0 +1,23 @@
+name: 1arley-template
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+        image: 1arley-template:latest
+        container_name: 1arley-template-prod
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        environment:
+            - NODE_ENV=production
+            - API_BASE_URL=${API_BASE_URL}
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
