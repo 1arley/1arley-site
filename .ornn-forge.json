@@ -1,0 +1,37 @@
+{
+  "packageVersion": "1.0.1",
+  "manifestVersion": "1",
+  "scope": null,
+  "providers": [
+    "claude",
+    "codex",
+    "opencode",
+    "gemini"
+  ],
+  "skills": [
+    "accessibility-review",
+    "adversarial-review",
+    "animation-review",
+    "api-abuse-audit",
+    "authorization-audit",
+    "business-logic-audit",
+    "data-integrity-audit",
+    "edge-case-hunter",
+    "error-flow-audit",
+    "gamification-audit",
+    "github-reference-research",
+    "idempotency-audit",
+    "implementation-research",
+    "input-trust-audit",
+    "interaction-design",
+    "market-research",
+    "race-condition-hunter",
+    "reference-research",
+    "research-router",
+    "skill-router",
+    "state-consistency-audit",
+    "user-flow-audit",
+    "ux-review",
+    "visual-quality-review"
+  ]
+}
