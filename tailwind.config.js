@@ -11,7 +11,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        titillium: ['var(--font-titillium)', ...fontFamily.sans],
+        sans: ['var(--font-mono)', ...fontFamily.mono],
+        mono: ['var(--font-mono)', ...fontFamily.mono],
+        display: ['var(--font-anton)', 'Oswald', ...fontFamily.sans],
+        headline: ['var(--font-oswald)', 'Oswald', ...fontFamily.sans],
       },
       keyframes: {
         blink: {
@@ -24,6 +27,7 @@ module.exports = {
       },
       colors: {
         white: '#FBFAFC',
+        black: '#000000',
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
         card: "hsl(var(--card) / <alpha-value>)",
@@ -43,15 +47,21 @@ module.exports = {
         border: "hsl(var(--border) / <alpha-value>)",
         input: "hsl(var(--input) / <alpha-value>)",
         ring: "hsl(var(--ring) / <alpha-value>)",
-        cyan: "hsl(var(--cyan) / <alpha-value>)",
-        magenta: "hsl(var(--magenta) / <alpha-value>)",
-        green: "hsl(var(--green) / <alpha-value>)",
-        orange: "hsl(var(--orange) / <alpha-value>)",
+        "gray-33": "hsl(var(--gray-33) / <alpha-value>)",
+        "gray-53": "hsl(var(--gray-53) / <alpha-value>)",
+        "gray-80": "hsl(var(--gray-80) / <alpha-value>)",
+        "gray-95": "hsl(var(--gray-95) / <alpha-value>)",
+        "black-2": "hsl(var(--black-2) / <alpha-value>)",
+        "black-4": "hsl(var(--black-4) / <alpha-value>)",
+        "black-6": "hsl(var(--black-6) / <alpha-value>)",
+        "black-8": "hsl(var(--black-8) / <alpha-value>)",
+        "black-10": "hsl(var(--black-10) / <alpha-value>)",
+        "black-16": "hsl(var(--black-16) / <alpha-value>)",
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "var(--radius)",
+        sm: "var(--radius)",
       },
     },
   },

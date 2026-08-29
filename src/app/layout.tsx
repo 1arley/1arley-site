@@ -1,32 +1,47 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
-import { Titillium_Web } from 'next/font/google'
+import { Anton, Oswald, JetBrains_Mono } from 'next/font/google';
 import './globals.css'
 import { baseUrl } from '@/config'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Preloader from '@/components/effects/Preloader'
+import { GrainOverlay } from '@/components/effects/GrainOverlay'
+import { CustomCursor } from '@/components/effects/CustomCursor'
+import { CursorTrail } from '@/components/effects/CursorTrail'
 
-const titilliumWeb = Titillium_Web({
-    variable: '--font-titillium-web',
+const anton = Anton({
+    variable: '--font-anton',
     subsets: ['latin'],
-    weight: ['400', '700', '900'],
+    weight: ['400'],
+})
+
+const oswald = Oswald({
+    variable: '--font-oswald',
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'],
+})
+
+const jetbrainsMono = JetBrains_Mono({
+    variable: '--font-mono',
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {
     title: {
-        default: '1arley — Template',
-        template: '%s | 1arley',
+        default: 'Arthur Iarley — Rockstar Full-Stack',
+        template: '%s | Arthur Iarley',
     },
-    description: 'Template multi-domínio com Next.js, React, TypeScript e Tailwind CSS.',
+    description: 'Portfólio P&B brutal. Next.js, React, TypeScript, WebGL. Cada tela é uma capa de disco — sem cor, sem concessão.',
     metadataBase: baseUrl ? new URL(baseUrl) : undefined,
-    applicationName: '1arley Template',
-    keywords: ['template', 'nextjs', 'react', 'typescript', 'tailwind'],
+    applicationName: 'Arthur Iarley Portfolio',
+    keywords: ['portfolio', 'arthur iarley', 'desenvolvedor', 'full-stack', 'nextjs', 'react', 'typescript', 'webgl', 'black and white', 'brutalist', 'rockstar'],
     openGraph: {
         type: 'website',
         locale: 'pt_BR',
         url: baseUrl,
-        siteName: '1arley Template',
+        siteName: 'Arthur Iarley',
+        description: 'Portfólio P&B brutal. Next.js, React, TypeScript, WebGL.',
     },
     twitter: {
         card: 'summary_large_image',
@@ -45,16 +60,18 @@ export default function RootLayout({
     return (
         <html lang='pt-BR' data-scroll-behavior="smooth">
             <head>
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-                <link rel="manifest" href="/site.webmanifest" />
+                <link rel="icon" href="/favicon.png" />
             </head>
             <body
-                className={`${GeistSans.variable} ${GeistMono.variable} ${titilliumWeb.variable} antialiased`}
+                className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} antialiased`}
             >
+                <Preloader />
                 <Navbar />
                 {children}
                 <Footer />
+                <GrainOverlay />
+                <CursorTrail />
+                <CustomCursor />
             </body>
         </html>
     )
