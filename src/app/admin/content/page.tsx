@@ -101,7 +101,7 @@ export default function AdminContentPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <h1 className="text-2xl font-bold text-white">Conteúdo</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
@@ -165,15 +165,15 @@ export default function AdminContentPage() {
           </div>
         )}
         {items.map((item) => (
-          <div key={item.id} className="glass-card p-4 flex items-center justify-between">
+          <div key={item.id} className="glass-card flex items-center justify-between gap-3 p-4">
             <div className="min-w-0 mr-4">
               <h3 className="text-white font-medium truncate">{item.title}</h3>
               <p className="text-muted-foreground text-sm truncate">{item.description}</p>
               {item.category && <span className="text-xs text-cyan mt-1 inline-block">{item.category}</span>}
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(item)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(item.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}

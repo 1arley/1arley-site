@@ -5,14 +5,31 @@ import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { Peel } from "@/components/canvasui/Peel";
 import { useLocale } from "@/lib/i18n";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 /**
  * ABOUT — "TRACK 01: THE ARTIST".
  * The portrait peels back on hover revealing an inverted doppelgänger (the
- * "other side of the tape"). Editorial manifesto. WebGL budget: 1 context.
+ * "other side of the tape") on fine pointers. Editorial manifesto.
+ * WebGL budget: 1 context.
  */
 export default function AboutSection() {
   const { t } = useLocale();
+  const isMobile = useIsMobile();
+
+  const portrait = (
+    <div className="relative aspect-[4/5] overflow-hidden cut-corner">
+      <Image
+        src="/icon-portrait.jpg"
+        alt=""
+        fill
+        className="object-cover object-top grayscale contrast-[1.3]"
+        sizes="(min-width: 1024px) 40vw, 90vw"
+      />
+      <div className="halftone absolute inset-0 opacity-30 mix-blend-overlay" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" aria-hidden="true" />
+    </div>
+  );
 
   return (
     <section
@@ -24,50 +41,43 @@ export default function AboutSection() {
         {/* ===== Portrait column ===== */}
         <div className="lg:col-span-5">
           <Reveal>
-            {/* Peel wrapper: portrait peels to reveal inverted version */}
-            <Peel
-              side="right"
-              mode="hover"
-              reveal={300}
-              zone={40}
-              curl={8}
-              bow={4}
-              shade={0.6}
-              shine={0.4}
-              shineDistance={0}
-              shineColor="auto"
-              bulge={6}
-              perspective={1200}
-              smoothing={0.3}
-              under={
-                <div className="relative aspect-[4/5] overflow-hidden cut-corner bg-black-8">
-                  <Image
-                    src="/icon-portrait.jpg"
-                    alt=""
-                    fill
-                    className="object-cover object-top grayscale invert contrast-[1.6]"
-                    sizes="(min-width: 1024px) 40vw, 90vw"
-                  />
-                  <div className="halftone absolute inset-0 opacity-20 mix-blend-overlay" aria-hidden="true" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" aria-hidden="true" />
-                  <div className="absolute bottom-3 left-3 font-mono text-[10px] tracking-[0.2em] text-white/80">
-                    FIG.02 — NEGATIVO
+            {isMobile ? (
+              portrait
+            ) : (
+              <Peel
+                side="right"
+                mode="hover"
+                reveal={300}
+                zone={40}
+                curl={8}
+                bow={4}
+                shade={0.6}
+                shine={0.4}
+                shineDistance={0}
+                shineColor="auto"
+                bulge={6}
+                perspective={1200}
+                smoothing={0.3}
+                under={
+                  <div className="relative aspect-[4/5] overflow-hidden cut-corner bg-black-8">
+                    <Image
+                      src="/icon-portrait.jpg"
+                      alt=""
+                      fill
+                      className="object-cover object-top grayscale invert contrast-[1.6]"
+                      sizes="(min-width: 1024px) 40vw, 90vw"
+                    />
+                    <div className="halftone absolute inset-0 opacity-20 mix-blend-overlay" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" aria-hidden="true" />
+                    <div className="absolute bottom-3 left-3 font-mono text-[10px] tracking-[0.2em] text-white/80">
+                      FIG.02 — NEGATIVO
+                    </div>
                   </div>
-                </div>
-              }
-            >
-              <div className="relative aspect-[4/5] overflow-hidden cut-corner">
-                <Image
-                  src="/icon-portrait.jpg"
-                  alt=""
-                  fill
-                  className="object-cover object-top grayscale contrast-[1.3]"
-                  sizes="(min-width: 1024px) 40vw, 90vw"
-                />
-                <div className="halftone absolute inset-0 opacity-30 mix-blend-overlay" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" aria-hidden="true" />
-              </div>
-            </Peel>
+                }
+              >
+                {portrait}
+              </Peel>
+            )}
           </Reveal>
 
           <Reveal delay={0.05}>

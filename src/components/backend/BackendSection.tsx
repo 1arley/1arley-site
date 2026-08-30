@@ -3,15 +3,65 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { GlyphRain } from "@/components/canvasui/GlyphRain";
 import { useLocale } from "@/lib/i18n";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 /**
  * BACKEND — "TRACK 05: THE CONSOLE".
- * A glyph rain terminal: the API contract is lit by falling character streams
- * that surge where the cursor cuts through. The terminal stays readable
- * (dim ~0.55) while the glyphs dance on top.
+ * On fine pointers a glyph rain terminal: the API contract is lit by falling
+ * character streams that surge where the cursor cuts through. The terminal
+ * stays readable (dim ~0.55) while the glyphs dance on top. On touch the
+ * terminal renders plain.
  */
 export default function BackendSection() {
   const { t } = useLocale();
+  const isMobile = useIsMobile();
+
+  const terminal = (
+    <div className="h-full">
+      {/* terminal header */}
+      <div className="flex items-center justify-between border-b border-white/15 bg-black-8 px-4 py-3">
+        <div className="flex items-center gap-2">
+          <span className="h-3 w-3 bg-white/30" aria-hidden="true" />
+          <span className="h-3 w-3 bg-white/15" aria-hidden="true" />
+          <span className="h-3 w-3 bg-white/40" aria-hidden="true" />
+          <span className="ml-2 font-mono text-xs text-white/60">
+            contrato-api.ts
+          </span>
+        </div>
+        <span className="font-mono text-[10px] tracking-[0.2em] text-white/60">
+          API REST
+        </span>
+      </div>
+      {/* terminal body */}
+      <div className="p-5 font-mono text-[13px] leading-relaxed">
+        {t.backend.endpoints.map((ep) => (
+          <div
+            key={ep.method + ep.path}
+            className="flex items-baseline gap-3 py-1"
+          >
+            <span
+              className={`w-12 shrink-0 font-bold ${
+                ep.method === "GET" ? "text-white" : "text-gray-53"
+              }`}
+            >
+              {ep.method}
+            </span>
+            <span className="min-w-0 break-words text-gray-95">{ep.path}</span>
+            <span className="ml-auto hidden text-white/60 sm:inline">
+              {ep.note}
+            </span>
+          </div>
+        ))}
+        <div className="mt-4 flex items-center gap-2 border-t border-white/10 pt-3 text-white/60">
+          <span className="text-white" aria-hidden="true">
+            ❯
+          </span>
+          <span className="inline-block h-3 w-2 animate-blink bg-white/70" aria-hidden="true" />
+          <span className="ml-2">ready</span>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section
@@ -22,72 +72,33 @@ export default function BackendSection() {
         {/* ---- Left: terminal with GlyphRain ---- */}
         <Reveal>
           <div className="relative overflow-hidden hard-border">
-            <GlyphRain
-              cell={16}
-              color={[0.6, 0.6, 0.6]}
-              headColor={[1, 1, 1]}
-              speed={0.8}
-              speedVariance={0.5}
-              density={0.5}
-              trail={1.5}
-              glow={1.2}
-              mutate={2}
-              flicker={0.3}
-              layers={2}
-              dim={0.78}
-              light={0.9}
-              lightRadius={180}
-              lightHeight={40}
-              relief={0.3}
-              stir={0.3}
-              stirRadius={120}
-              settle={1.5}
-            >
-              <div className="h-full">
-                {/* terminal header */}
-                <div className="flex items-center justify-between border-b border-white/15 bg-black-8 px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <span className="h-3 w-3 bg-white/30" aria-hidden="true" />
-                    <span className="h-3 w-3 bg-white/15" aria-hidden="true" />
-                    <span className="h-3 w-3 bg-white/40" aria-hidden="true" />
-                    <span className="ml-2 font-mono text-xs text-white/60">
-                      contrato-api.ts
-                    </span>
-                  </div>
-                  <span className="font-mono text-[10px] tracking-[0.2em] text-white/60">
-                    API REST
-                  </span>
-                </div>
-                {/* terminal body */}
-                <div className="p-5 font-mono text-[13px] leading-relaxed">
-                  {t.backend.endpoints.map((ep) => (
-                    <div
-                      key={ep.method + ep.path}
-                      className="flex items-baseline gap-3 py-1"
-                    >
-                      <span
-                        className={`w-12 shrink-0 font-bold ${
-                          ep.method === "GET" ? "text-white" : "text-gray-53"
-                        }`}
-                      >
-                        {ep.method}
-                      </span>
-                      <span className="text-gray-95">{ep.path}</span>
-                      <span className="ml-auto hidden text-white/60 sm:inline">
-                        {ep.note}
-                      </span>
-                    </div>
-                  ))}
-                  <div className="mt-4 flex items-center gap-2 border-t border-white/10 pt-3 text-white/60">
-                    <span className="text-white" aria-hidden="true">
-                      ❯
-                    </span>
-                    <span className="inline-block h-3 w-2 animate-blink bg-white/70" aria-hidden="true" />
-                    <span className="ml-2">ready</span>
-                  </div>
-                </div>
-              </div>
-            </GlyphRain>
+            {isMobile ? (
+              terminal
+            ) : (
+              <GlyphRain
+                cell={16}
+                color={[0.6, 0.6, 0.6]}
+                headColor={[1, 1, 1]}
+                speed={0.8}
+                speedVariance={0.5}
+                density={0.5}
+                trail={1.5}
+                glow={1.2}
+                mutate={2}
+                flicker={0.3}
+                layers={2}
+                dim={0.78}
+                light={0.9}
+                lightRadius={180}
+                lightHeight={40}
+                relief={0.3}
+                stir={0.3}
+                stirRadius={120}
+                settle={1.5}
+              >
+                {terminal}
+              </GlyphRain>
+            )}
           </div>
         </Reveal>
 
@@ -116,7 +127,7 @@ export default function BackendSection() {
               {t.backend.features.map((f, i) => (
                 <li
                   key={f.title}
-                  className="group flex gap-4 border-t border-white/10 py-4 transition-colors hover:bg-black-8 hover:px-2"
+                  className="group flex gap-4 border-t border-white/10 py-4 transition-colors hover:bg-black-8"
                 >
                   <span className="w-8 shrink-0 font-mono text-sm text-white/60">
                     {String(i + 1).padStart(2, "0")}
