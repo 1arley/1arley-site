@@ -24,6 +24,8 @@ export default function LoginPage() {
         setSession(response.access_token, response.user)
         toast.success('Login realizado com sucesso')
         router.push('/admin/content')
+      } else {
+        throw new Error('Resposta inválida')
       }
     } catch {
       toast.error('Credenciais inválidas')
