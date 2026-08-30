@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "criteria": [
+    {
+      "id": "AC1",
+      "description": "Em viewport de 320 px, a guitarra de partículas está ausente e o hero exibe nome, subtítulo e CTAs sem sobreposição decorativa.",
+      "verification_method": "manual"
+    },
+    {
+      "id": "AC2",
+      "description": "As rotas públicas, /login e todas as rotas /admin permanecem sem rolagem horizontal involuntária ou clipping de conteúdo em 320 px.",
+      "verification_method": "manual"
+    },
+    {
+      "id": "AC3",
+      "description": "Os efeitos de hover, cursor ou ponteiro usados nas seções públicas não são ativados no mobile e não interceptam scroll ou toque.",
+      "verification_method": "manual"
+    },
+    {
+      "id": "AC4",
+      "description": "Menu, seletor de idioma, CTAs e ações administrativas têm alvos de toque de aproximadamente 44 × 44 px ou área equivalente.",
+      "verification_method": "manual"
+    },
+    {
+      "id": "AC5",
+      "description": "Headings, cartões, terminal, URLs e metadados de projetos quebram ou empilham sem perda de legibilidade em 320 px.",
+      "verification_method": "manual"
+    },
+    {
+      "id": "AC6",
+      "description": "A navegação e os formulários/listagens das telas administrativas Site, Conteúdo, Equipe, Links e Usuários são utilizáveis em 320 px.",
+      "verification_method": "manual"
+    },
+    {
+      "id": "AC7",
+      "description": "O código passa no lint do projeto.",
+      "verification_method": "lint"
+    },
+    {
+      "id": "AC8",
+      "description": "O código passa no typecheck do projeto.",
+      "verification_method": "test"
+    }
+  ]
+}
