@@ -158,18 +158,20 @@ function ListControls({
   onRemove,
   first,
   last,
+  className,
 }: {
   onUp: () => void
   onDown: () => void
   onRemove: () => void
   first: boolean
   last: boolean
+  className?: string
 }) {
   return (
-    <div className="flex gap-1">
-      <Button variant="ghost" size="icon" onClick={onUp} disabled={first}><ArrowUp className="w-3.5 h-3.5" /></Button>
-      <Button variant="ghost" size="icon" onClick={onDown} disabled={last}><ArrowDown className="w-3.5 h-3.5" /></Button>
-      <Button variant="ghost" size="icon" onClick={onRemove}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
+    <div className={`flex gap-1 ${className ?? ''}`}>
+      <Button variant="ghost" size="icon" className="h-11 w-11" onClick={onUp} disabled={first}><ArrowUp className="w-3.5 h-3.5" /></Button>
+      <Button variant="ghost" size="icon" className="h-11 w-11" onClick={onDown} disabled={last}><ArrowDown className="w-3.5 h-3.5" /></Button>
+      <Button variant="ghost" size="icon" className="h-11 w-11" onClick={onRemove}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
     </div>
   )
 }
@@ -236,7 +238,7 @@ export default function AdminSitePage() {
               <button
                 key={l}
                 onClick={() => setLang(l)}
-                className={`px-3 py-1.5 text-sm uppercase ${lang === l ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-white'}`}
+                className={`px-3 py-2.5 text-sm uppercase ${lang === l ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-white'}`}
               >
                 {l}
               </button>
@@ -254,11 +256,11 @@ export default function AdminSitePage() {
         <Card title="Hero">
           <Field label="Label (cargo)" value={d.hero.label} onChange={(v) => patch('hero', { label: v })} />
           <AreaField label="Subtítulo" value={d.hero.subtitle} onChange={(v) => patch('hero', { subtitle: v })} />
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="CTA Projetos" value={d.hero.ctaProjects} onChange={(v) => patch('hero', { ctaProjects: v })} />
             <Field label="CTA Sobre" value={d.hero.ctaAbout} onChange={(v) => patch('hero', { ctaAbout: v })} />
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Link Sobre" value={d.hero.aboutLink} onChange={(v) => patch('hero', { aboutLink: v })} />
             <Field label="Coordenadas" value={d.hero.coords} onChange={(v) => patch('hero', { coords: v })} />
             <Field label="Local" value={d.hero.place} onChange={(v) => patch('hero', { place: v })} />
@@ -267,21 +269,21 @@ export default function AdminSitePage() {
 
         {/* ABOUT */}
         <Card title="Sobre">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Label intro" value={d.about.intro} onChange={(v) => patch('about', { intro: v })} />
             <Field label="CTA" value={d.about.cta} onChange={(v) => patch('about', { cta: v })} />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Título linha 1" value={d.about.title1} onChange={(v) => patch('about', { title1: v })} />
             <Field label="Título linha 2" value={d.about.title2} onChange={(v) => patch('about', { title2: v })} />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Texto antes do nome" value={d.about.p1Before} onChange={(v) => patch('about', { p1Before: v })} />
             <AreaField label="Texto depois do nome" value={d.about.p1After} onChange={(v) => patch('about', { p1After: v })} />
           </div>
           <AreaField label="Segundo parágrafo" value={d.about.p2} onChange={(v) => patch('about', { p2: v })} />
           <Field label="Label da stack" value={d.about.stackLabel} onChange={(v) => patch('about', { stackLabel: v })} />
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Legenda da foto" value={d.about.figLabel} onChange={(v) => patch('about', { figLabel: v })} />
             <Field label="Spec da foto" value={d.about.figSpec} onChange={(v) => patch('about', { figSpec: v })} />
           </div>
@@ -298,18 +300,21 @@ export default function AdminSitePage() {
             </div>
             <div className="space-y-2">
               {d.about.stack.map((item, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <Input value={item.name} placeholder="Nome" onChange={(e) => {
-                    const stack = [...d.about.stack]
-                    stack[i] = { ...stack[i], name: e.target.value }
-                    patch('about', { stack })
-                  }} />
-                  <Input value={item.desc} placeholder="Descrição" onChange={(e) => {
-                    const stack = [...d.about.stack]
-                    stack[i] = { ...stack[i], desc: e.target.value }
-                    patch('about', { stack })
-                  }} />
+                <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:flex-1">
+                    <Input value={item.name} placeholder="Nome" onChange={(e) => {
+                      const stack = [...d.about.stack]
+                      stack[i] = { ...stack[i], name: e.target.value }
+                      patch('about', { stack })
+                    }} />
+                    <Input value={item.desc} placeholder="Descrição" onChange={(e) => {
+                      const stack = [...d.about.stack]
+                      stack[i] = { ...stack[i], desc: e.target.value }
+                      patch('about', { stack })
+                    }} />
+                  </div>
                   <ListControls
+                    className="shrink-0"
                     first={i === 0} last={i === d.about.stack.length - 1}
                     onUp={() => patch('about', { stack: move(d.about.stack, i, -1) })}
                     onDown={() => patch('about', { stack: move(d.about.stack, i, 1) })}
@@ -323,25 +328,28 @@ export default function AdminSitePage() {
 
         {/* SKILLS */}
         <Card title="Skills">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Label" value={d.skills.label} onChange={(v) => patch('skills', { label: v })} />
             <Field label="Título" value={d.skills.title} onChange={(v) => patch('skills', { title: v })} />
           </div>
           <div className="space-y-4">
             {d.skills.categories.map((cat, i) => (
               <div key={i} className="border border-input rounded-lg p-3 space-y-3">
-                <div className="flex items-center gap-2">
-                  <Input value={cat.id} placeholder="01" className="w-16" onChange={(e) => {
-                    const categories = [...d.skills.categories]
-                    categories[i] = { ...categories[i], id: e.target.value }
-                    patch('skills', { categories })
-                  }} />
-                  <Input value={cat.title} placeholder="Título" onChange={(e) => {
-                    const categories = [...d.skills.categories]
-                    categories[i] = { ...categories[i], title: e.target.value }
-                    patch('skills', { categories })
-                  }} />
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-2 sm:flex sm:flex-1">
+                    <Input value={cat.id} placeholder="01" className="w-16" onChange={(e) => {
+                      const categories = [...d.skills.categories]
+                      categories[i] = { ...categories[i], id: e.target.value }
+                      patch('skills', { categories })
+                    }} />
+                    <Input value={cat.title} placeholder="Título" onChange={(e) => {
+                      const categories = [...d.skills.categories]
+                      categories[i] = { ...categories[i], title: e.target.value }
+                      patch('skills', { categories })
+                    }} />
+                  </div>
                   <ListControls
+                    className="shrink-0"
                     first={i === 0} last={i === d.skills.categories.length - 1}
                     onUp={() => patch('skills', { categories: move(d.skills.categories, i, -1) })}
                     onDown={() => patch('skills', { categories: move(d.skills.categories, i, 1) })}
@@ -370,25 +378,28 @@ export default function AdminSitePage() {
 
         {/* EXPERIÊNCIA */}
         <Card title="Experiência">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Label" value={d.experience.label} onChange={(v) => patch('experience', { label: v })} />
             <Field label="Título" value={d.experience.title} onChange={(v) => patch('experience', { title: v })} />
           </div>
           <div className="space-y-4">
             {d.experience.timeline.map((item, i) => (
               <div key={i} className="border border-input rounded-lg p-3 space-y-3">
-                <div className="flex items-center gap-2">
-                  <Input value={item.year} placeholder="ATUAL" className="w-24" onChange={(e) => {
-                    const timeline = [...d.experience.timeline]
-                    timeline[i] = { ...timeline[i], year: e.target.value }
-                    patch('experience', { timeline })
-                  }} />
-                  <Input value={item.title} placeholder="Cargo — Empresa" onChange={(e) => {
-                    const timeline = [...d.experience.timeline]
-                    timeline[i] = { ...timeline[i], title: e.target.value }
-                    patch('experience', { timeline })
-                  }} />
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-2 sm:flex sm:flex-1">
+                    <Input value={item.year} placeholder="ATUAL" className="w-24" onChange={(e) => {
+                      const timeline = [...d.experience.timeline]
+                      timeline[i] = { ...timeline[i], year: e.target.value }
+                      patch('experience', { timeline })
+                    }} />
+                    <Input value={item.title} placeholder="Cargo — Empresa" onChange={(e) => {
+                      const timeline = [...d.experience.timeline]
+                      timeline[i] = { ...timeline[i], title: e.target.value }
+                      patch('experience', { timeline })
+                    }} />
+                  </div>
                   <ListControls
+                    className="shrink-0"
                     first={i === 0} last={i === d.experience.timeline.length - 1}
                     onUp={() => patch('experience', { timeline: move(d.experience.timeline, i, -1) })}
                     onDown={() => patch('experience', { timeline: move(d.experience.timeline, i, 1) })}
@@ -418,7 +429,7 @@ export default function AdminSitePage() {
 
         {/* PROJETOS */}
         <Card title="Projetos">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Label" value={d.projects.label} onChange={(v) => patch('projects', { label: v })} />
             <Field label="Título" value={d.projects.title} onChange={(v) => patch('projects', { title: v })} />
             <Field label="Contador" value={d.projects.count} onChange={(v) => patch('projects', { count: v })} />
@@ -426,21 +437,24 @@ export default function AdminSitePage() {
           <div className="space-y-4">
             {d.projects.projects.map((proj, i) => (
               <div key={i} className="border border-input rounded-lg p-3 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-muted-foreground">{proj.id}</span>
-                  <Input value={proj.title} placeholder="Nome" onChange={(e) => {
-                    const projects = [...d.projects.projects]
-                    projects[i] = { ...projects[i], title: e.target.value }
-                    patch('projects', { projects })
-                  }} />
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 sm:flex sm:flex-1">
+                    <span className="font-mono text-xs text-muted-foreground">{proj.id}</span>
+                    <Input value={proj.title} placeholder="Nome" onChange={(e) => {
+                      const projects = [...d.projects.projects]
+                      projects[i] = { ...projects[i], title: e.target.value }
+                      patch('projects', { projects })
+                    }} />
+                  </div>
                   <ListControls
+                    className="shrink-0"
                     first={i === 0} last={i === d.projects.projects.length - 1}
                     onUp={() => patch('projects', { projects: move(d.projects.projects, i, -1) })}
                     onDown={() => patch('projects', { projects: move(d.projects.projects, i, 1) })}
                     onRemove={() => patch('projects', { projects: d.projects.projects.filter((_, j) => j !== i) })}
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <Field label="Tipo" value={proj.kind} onChange={(v) => {
                     const projects = [...d.projects.projects]
                     projects[i] = { ...projects[i], kind: v }
@@ -490,12 +504,12 @@ export default function AdminSitePage() {
 
         {/* CONTATO */}
         <Card title="Contato">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Label" value={d.contact.label} onChange={(v) => patch('contact', { label: v })} />
             <Field label="CTA e-mail" value={d.contact.cta} onChange={(v) => patch('contact', { cta: v })} />
             <Field label="CTA sobre" value={d.contact.aboutCta} onChange={(v) => patch('contact', { aboutCta: v })} />
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Título linha 1" value={d.contact.title1} onChange={(v) => patch('contact', { title1: v })} />
             <Field label="Título linha 2" value={d.contact.title2} onChange={(v) => patch('contact', { title2: v })} />
             <Field label="Título linha 3" value={d.contact.title3} onChange={(v) => patch('contact', { title3: v })} />
@@ -515,12 +529,12 @@ export default function AdminSitePage() {
 
         <Card title="Rodapé">
           <AreaField label="Descrição" value={d.footer.desc} rows={2} onChange={(v) => patch('footer', { desc: v })} />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Coluna navegação" value={d.footer.navLabel} onChange={(v) => patch('footer', { navLabel: v })} />
             <Field label="Link Home" value={d.footer.home} onChange={(v) => patch('footer', { home: v })} />
             <Field label="Link Sobre" value={d.footer.about} onChange={(v) => patch('footer', { about: v })} />
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Coluna contato" value={d.footer.contactLabel} onChange={(v) => patch('footer', { contactLabel: v })} />
             <Field label="Botão e-mail" value={d.footer.sendEmail} onChange={(v) => patch('footer', { sendEmail: v })} />
             <Field label="Direitos" value={d.footer.rights} onChange={(v) => patch('footer', { rights: v })} />
@@ -528,14 +542,14 @@ export default function AdminSitePage() {
         </Card>
 
         <Card title="Navbar">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Home" value={d.navbar.home} onChange={(v) => patch('navbar', { home: v })} />
             <Field label="Sobre" value={d.navbar.about} onChange={(v) => patch('navbar', { about: v })} />
           </div>
         </Card>
 
         <Card title="Preloader">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Carregando" value={d.preloader.loading} onChange={(v) => patch('preloader', { loading: v })} />
             <Field label="Tag" value={d.preloader.loadingTag} onChange={(v) => patch('preloader', { loadingTag: v })} />
             <Field label="Slogan" value={d.preloader.tagline} onChange={(v) => patch('preloader', { tagline: v })} />

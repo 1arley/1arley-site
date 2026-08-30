@@ -81,7 +81,7 @@ export default function AdminLinksPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <h1 className="text-2xl font-bold text-white">Links Rápidos</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
@@ -127,17 +127,17 @@ export default function AdminLinksPage() {
           </div>
         )}
         {links.map((link) => (
-          <div key={link.id} className="glass-card p-4 flex items-center justify-between">
+          <div key={link.id} className="glass-card flex items-center justify-between gap-3 p-4">
             <div className="min-w-0 mr-4">
               <h3 className="text-white font-medium">{link.title}</h3>
               <p className="text-muted-foreground text-sm truncate">{link.description}</p>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan hover:underline inline-flex items-center gap-1 mt-1">
-                {link.url} <ExternalLink className="w-3 h-3" />
+              <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan hover:underline inline-flex items-center gap-1 mt-1 break-all">
+                {link.url} <ExternalLink className="w-3 h-3 shrink-0" />
               </a>
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" onClick={() => handleEdit(link)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" onClick={() => handleDelete(link.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(link)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(link.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}
