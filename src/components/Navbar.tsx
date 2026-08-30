@@ -17,6 +17,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const lastY = useRef(0);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
   const pathname = usePathname();
 
   const navItems = [
@@ -42,9 +43,6 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!mobileOpen) return;
-    const toggle = document.querySelector(
-      '[aria-label="Abrir menu"]',
-    ) as HTMLElement | null;
     const focusTrap = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMobileOpen(false);
@@ -58,7 +56,7 @@ const Navbar = () => {
       const first = links[0];
       const last = links[links.length - 1];
       const active = document.activeElement;
-      if (e.shiftKey && (active === first || active === toggle)) {
+      if (e.shiftKey && (active === first || active === toggleRef.current)) {
         e.preventDefault();
         last.focus();
       } else if (!e.shiftKey && active === last) {
@@ -72,7 +70,7 @@ const Navbar = () => {
     });
     return () => {
       document.removeEventListener("keydown", focusTrap);
-      toggle?.focus();
+      toggleRef.current?.focus();
     };
   }, [mobileOpen]);
 
@@ -85,7 +83,7 @@ const Navbar = () => {
       <button
         onClick={() => setLocale("pt")}
         aria-pressed={locale === "pt"}
-        className={`px-2 py-1 transition-colors ${
+        className={`flex min-h-[44px] min-w-[44px] items-center justify-center px-2 text-[11px] transition-colors ${
           locale === "pt"
             ? "bg-white text-black"
             : "text-white/70 hover:text-white"
@@ -96,7 +94,7 @@ const Navbar = () => {
       <button
         onClick={() => setLocale("en")}
         aria-pressed={locale === "en"}
-        className={`px-2 py-1 transition-colors ${
+        className={`flex min-h-[44px] min-w-[44px] items-center justify-center px-2 text-[11px] transition-colors ${
           locale === "en"
             ? "bg-white text-black"
             : "text-white/70 hover:text-white"
@@ -161,6 +159,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2 md:hidden">
           {LangSwitch}
           <button
+            ref={toggleRef}
             className="flex h-11 w-11 items-center justify-center border border-white/20 text-white"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-expanded={mobileOpen}

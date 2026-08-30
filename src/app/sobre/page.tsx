@@ -36,7 +36,7 @@ export default function SobrePage() {
 
         <section>
           <h2 className="text-2xl font-bold text-white mb-4">Estrutura</h2>
-          <div className="glass-card p-6 font-mono text-sm text-muted-foreground space-y-1">
+          <div className="glass-card break-words p-6 font-mono text-sm text-muted-foreground space-y-1">
             <p><span className="text-cyan">src/</span></p>
             <p className="pl-4">├── <span className="text-cyan">app/</span> — Rotas e páginas</p>
             <p className="pl-4">├── <span className="text-cyan">components/</span> — UI e seções reutilizáveis</p>

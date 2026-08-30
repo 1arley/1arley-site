@@ -82,7 +82,7 @@ export default function AdminUsersPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <h1 className="text-2xl font-bold text-white">Usuários</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
@@ -140,7 +140,7 @@ export default function AdminUsersPage() {
           </div>
         )}
         {users.map((user) => (
-          <div key={user.id} className="glass-card p-4 flex items-center justify-between">
+          <div key={user.id} className="glass-card flex items-center justify-between gap-3 p-4">
             <div className="flex items-center gap-3 min-w-0 mr-4">
               <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
                 <Shield className="w-5 h-5 text-primary" />
@@ -152,8 +152,8 @@ export default function AdminUsersPage() {
               </div>
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" onClick={() => handleEdit(user)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" onClick={() => handleDelete(user.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(user)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(user.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}

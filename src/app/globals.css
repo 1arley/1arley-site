@@ -157,6 +157,13 @@
     90% { transform: translate(-1%, 7%); }
   }
 
+  /* Grain animation is decorative — skip the repaint cost on touch devices */
+  @media (hover: none), (pointer: coarse) {
+    .grain::before {
+      animation: none;
+    }
+  }
+
   .scanlines::after {
     content: '';
     position: absolute;

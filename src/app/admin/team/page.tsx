@@ -100,7 +100,7 @@ export default function AdminTeamPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <h1 className="text-2xl font-bold text-white">Equipe</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
@@ -161,15 +161,15 @@ export default function AdminTeamPage() {
           </div>
         )}
         {members.map((member) => (
-          <div key={member.id} className="glass-card p-4 flex items-center justify-between">
+          <div key={member.id} className="glass-card flex items-center justify-between gap-3 p-4">
             <div className="min-w-0 mr-4">
               <h3 className="text-white font-medium">{member.name}</h3>
               <p className="text-muted-foreground text-sm">{member.role}</p>
               <p className="text-xs text-cyan truncate">{member.email}</p>
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" onClick={() => handleEdit(member)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" onClick={() => handleDelete(member.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(member)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(member.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}
