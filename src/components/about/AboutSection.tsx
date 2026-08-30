@@ -6,14 +6,14 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Peel } from "@/components/canvasui/Peel";
 
 const STACK = [
-  { name: "Next.js 16", desc: "App Router · SSR · RSC" },
-  { name: "React 19", desc: "Hooks · Context · Suspense" },
-  { name: "TypeScript 5", desc: "Tipagem estrita" },
-  { name: "Tailwind CSS 3", desc: "Design system utilitário" },
-  { name: "Radix / shadcn", desc: "Componentes acessíveis" },
-  { name: "Framer Motion", desc: "Animações fluidas" },
-  { name: "Axios", desc: "HTTP client com proxy" },
-  { name: "Three.js", desc: "WebGL / 3D no browser" },
+  { name: "TypeScript", desc: "Tipagem estrita" },
+  { name: "Node.js", desc: "Backend e tooling" },
+  { name: "Python", desc: "Projetos e APIs" },
+  { name: "Next.js", desc: "Frontend moderno" },
+  { name: "React", desc: "Interfaces componentizadas" },
+  { name: "NestJS", desc: "APIs modulares" },
+  { name: "PostgreSQL", desc: "Modelagem relacional" },
+  { name: "Prisma", desc: "ORM e migrations" },
 ];
 
 /**
@@ -65,9 +65,10 @@ export default function AboutSection() {
               }
             >
               <div className="relative aspect-[4/5] overflow-hidden cut-corner">
-                <Image
-                  src="/icon-portrait.jpg"
-                  alt="Retrato preto e branco com estética rock"
+                  <Image
+                    src="/icon-portrait.jpg"
+                    alt="Arthur Iarley"
+
                   fill
                   className="object-cover object-top grayscale contrast-[1.3]"
                   sizes="(min-width: 1024px) 40vw, 90vw"
@@ -108,18 +109,15 @@ export default function AboutSection() {
             <div className="mt-6 max-w-2xl space-y-4">
               <p className="text-base leading-relaxed text-gray-80">
                 Sou <strong className="text-white">Arthur Iarley</strong> —
-                desenvolvedor full-stack. Este é o meu palco: um template
-                multi-domínio construído sobre{" "}
-                <span className="text-white">Next.js 16</span>,{" "}
-                <span className="text-white">React 19</span>,{" "}
-                <span className="text-white">TypeScript</span> e{" "}
-                <span className="text-white">Tailwind</span>, onde cada tela é
-                tratada como uma capa de disco — P&B, bruta, cinematográfica.
+                estudante de Sistemas de Informação na UFRPE, desenvolvedor
+                backend/full-stack, Analista de Projetos na Seed a Bit
+                Tecnologia e CTO da SmartRU. Meu foco é transformar requisitos
+                em software sólido, seguro e com boa estrutura.
               </p>
               <p className="text-base leading-relaxed text-gray-53">
-                Do contraste ao motion, do grid ao grain: nada aqui é
-                decorativo por acaso. A identidade carrega a mensagem antes do
-                texto. E o texto, quando chega, tem peso.
+                Atuo com APIs, arquitetura, autenticação, modelagem de dados,
+                frontend quando necessário e decisões de produto que mantêm o
+                sistema consistente do início ao fim.
               </p>
             </div>
           </Reveal>
@@ -158,7 +156,7 @@ export default function AboutSection() {
                 href="/sobre"
                 className="btn-outline"
               >
-                LEIA O MANIFESTO COMPLETO
+                VER PERFIL COMPLETO / VIEW FULL PROFILE
               </Link>
             </div>
           </Reveal>

@@ -4,26 +4,26 @@ import { Reveal } from "@/components/ui/Reveal";
 import { GlyphRain } from "@/components/canvasui/GlyphRain";
 
 const ENDPOINTS = [
-  { method: "GET", path: "/api/v1/posts", note: "→ Post[]" },
-  { method: "POST", path: "/api/v1/posts", note: "→ CreatePost" },
-  { method: "GET", path: "/api/v1/team-members", note: "→ { data: Member[] }" },
-  { method: "GET", path: "/api/v1/faq/topics", note: "→ FaqTopic[]" },
-  { method: "POST", path: "/api/v1/auth/login", note: "→ LoginResponse" },
-  { method: "POST", path: "/api/v1/auth/refresh", note: "→ { access_token }" },
+  { method: "AUTH", path: "JWT + refresh token", note: "login / session" },
+  { method: "DATA", path: "PostgreSQL + Prisma", note: "migrations / modelagem" },
+  { method: "REST", path: "APIs modulares", note: "posts / team / faq / users" },
+  { method: "DEVOPS", path: "Docker + CI/CD", note: "ambientes e deploy" },
+  { method: "SEC", path: "Autorização & roles", note: "admin / guards" },
+  { method: "OPS", path: "TypeScript + strict", note: "qualidade / consistência" },
 ];
 
 const FEATURES = [
   {
-    title: "Contrato API genérico",
-    body: "Tipos TypeScript e serviço Axios prontos para conectar a qualquer backend REST.",
+    title: "Autenticação e sessão",
+    body: "Fluxos com login, refresh token e controle de acesso para áreas administrativas.",
   },
   {
-    title: "CRUD configurável",
-    body: "Módulos de conteúdo, equipe, links e usuários com operações Create, Read, Update, Delete.",
+    title: "Arquitetura de dados",
+    body: "Modelagem com PostgreSQL, Prisma e estrutura pensada para crescer com o produto.",
   },
   {
-    title: "Admin & RBAC",
-    body: "Login, refresh token, autorização e upload de imagens já integrados ao painel.",
+    title: "Execução em produção",
+    body: "Docker, CI/CD e disciplina de TypeScript para manter entrega confiável.",
   },
 ];
 
@@ -115,25 +115,22 @@ export default function BackendSection() {
         {/* ---- Right: text + features ---- */}
         <div className="lg:pl-6">
           <Reveal>
-            <p className="mono-label text-white/60">// BACKEND · TRACK 05</p>
+            <p className="mono-label text-white/60">// BACKEND · ENGENHARIA</p>
             <h2
               id="backend-title"
               className="mt-2 font-headline text-4xl font-bold uppercase leading-[1.02] tracking-tight text-white sm:text-5xl"
             >
-              Por trás
+              Engenharia
               <br />
-              <span className="text-outline">do palco.</span>
+              <span className="text-outline">por trás do produto.</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-80">
-              O template não depende de um backend específico. Defina sua{" "}
-              <code className="border border-white/30 bg-black-4 px-1.5 py-0.5 font-mono text-sm text-white">
-                API_BASE_URL
-              </code>
-              , implemente os endpoints do contrato e a aplicação funciona —
-              da autenticação à publicação de conteúdo.
+              Trabalho com backend real, modelagem de dados, autenticação,
+              autorização, integrações REST e decisões de arquitetura que
+              sustentam o produto de ponta a ponta.
             </p>
           </Reveal>
 
@@ -162,11 +159,8 @@ export default function BackendSection() {
 
           <Reveal delay={0.2}>
             <div className="mt-8">
-              <a
-                href="/admin/content"
-                className="btn-brutal"
-              >
-                ENTRAR NO ADMIN
+              <a href="/admin/content" className="btn-brutal">
+                VER ARQUITETURA / VIEW ARCHITECTURE
               </a>
             </div>
           </Reveal>

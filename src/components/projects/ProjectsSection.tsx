@@ -8,23 +8,43 @@ import { Shatter } from "@/components/canvasui/Shatter";
 const PROJECTS = [
   {
     id: "01",
-    title: "PALCO DIGITAL",
-    kind: "WEBSITE · PORTFÓLIO",
-    body: "O site que você está vendo. Reinvenção P&B brutal com WebGL, grain e ASCII.",
+    title: "AnimesIce",
+    kind: "PLATAFORMA · STREAMING",
+    body: "Plataforma de catálogo de animes com backend NestJS, streaming via URLs assinadas, auth JWT, Prisma e PostgreSQL.",
     img: "/header-guitar.jpg",
-    alt: "Guitarra em movimento com motion blur, preto e branco",
-    tags: ["NEXT.JS", "THREE.JS", "MOTION"],
-    href: "/sobre",
+    alt: "Projeto AnimesIce",
+    tags: ["NESTJS", "PRISMA", "POSTGRESQL"],
+    href: "https://github.com/1arley/animesice-back",
   },
   {
     id: "02",
-    title: "RETRATO / MONO",
-    kind: "ESTUDO · IDENTIDADE",
-    body: "Tratamento editorial do retrato: halftone, scanlines, recorte agressivo.",
+    title: "Reserva de Salas",
+    kind: "SISTEMA · GESTÃO",
+    body: "Sistema web para informatizar reservas de salas de reunião com agenda, roles, estatísticas e exportação CSV.",
     img: "/icon-portrait.jpg",
-    alt: "Retrato em preto e branco com estética rock",
-    tags: ["CSS", "TEXTURE", "EDITORIAL"],
-    href: "/sobre",
+    alt: "Projeto Reserva de Salas",
+    tags: ["NEXT.JS", "NESTJS", "POSTGRESQL"],
+    href: "https://github.com/1arley/reserva-de-salas",
+  },
+  {
+    id: "03",
+    title: "Pegai",
+    kind: "MOBILIDADE · SEGURANÇA",
+    body: "Sistema de caronas universitárias com foco em validação, 2FA via SMTP, bcrypt, SQLite e geolocalização.",
+    img: "/header-guitar.jpg",
+    alt: "Projeto Pegai",
+    tags: ["PYTHON", "SQLITE", "SMTP"],
+    href: "https://github.com/1arley/Pegai",
+  },
+  {
+    id: "04",
+    title: "Dev CLI",
+    kind: "CLI · PRODUTIVIDADE",
+    body: "CLI interativa que centraliza utilitários do dia a dia e é distribuída no npm e como binário standalone.",
+    img: "/icon-portrait.jpg",
+    alt: "Projeto Dev CLI",
+    tags: ["NODE.JS", "CLI", "NPM"],
+    href: "https://github.com/1arley/devcli",
   },
 ];
 
@@ -45,12 +65,12 @@ export default function ProjectsSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">// OBRAS · TRACK 04</p>
+              <p className="mono-label text-white/50">// PROJETOS · PORTFÓLIO</p>
               <h2
                 id="projects-title"
                 className="mt-2 font-headline text-5xl font-bold uppercase tracking-tight text-white sm:text-6xl"
               >
-                Projetos
+Projetos reais
               </h2>
             </div>
             <p className="font-mono text-xs text-white/60">

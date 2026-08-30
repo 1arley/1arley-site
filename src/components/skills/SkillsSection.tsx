@@ -6,47 +6,50 @@ import { HexFloat } from "@/components/canvasui/HexFloat";
 const CATEGORIES = [
   {
     id: "01",
-    title: "FRONTEND",
+    title: "BACKEND",
     items: [
-      "Next.js / App Router",
-      "React 19",
       "TypeScript",
-      "Tailwind CSS",
-      "Framer Motion",
-      "Radix / shadcn",
+      "Node.js",
+      "NestJS",
+      "Python",
+      "APIs REST",
+      "Segurança",
     ],
   },
   {
     id: "02",
-    title: "BACKEND",
+    title: "DADOS",
     items: [
-      "API REST (contrato /api/v1)",
-      "Autenticação & refresh token",
-      "Services layer",
-      "Validação de inputs",
-      "Autorização admin",
+      "PostgreSQL",
+      "Prisma",
+      "SQLite",
+      "Modelagem relacional",
+      "Migrations",
+      "Validação",
     ],
   },
   {
     id: "03",
-    title: "GRAFICA",
+    title: "FRONTEND",
     items: [
-      "WebGL / Three.js",
-      "Canvas UI effects",
-      "Filtros P&B (grayscale)",
-      "Texturas: grain · halftone",
-      "Motion design",
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "UI componentizada",
+      "Responsividade",
+      "Acessibilidade",
     ],
   },
   {
     id: "04",
-    title: "SISTEMA",
+    title: "DEVOPS",
     items: [
-      "Arquitetura de pastas",
-      "Design tokens",
-      "SEO / OpenGraph",
-      "Sitemap automático",
-      "Performance budgets",
+      "Docker",
+      "CI/CD",
+      "Swagger/OpenAPI",
+      "JWT",
+      "Git",
+      "Linux",
     ],
   },
 ];
@@ -68,12 +71,12 @@ export default function SkillsSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">// CAPACIDADES · TRACK 02</p>
+              <p className="mono-label text-white/50">// SKILLS · STACK REAL</p>
               <h2
                 id="skills-title"
                 className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl"
               >
-                Habilidades
+Tecnologias e categorias
               </h2>
             </div>
             <p className="font-mono text-xs text-white/60">

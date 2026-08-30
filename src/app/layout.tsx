@@ -29,13 +29,13 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
     title: {
-        default: 'Arthur Iarley — Rockstar Full-Stack',
+        default: 'Arthur Iarley — Desenvolvedor Full-Stack',
         template: '%s | Arthur Iarley',
     },
-    description: 'Portfólio P&B brutal. Next.js, React, TypeScript, WebGL. Cada tela é uma capa de disco — sem cor, sem concessão.',
+    description: 'Portfólio de Arthur Iarley com experiências reais, projetos, skills, links e contato. Design Rockstar 2 em P&B.',
     metadataBase: baseUrl ? new URL(baseUrl) : undefined,
     applicationName: 'Arthur Iarley Portfolio',
-    keywords: ['portfolio', 'arthur iarley', 'desenvolvedor', 'full-stack', 'nextjs', 'react', 'typescript', 'webgl', 'black and white', 'brutalist', 'rockstar'],
+    keywords: ['portfolio', 'arthur iarley', 'desenvolvedor', 'full-stack', 'backend', 'frontend', 'typescript', 'nodejs', 'nestjs', 'postgresql'],
     openGraph: {
         type: 'website',
         locale: 'pt_BR',
