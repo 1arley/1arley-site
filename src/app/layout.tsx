@@ -9,6 +9,7 @@ import { GrainOverlay } from '@/components/effects/GrainOverlay'
 import { CustomCursor } from '@/components/effects/CustomCursor'
 import { CursorTrail } from '@/components/effects/CursorTrail'
 import { LocaleProvider } from '@/lib/i18n'
+import { Toaster } from '@/components/ui/sonner'
 
 const anton = Anton({
     variable: '--font-anton',
@@ -74,6 +75,7 @@ export default function RootLayout({
                     <GrainOverlay />
                     <CursorTrail />
                     <CustomCursor />
+                    <Toaster richColors position="top-center" />
                 </LocaleProvider>
             </body>
         </html>
