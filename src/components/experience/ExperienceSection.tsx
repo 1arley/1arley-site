@@ -2,33 +2,7 @@
 
 import { Reveal } from "@/components/ui/Reveal";
 import { ParticleScroll } from "@/components/canvasui/ParticleScroll";
-
-const TIMELINE = [
-  {
-    year: "ATUAL",
-    title: "Analista de Projetos — Seed a Bit Tecnologia",
-    body: "Atuação profissional com foco em desenvolvimento e apoio a soluções reais em produção.",
-    tag: "PROJETOS · PROD",
-  },
-  {
-    year: "ATUAL",
-    title: "CTO — SmartRU",
-    body: "Responsável pelas decisões de arquitetura de software e pela evolução técnica da plataforma.",
-    tag: "ARQUITETURA · PRODUTO",
-  },
-  {
-    year: "FORMAÇÃO",
-    title: "Sistemas de Informação — UFRPE",
-    body: "Base acadêmica em computação aplicada, engenharia de software e sistemas de informação.",
-    tag: "UFRPE",
-  },
-  {
-    year: "FOCO",
-    title: "Backend, APIs e segurança",
-    body: "Trabalho com autenticação, autorização, modelagem de dados, módulos backend e integrações REST.",
-    tag: "NODE · NEST · SQL",
-  },
-];
+import { useLocale } from "@/lib/i18n";
 
 /**
  * EXPERIENCE — "TRACK 03: THE BUILD LOG".
@@ -37,6 +11,8 @@ const TIMELINE = [
  * scrolls — a build log that assembles itself while you read.
  */
 export default function ExperienceSection() {
+  const { t } = useLocale();
+
   return (
     <section
       className="relative border-t border-white/10 bg-black-4"
@@ -46,12 +22,12 @@ export default function ExperienceSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">// TRAJETÓRIA · PERFIL</p>
+              <p className="mono-label text-white/50">{t.experience.label}</p>
               <h2
                 id="experience-title"
                 className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl"
               >
-                Experiência e formação
+                {t.experience.title}
               </h2>
             </div>
             <p className="font-mono text-xs text-white/60">
@@ -79,8 +55,8 @@ export default function ExperienceSection() {
       >
         <div className="mx-auto max-w-[1400px] px-5 py-4 sm:px-8">
           <ol className="mt-0">
-            {TIMELINE.map((item, i) => (
-              <li key={item.year} className="group">
+            {t.experience.timeline.map((item, i) => (
+              <li key={`${item.year}-${i}`} className="group">
                 <div className="grid grid-cols-1 gap-3 border-b border-white/10 py-8 transition-colors hover:bg-black-8 sm:grid-cols-12 sm:items-baseline sm:px-3">
                   <div className="sm:col-span-3">
                     <span className="font-mono text-xs tracking-[0.2em] text-white/50">

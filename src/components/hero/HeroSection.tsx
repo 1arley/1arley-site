@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { useLocale } from "@/lib/i18n";
 
 import { Displacement } from "@/components/canvasui/Displacement";
 
@@ -24,6 +25,7 @@ const ParticleObject = dynamic(
  * browser's 16-context limit so every section effect actually renders.
  */
 export default function HeroSection() {
+  const { t } = useLocale();
   const containerRef = useRef<HTMLElement | null>(null);
   const reduce = useReducedMotion();
 
@@ -38,7 +40,7 @@ export default function HeroSection() {
     <section
       ref={containerRef}
       className="relative min-h-screen overflow-hidden bg-black"
-      aria-label="Arthur Iarley — portfólio"
+      aria-label={t.hero.ariaLabel}
     >
       {/* ===== Displacement — whole hero ripples away from cursor ===== */}
       <Displacement
@@ -83,8 +85,8 @@ export default function HeroSection() {
               <span>01</span>
             </div>
             <div className="hidden items-center gap-6 sm:flex">
-              <span>28°46′S / 53°36′W</span>
-              <span className="hidden md:inline">EST·2026</span>
+              <span>{t.hero.coords}</span>
+              <span className="hidden md:inline">{t.hero.place}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="hidden sm:inline">[ INDEX ]</span>
@@ -92,7 +94,7 @@ export default function HeroSection() {
                 href="/sobre"
                 className="border border-white/30 px-3 py-1 font-mono text-[11px] tracking-[0.15em] text-white/80 transition-colors hover:bg-white hover:text-black"
               >
-                SOBRE
+                {t.hero.aboutLink}
               </Link>
             </div>
           </motion.div>
@@ -107,7 +109,7 @@ export default function HeroSection() {
               transition={{ delay: 0.5, duration: 0.5 }}
             >
               <span className="h-px w-10 bg-white/40" aria-hidden="true" />
-              <span>FULL-STACK · ANALISTA DE PROJETOS</span>
+              <span>{t.hero.label}</span>
             </motion.div>
 
             {/* ===== Giant title ===== */}
@@ -116,7 +118,7 @@ export default function HeroSection() {
               className="max-w-4xl font-display font-black uppercase leading-[0.82] tracking-[-0.03em] text-white"
             >
               <span className="block text-[clamp(3.6rem,14vw,12rem)]">
-                Arthur Iarley
+                Arthur
               </span>
               <span className="block text-[clamp(3.6rem,14vw,12rem)]">
                 Iarley
@@ -130,11 +132,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55, duration: 0.6 }}
             >
-                Desenvolvedor full-stack e analista de projetos, com foco em
-                arquitetura sólida, APIs, segurança e interfaces com identidade
-                forte. / Full-stack developer and project analyst focused on
-                solid architecture, APIs, security, and distinctive interfaces.
-
+              {t.hero.subtitle}
             </motion.p>
 
             {/* CTAs */}
@@ -148,13 +146,13 @@ export default function HeroSection() {
                 href="#projetos"
                 className="btn-brutal"
               >
-                VER PROJETOS / SEE PROJECTS
+                {t.hero.ctaProjects}
               </Link>
               <Link
                 href="/sobre"
                 className="btn-outline"
               >
-                SOBRE MIM / ABOUT
+                {t.hero.ctaAbout}
               </Link>
             </motion.div>
           </div>

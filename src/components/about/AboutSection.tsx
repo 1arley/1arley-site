@@ -4,17 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { Peel } from "@/components/canvasui/Peel";
-
-const STACK = [
-  { name: "TypeScript", desc: "Tipagem estrita" },
-  { name: "Node.js", desc: "Backend e tooling" },
-  { name: "Python", desc: "Projetos e APIs" },
-  { name: "Next.js", desc: "Frontend moderno" },
-  { name: "React", desc: "Interfaces componentizadas" },
-  { name: "NestJS", desc: "APIs modulares" },
-  { name: "PostgreSQL", desc: "Modelagem relacional" },
-  { name: "Prisma", desc: "ORM e migrations" },
-];
+import { useLocale } from "@/lib/i18n";
 
 /**
  * ABOUT — "TRACK 01: THE ARTIST".
@@ -22,6 +12,8 @@ const STACK = [
  * "other side of the tape"). Editorial manifesto. WebGL budget: 1 context.
  */
 export default function AboutSection() {
+  const { t } = useLocale();
+
   return (
     <section
       id="sobre"
@@ -65,10 +57,9 @@ export default function AboutSection() {
               }
             >
               <div className="relative aspect-[4/5] overflow-hidden cut-corner">
-                  <Image
-                    src="/icon-portrait.jpg"
-                    alt="Arthur Iarley"
-
+                <Image
+                  src="/icon-portrait.jpg"
+                  alt=""
                   fill
                   className="object-cover object-top grayscale contrast-[1.3]"
                   sizes="(min-width: 1024px) 40vw, 90vw"
@@ -82,10 +73,10 @@ export default function AboutSection() {
           <Reveal delay={0.05}>
             <div className="mt-4 flex items-center justify-between border border-white/15 bg-black px-4 py-3">
               <span className="font-mono text-[10px] tracking-[0.2em] text-white/60 uppercase">
-                ARTHUR IARLEY
+                {t.about.figLabel}
               </span>
               <span className="font-mono text-[10px] text-white/60">
-                P&B · 735×727
+                {t.about.figSpec}
               </span>
             </div>
           </Reveal>
@@ -94,30 +85,26 @@ export default function AboutSection() {
         {/* ===== Manifesto column ===== */}
         <div className="lg:col-span-7 lg:pl-6">
           <Reveal>
-            <p className="mono-label mb-4 text-white/60">// INTRODUÇÃO</p>
+            <p className="mono-label mb-4 text-white/60">{t.about.intro}</p>
             <h2
               id="about-title"
               className="font-headline text-4xl font-bold uppercase leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl"
             >
-              Interface é
+              {t.about.title1}
               <br />
-              <span className="text-outline">performance.</span>
+              <span className="text-outline">{t.about.title2}</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <div className="mt-6 max-w-2xl space-y-4">
               <p className="text-base leading-relaxed text-gray-80">
-                Sou <strong className="text-white">Arthur Iarley</strong> —
-                estudante de Sistemas de Informação na UFRPE, desenvolvedor
-                backend/full-stack, Analista de Projetos na Seed a Bit
-                Tecnologia e CTO da SmartRU. Meu foco é transformar requisitos
-                em software sólido, seguro e com boa estrutura.
+                {t.about.p1Before}{" "}
+                <strong className="text-white">Arthur Iarley</strong>
+                {t.about.p1After}
               </p>
               <p className="text-base leading-relaxed text-gray-53">
-                Atuo com APIs, arquitetura, autenticação, modelagem de dados,
-                frontend quando necessário e decisões de produto que mantêm o
-                sistema consistente do início ao fim.
+                {t.about.p2}
               </p>
             </div>
           </Reveal>
@@ -125,10 +112,10 @@ export default function AboutSection() {
           {/* Stack grid */}
           <Reveal delay={0.15}>
             <h3 className="mt-10 font-mono text-[11px] tracking-[0.25em] text-white/50 uppercase">
-              STACK — O QUE EU TOCo
+              {t.about.stackLabel}
             </h3>
             <ul className="mt-4 grid grid-cols-1 gap-px bg-white/10 sm:grid-cols-2">
-              {STACK.map((tech) => (
+              {t.about.stack.map((tech) => (
                 <li
                   key={tech.name}
                   className="group flex items-start justify-between gap-4 bg-black-4 px-4 py-4 transition-colors hover:bg-black-8"
@@ -156,7 +143,7 @@ export default function AboutSection() {
                 href="/sobre"
                 className="btn-outline"
               >
-                VER PERFIL COMPLETO / VIEW FULL PROFILE
+                {t.about.cta}
               </Link>
             </div>
           </Reveal>

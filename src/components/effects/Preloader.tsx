@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useLocale } from "@/lib/i18n";
 
 /**
  * PRELOADER — "rec" boot curtain.
@@ -10,6 +11,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
  * reduced motion (no jank, no blocking).
  */
 export default function Preloader() {
+  const { t } = useLocale();
   const [done, setDone] = useState(false);
   const reduce = useReducedMotion();
 
@@ -41,7 +43,7 @@ export default function Preloader() {
               <span className="inline-block h-2 w-2 animate-pulse bg-white" />
               INIT · 01
             </span>
-            <span>CARREGANDO…</span>
+            <span>{t.preloader.loading}</span>
           </motion.div>
 
           {/* giant name */}
@@ -60,7 +62,7 @@ export default function Preloader() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.4 }}
             >
-              [ carregando ]
+              {t.preloader.loadingTag}
             </motion.span>
           </div>
 
@@ -72,7 +74,7 @@ export default function Preloader() {
             transition={{ delay: 0.2, duration: 0.3 }}
           >
             <Counter />
-            <span>SEM COR · SEM CONCESSÃO</span>
+            <span>{t.preloader.tagline}</span>
           </motion.div>
         </motion.div>
       )}

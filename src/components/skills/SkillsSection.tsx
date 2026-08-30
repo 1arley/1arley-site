@@ -2,57 +2,7 @@
 
 import { Reveal } from "@/components/ui/Reveal";
 import { HexFloat } from "@/components/canvasui/HexFloat";
-
-const CATEGORIES = [
-  {
-    id: "01",
-    title: "BACKEND",
-    items: [
-      "TypeScript",
-      "Node.js",
-      "NestJS",
-      "Python",
-      "APIs REST",
-      "Segurança",
-    ],
-  },
-  {
-    id: "02",
-    title: "DADOS",
-    items: [
-      "PostgreSQL",
-      "Prisma",
-      "SQLite",
-      "Modelagem relacional",
-      "Migrations",
-      "Validação",
-    ],
-  },
-  {
-    id: "03",
-    title: "FRONTEND",
-    items: [
-      "Next.js",
-      "React",
-      "Tailwind CSS",
-      "UI componentizada",
-      "Responsividade",
-      "Acessibilidade",
-    ],
-  },
-  {
-    id: "04",
-    title: "DEVOPS",
-    items: [
-      "Docker",
-      "CI/CD",
-      "Swagger/OpenAPI",
-      "JWT",
-      "Git",
-      "Linux",
-    ],
-  },
-];
+import { useLocale } from "@/lib/i18n";
 
 /**
  * SKILLS — "TRACK 02: THE GEAR".
@@ -61,6 +11,8 @@ const CATEGORIES = [
  * perspective-tilted hexagons.
  */
 export default function SkillsSection() {
+  const { t } = useLocale();
+
   return (
     <section
       className="relative border-t border-white/10 bg-black-2 py-[12vh]"
@@ -71,12 +23,12 @@ export default function SkillsSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">// SKILLS · STACK REAL</p>
+              <p className="mono-label text-white/50">{t.skills.label}</p>
               <h2
                 id="skills-title"
                 className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl"
               >
-Tecnologias e categorias
+                {t.skills.title}
               </h2>
             </div>
             <p className="font-mono text-xs text-white/60">
@@ -107,7 +59,7 @@ Tecnologias e categorias
             gapColor="auto"
           >
             <div className="grid grid-cols-1 gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-              {CATEGORIES.map((cat) => (
+              {t.skills.categories.map((cat) => (
                 <div
                   key={cat.id}
                   className="group flex h-full flex-col border border-white/10 bg-black-2 p-5 transition-colors hover:border-white/40 hover:bg-black-4"

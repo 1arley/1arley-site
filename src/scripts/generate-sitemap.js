@@ -6,7 +6,6 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 const routes = [
   { path: "/", changefreq: "daily", priority: "1.0" },
   { path: "/sobre", changefreq: "monthly", priority: "0.7" },
-  { path: "/faq", changefreq: "monthly", priority: "0.5" },
 ];
 
 const now = new Date().toISOString().slice(0, 10);
