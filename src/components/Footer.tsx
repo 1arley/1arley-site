@@ -10,7 +10,7 @@ import { Asciify } from "@/components/canvasui/Asciify";
  */
 const Footer = () => {
   const mailtoHref =
-    "mailto:contato@seu-dominio.com?subject=Contato%20via%201arley&body=Ola%2C%20gostaria%20de%20mais%20informacoes.";
+    "mailto:arthuriarleydev@gmail.com?subject=Contato%20via%20portfolio&body=Ola%2C%20gostaria%20de%20falar%20sobre%20oportunidades.";
 
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-black">
@@ -50,8 +50,8 @@ const Footer = () => {
                 </div>
               </div>
               <p className="mt-4 text-sm leading-relaxed text-gray-53">
-                Template multi-domínio para projetos web. P&B, brutal, sem
-                concessão.
+                Portfólio com informações reais de Arthur Iarley: experiência,
+                projetos, skills e contato.
               </p>
             </div>
 

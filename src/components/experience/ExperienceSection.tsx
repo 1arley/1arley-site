@@ -5,28 +5,28 @@ import { ParticleScroll } from "@/components/canvasui/ParticleScroll";
 
 const TIMELINE = [
   {
-    year: "FASE 01",
-    title: "Arquitetura base",
-    body: "Template multi-domínio: Next.js 16, App Router, SSR, RSC. Camada de serviços separada da UI.",
-    tag: "NEXT 16 · TS",
+    year: "ATUAL",
+    title: "Analista de Projetos — Seed a Bit Tecnologia",
+    body: "Atuação profissional com foco em desenvolvimento e apoio a soluções reais em produção.",
+    tag: "PROJETOS · PROD",
   },
   {
-    year: "FASE 02",
-    title: "Backend & Admin",
-    body: "Contrato de API /api/v1 com posts, team-members, FAQ e auth com refresh token. Painel admin completo.",
-    tag: "API · AUTH",
+    year: "ATUAL",
+    title: "CTO — SmartRU",
+    body: "Responsável pelas decisões de arquitetura de software e pela evolução técnica da plataforma.",
+    tag: "ARQUITETURA · PRODUTO",
   },
   {
-    year: "FASE 03",
-    title: "Design system",
-    body: "Radix + shadcn sobre tokens. Componentes acessíveis, formulários, validação, dark-first.",
-    tag: "RADIX · UI",
+    year: "FORMAÇÃO",
+    title: "Sistemas de Informação — UFRPE",
+    body: "Base acadêmica em computação aplicada, engenharia de software e sistemas de informação.",
+    tag: "UFRPE",
   },
   {
-    year: "FASE 04",
-    title: "Identidade visual",
-    body: "Reinvenção P&B brutal: grain, halftone, ASCII, WebGL. Nada de cor, nada de borda arredondada.",
-    tag: "P&B · WEBGL",
+    year: "FOCO",
+    title: "Backend, APIs e segurança",
+    body: "Trabalho com autenticação, autorização, modelagem de dados, módulos backend e integrações REST.",
+    tag: "NODE · NEST · SQL",
   },
 ];
 
@@ -46,12 +46,12 @@ export default function ExperienceSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">// TRAJETÓRIA · TRACK 03</p>
+              <p className="mono-label text-white/50">// TRAJETÓRIA · PERFIL</p>
               <h2
                 id="experience-title"
                 className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl"
               >
-                Linha do tempo
+                Experiência e formação
               </h2>
             </div>
             <p className="font-mono text-xs text-white/60">

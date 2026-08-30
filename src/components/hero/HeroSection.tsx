@@ -107,7 +107,7 @@ export default function HeroSection() {
               transition={{ delay: 0.5, duration: 0.5 }}
             >
               <span className="h-px w-10 bg-white/40" aria-hidden="true" />
-              <span>DEVELOPER · SOUND ENGINEER</span>
+              <span>FULL-STACK · ANALISTA DE PROJETOS</span>
             </motion.div>
 
             {/* ===== Giant title ===== */}
@@ -116,7 +116,7 @@ export default function HeroSection() {
               className="max-w-4xl font-display font-black uppercase leading-[0.82] tracking-[-0.03em] text-white"
             >
               <span className="block text-[clamp(3.6rem,14vw,12rem)]">
-                Arthur
+                Arthur Iarley
               </span>
               <span className="block text-[clamp(3.6rem,14vw,12rem)]">
                 Iarley
@@ -130,8 +130,11 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55, duration: 0.6 }}
             >
-              Construo interfaces que parecem capas de disco — P&B, brutais,
-              cinematográficas. Full-stack com identidade forte.
+                Desenvolvedor full-stack e analista de projetos, com foco em
+                arquitetura sólida, APIs, segurança e interfaces com identidade
+                forte. / Full-stack developer and project analyst focused on
+                solid architecture, APIs, security, and distinctive interfaces.
+
             </motion.p>
 
             {/* CTAs */}
@@ -145,13 +148,13 @@ export default function HeroSection() {
                 href="#projetos"
                 className="btn-brutal"
               >
-                VER PROJETOS
+                VER PROJETOS / SEE PROJECTS
               </Link>
               <Link
                 href="/sobre"
                 className="btn-outline"
               >
-                SOBRE MIM
+                SOBRE MIM / ABOUT
               </Link>
             </motion.div>
           </div>

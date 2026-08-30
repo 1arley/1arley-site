@@ -47,11 +47,11 @@ export default function ContactSection() {
           </div>
 
           <div className="relative z-10">
-          {/* Editorial label */}
+            {/* Editorial label */}
           <Reveal>
             <div className="flex items-center gap-3 mono-label text-white/50">
               <span className="h-px w-10 bg-white/40" aria-hidden="true" />
-              <span>CONTATO · TRACK 06</span>
+              <span>CONTATO · LINKS REAIS</span>
             </div>
           </Reveal>
 
@@ -63,17 +63,18 @@ export default function ContactSection() {
             >
               Vamos
               <br />
-              <span className="text-outline-white">tocar</span>
+              <span className="text-outline-white">conversar</span>
               <br />
-              juntos.
+              sobre oportunidades.
             </h2>
           </Reveal>
 
           {/* Editorial subtitle */}
           <Reveal delay={0.1}>
             <p className="mt-8 max-w-lg text-lg leading-relaxed text-gray-80">
-              Tem um projeto, uma ideia, ou só quer trocar uma ideia sobre
-              música, código e design? Manda um sinal.
+              Aberto a oportunidades, colaborações e conversas sobre
+              produto, backend, frontend e arquitetura. Se fizer sentido,
+              vamos falar.
             </p>
           </Reveal>
 
@@ -87,16 +88,13 @@ export default function ContactSection() {
                   size="lg"
                   onClick={() => {
                     window.location.href =
-                      "mailto:contato@seu-dominio.com?subject=Contato%20via%201arley";
+                      "mailto:arthuriarleydev@gmail.com?subject=Contato%20via%20portfolio";
                   }}
                 >
-                  ENVIAR SINAL
+                  ENVIAR E-MAIL / SEND EMAIL
                 </LiquidButton>
-                <Link
-                  href="/faq"
-                  className="btn-outline text-sm"
-                >
-                  FAQ
+                <Link href="/sobre" className="btn-outline text-sm">
+                  SOBRE / ABOUT
                 </Link>
               </div>
             </Reveal>
@@ -106,14 +104,14 @@ export default function ContactSection() {
               <div className="hard-border bg-black-4 px-5 py-4 font-mono text-xs leading-loose text-white/70">
                 <p>
                   <span className="text-white/60">$ </span>mail
-                  &lt;contato@seu-dominio.com&gt;
+                  &lt;arthuriarleydev@gmail.com&gt;
                 </p>
                 <p>
-                  <span className="text-white/60">$ </span>site &lt;1arley.dev&gt;
+                  <span className="text-white/60">$ </span>github &lt;github.com/1arley&gt;
                 </p>
                 <p>
-                  <span className="text-white/60">$ </span>status &lt;aberto a
-                  projetos&gt;
+                  <span className="text-white/60">$ </span>linkedin
+                  &lt;linkedin.com/in/arthuriarley&gt;
                   <span
                     className="ml-2 inline-block h-2 w-2 animate-pulse bg-white"
                     aria-hidden="true"
