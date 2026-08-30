@@ -42,6 +42,7 @@ async function proxyRequest(
   const headers = new Headers(request.headers);
   headers.delete("host");
   headers.delete("content-length");
+  headers.set("accept-encoding", "identity");
 
   const response = await fetch(targetUrl, {
     method: request.method,
@@ -54,10 +55,15 @@ async function proxyRequest(
     cache: "no-store",
   });
 
+  const responseHeaders = new Headers(response.headers);
+  responseHeaders.delete("content-encoding");
+  responseHeaders.delete("content-length");
+  responseHeaders.delete("transfer-encoding");
+
   return new NextResponse(response.body, {
     status: response.status,
     statusText: response.statusText,
-    headers: response.headers,
+    headers: responseHeaders,
   });
 }
 
