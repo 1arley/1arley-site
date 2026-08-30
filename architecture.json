@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "requirements_version": 1,
+  "summary": "Aplicar correções incrementais de UX mobile para todo o site a partir de 320 px.",
+  "files_to_create": [],
+  "files_to_modify": [
+    "requirements.json",
+    "src/app/globals.css",
+    "src/components/hero/HeroSection.tsx",
+    "src/components/Navbar.tsx",
+    "src/components/Footer.tsx",
+    "src/components/about/AboutSection.tsx",
+    "src/components/skills/SkillsSection.tsx",
+    "src/components/experience/ExperienceSection.tsx",
+    "src/components/projects/ProjectsSection.tsx",
+    "src/components/backend/BackendSection.tsx",
+    "src/components/contact/ContactSection.tsx",
+    "src/components/effects/Preloader.tsx",
+    "src/app/sobre/page.tsx",
+    "src/app/login/page.tsx",
+    "src/app/admin/layout.tsx",
+    "src/app/admin/content/page.tsx",
+    "src/app/admin/site/page.tsx",
+    "src/app/admin/links/page.tsx",
+    "src/app/admin/team/page.tsx",
+    "src/app/admin/users/page.tsx"
+  ],
+  "approach": "Usar breakpoints e variantes responsivas do Tailwind para corrigir layout, tipografia, alvos de toque e conteúdo denso. Ocultar a guitarra no mobile, desligar efeitos baseados em hover/cursor/ponteiro quando forem incompatíveis com toque, corrigir overflow na origem e reorganizar as telas administrativas em layout mobile sem alterar a arquitetura existente.",
+  "risks": [
+    "Fallbacks para WebGL mobile devem evitar divergências de hidratação.",
+    "A remoção de clipping global pode revelar elementos com largura intrínseca excessiva.",
+    "Ajustes em componentes compartilhados devem preservar o layout desktop.",
+    "É necessária validação manual em viewport real para gestos, canvases e teclado virtual."
+  ],
+  "acceptance_criteria": [
+    "A guitarra de partículas não aparece em 320 px e não há sobreposição de conteúdo no hero.",
+    "Nenhuma rota pública, de login ou administrativa gera overflow horizontal involuntário em 320 px.",
+    "Efeitos dependentes de hover, cursor ou ponteiro não bloqueiam toque ou scroll no mobile.",
+    "Controles de navegação e administração têm alvos de toque adequados.",
+    "Conteúdo denso quebra ou empilha de forma legível em 320 px.",
+    "As telas administrativas seguem utilizáveis em layout mobile.",
+    "Lint e typecheck passam após a implementação."
+  ]
+}
