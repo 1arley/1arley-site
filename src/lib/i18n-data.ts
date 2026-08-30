@@ -69,6 +69,13 @@ export interface Dict {
     title: string;
     categories: SkillCategory[];
   };
+  sobre: {
+    label: string;
+    title1: string;
+    title2: string;
+    introLabel: string;
+    introTitle: string;
+  };
   experience: {
     label: string;
     title: string;
@@ -151,7 +158,7 @@ export const dict: Record<Locale, Dict> = {
       p1After:
         " — estudante de Sistemas de Informação na UFRPE, desenvolvedor backend/full-stack, Analista de Projetos na Seed a Bit Tecnologia e CTO da SmartRU. Meu foco é transformar requisitos em software sólido, seguro e com boa estrutura.",
       p2: "Atuo com APIs, arquitetura, autenticação, modelagem de dados, frontend quando necessário e decisões de produto que mantêm o sistema consistente do início ao fim.",
-      stackLabel: "STACK — O QUE EU TOCo",
+      stackLabel: "STACK — O QUE EU TOCO",
       stack: [
         { name: "TypeScript", desc: "Tipagem estrita" },
         { name: "Node.js", desc: "Backend e tooling" },
@@ -212,6 +219,13 @@ export const dict: Record<Locale, Dict> = {
           items: ["Docker", "CI/CD", "Swagger/OpenAPI", "JWT", "Git", "Linux"],
         },
       ],
+    },
+    sobre: {
+      label: "// SOBRE · ARTHUR IARLEY",
+      title1: "Arthur",
+      title2: "Iarley.",
+      introLabel: "// QUEM SOU",
+      introTitle: "Software com estrutura, do requisito à entrega.",
     },
     experience: {
       label: "// TRAJETÓRIA · PERFIL",
@@ -441,6 +455,13 @@ export const dict: Record<Locale, Dict> = {
           items: ["Docker", "CI/CD", "Swagger/OpenAPI", "JWT", "Git", "Linux"],
         },
       ],
+    },
+    sobre: {
+      label: "// ABOUT · ARTHUR IARLEY",
+      title1: "Arthur",
+      title2: "Iarley.",
+      introLabel: "// WHO I AM",
+      introTitle: "Structured software, from requirement to delivery.",
     },
     experience: {
       label: "// CAREER · PROFILE",
