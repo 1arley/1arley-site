@@ -49,7 +49,7 @@ export default function Preloader() {
           {/* giant name */}
           <div className="flex flex-col items-center justify-center -translate-y-6">
             <motion.span
-              className="font-display text-[clamp(2.6rem,10vw,9rem)] font-black uppercase leading-[0.85] tracking-[-0.02em] text-white"
+              className="font-display text-[clamp(2.25rem,10vw,9rem)] font-black uppercase leading-[0.85] tracking-[-0.02em] text-white"
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
@@ -68,13 +68,13 @@ export default function Preloader() {
 
           {/* bottom strip */}
           <motion.div
-            className="flex items-end justify-between border-t border-white/15 pt-3 font-mono text-[11px] text-white/60"
+            className="flex items-end justify-between gap-3 border-t border-white/15 pt-3 font-mono text-[11px] text-white/60"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.3 }}
           >
             <Counter />
-            <span>{t.preloader.tagline}</span>
+            <span className="min-w-0 truncate">{t.preloader.tagline}</span>
           </motion.div>
         </motion.div>
       )}

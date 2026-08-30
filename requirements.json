@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "status": "locked",
+  "task_summary": "Auditar e planejar correções incrementais de UX mobile em todo o site.",
+  "scope": {
+    "included": [
+      "Todas as rotas públicas, login, painel administrativo e componentes compartilhados",
+      "Layouts de 320 px ou mais",
+      "Responsividade, legibilidade, hierarquia, navegação, alvos de toque, overflow, sobreposição e interações de toque"
+    ],
+    "excluded": [
+      "Implementação de correções nesta etapa",
+      "Reformulação visual ampla fora do necessário para usabilidade mobile"
+    ]
+  },
+  "decisions": {
+    "priority": "Usabilidade mobile acima da preservação integral dos efeitos brutalistas.",
+    "particle_guitar_mobile": "Ocultar em viewport mobile.",
+    "hover_pointer_effects_mobile": "Desativar em mobile quando não houver alternativa de toque clara.",
+    "minimum_viewport_width": "320px"
+  },
+  "requirements": [
+    "Nenhum elemento decorativo pode encobrir texto, CTAs ou controles interativos em viewport de 320 px.",
+    "Conteúdo e controles devem permanecer acessíveis sem overflow horizontal oculto ou clipping.",
+    "Controles tocáveis devem ter área de toque adequada para mobile.",
+    "Navegação pública e administrativa deve permanecer utilizável em telas estreitas.",
+    "Efeitos dependentes de hover, cursor ou ponteiro devem ser removidos ou desativados em mobile.",
+    "A tipografia, espaçamento e informações densas devem ser ajustados progressivamente para leitura em mobile.",
+    "As alterações devem ser incrementais, preservar a identidade visual quando não conflitar com usabilidade e não exigir reescrita de arquitetura."
+  ],
+  "answers": [
+    {"id":"Q1","classification":"BLOCKING","question":"Escopo prioritário","answer":"Todas as áreas"},
+    {"id":"Q2","classification":"BLOCKING","question":"Comportamento da guitarra em mobile","answer":"Ocultar no mobile"},
+    {"id":"Q3","classification":"BLOCKING","question":"Largura mínima","answer":"Delegado; definido como 320px"},
+    {"id":"Q4","classification":"OPTIONAL","question":"Efeitos hover/ponteiro no mobile","answer":"Remover/desativar no mobile"}
+  ]
+}
