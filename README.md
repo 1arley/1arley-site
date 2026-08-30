@@ -54,14 +54,21 @@ src/
 
 ## API
 
-O template espera uma API RESTful com os seguintes endpoints:
+O site consome um backend CMS (services/cms-backend) via proxy `/api/[...path]`.
+Defina `API_BASE_URL` apontando para a raiz da API **terminando em `/api`**
+(ex.: `https://1arley-cms-backend.onrender.com/api`) — o proxy concatena `/v1/...`.
+
+Endpoints:
 
 ### Auth
 - `POST /api/v1/auth/login` → `{ access_token, user }`
-- `POST /api/v1/auth/refresh` → `{ access_token }`
 
-### Posts/Conteúdo
-- `GET /api/v1/posts` → `Post[]`
+### Conteúdo do site (hero, sobre, skills, experiência, projetos, contato)
+- `GET /api/v1/site` → `{ data: { pt, en } }`
+- `PUT /api/v1/site` → JSON `{ pt, en }` (auth)
+
+### Posts
+- `GET /api/v1/posts` → `{ data: Post[] }`
 - `POST /api/v1/posts` → FormData
 - `PATCH /api/v1/posts/:id` → FormData
 - `DELETE /api/v1/posts/:id`
@@ -73,32 +80,48 @@ O template espera uma API RESTful com os seguintes endpoints:
 - `DELETE /api/v1/team-members/:id`
 
 ### Links
-- `GET /api/v1/quick-access` → `QuickLink[]`
+- `GET /api/v1/quick-access` → `{ data: QuickLink[] }`
 - `POST /api/v1/quick-access` → JSON
 - `PATCH /api/v1/quick-access/:id` → JSON
 - `DELETE /api/v1/quick-access/:id`
 
-### FAQ
-- `GET /api/v1/faq/topics` → `FaqTopic[]`
-- `POST /api/v1/faq/topics` → JSON
-- `PATCH /api/v1/faq/topics/:id` → JSON
-- `DELETE /api/v1/faq/topics/:id`
-- `POST /api/v1/faq/questions` → JSON
-- `PATCH /api/v1/faq/questions/:id` → JSON
-- `DELETE /api/v1/faq/questions/:id`
-
 ### Usuários
-- `GET /api/v1/users` → `AdminUser[]`
+- `GET /api/v1/users` → `{ data: AdminUser[] }`
 - `POST /api/v1/users` → JSON
 - `PATCH /api/v1/users/:id` → JSON
 - `DELETE /api/v1/users/:id`
 
+### Uploads
+- `POST /api/v1/upload` → FormData `file` → `{ url }` (auth)
+- `GET /api/v1/images/:id` → imagem (público)
+
 ## Variáveis de ambiente
+
+Site (Next.js):
 
 ```env
 NEXT_PUBLIC_SITE_URL=https://seu-dominio.com.br
-API_BASE_URL=https://api.seu-dominio.com.br/api/v1
+API_BASE_URL=https://1arley-cms-backend.onrender.com/api
 ```
+
+Backend CMS (Render — services/cms-backend):
+
+```env
+DATABASE_URL=postgres://...   # Postgres do Render
+CMS_ADMIN_EMAIL=admin@exemplo.com
+CMS_ADMIN_PASSWORD=senha-forte
+CMS_SECRET=segredo-aleatorio
+```
+
+As credenciais vivem apenas no ambiente do Render — nada hardcoded no site.
+
+## Deploy do backend (Render)
+
+Blueprint: `render.yaml` (serviço web `cms-backend` + Postgres). Ou manual:
+
+- **Root Directory:** `services/cms-backend`
+- **Build:** `npm install` · **Start:** `npm start`
+- **Env:** `DATABASE_URL`, `CMS_ADMIN_EMAIL`, `CMS_ADMIN_PASSWORD`, `CMS_SECRET`
 
 ## Docker
 

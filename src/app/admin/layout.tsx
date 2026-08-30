@@ -1,11 +1,14 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { FileText, Users, Link2, Shield } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { FileText, Users, Link2, Shield, Globe } from 'lucide-react'
 import { cn } from '@/utils/lib/utils'
+import { isAdminSessionActive } from '@/utils/lib/admin-auth'
 
 const adminLinks = [
+  { label: 'Site', href: '/admin/site', icon: Globe },
   { label: 'Conteúdo', href: '/admin/content', icon: FileText },
   { label: 'Equipe', href: '/admin/team', icon: Users },
   { label: 'Links', href: '/admin/links', icon: Link2 },
@@ -14,6 +17,24 @@ const adminLinks = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
+  const [authed, setAuthed] = useState(false)
+
+  useEffect(() => {
+    if (!isAdminSessionActive()) {
+      router.replace('/login')
+    } else {
+      setAuthed(true)
+    }
+  }, [router])
+
+  if (!authed) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-black">
+        <p className="font-mono text-xs tracking-[0.2em] text-white/50">AUTENTICANDO…</p>
+      </main>
+    )
+  }
 
   return (
     <div className="min-h-screen pt-24 pb-12">
