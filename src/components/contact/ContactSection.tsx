@@ -5,6 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Ripple } from "@/components/canvasui/Ripple";
 import { GravityStarsBackground } from "@/components/animate-ui/gravity-stars";
 import { LiquidButton } from "@/components/animate-ui/liquid-button";
+import { useLocale } from "@/lib/i18n";
 
 /**
  * CONTACT — "TRACK 06: THE FINALE".
@@ -13,6 +14,8 @@ import { LiquidButton } from "@/components/animate-ui/liquid-button";
  * moment. WebGL budget: 1 context (Ripple).
  */
 export default function ContactSection() {
+  const { t } = useLocale();
+
   return (
     <section
       className="relative border-t border-white/10 bg-black-2"
@@ -48,89 +51,91 @@ export default function ContactSection() {
 
           <div className="relative z-10">
             {/* Editorial label */}
-          <Reveal>
-            <div className="flex items-center gap-3 mono-label text-white/50">
-              <span className="h-px w-10 bg-white/40" aria-hidden="true" />
-              <span>CONTATO · LINKS REAIS</span>
-            </div>
-          </Reveal>
-
-          {/* Colossal headline */}
-          <Reveal delay={0.05}>
-            <h2
-              id="contact-title"
-              className="mt-6 font-display text-[clamp(3.6rem,14vw,12rem)] font-black uppercase leading-[0.82] tracking-[-0.03em] text-white"
-            >
-              Vamos
-              <br />
-              <span className="text-outline-white">conversar</span>
-              <br />
-              sobre oportunidades.
-            </h2>
-          </Reveal>
-
-          {/* Editorial subtitle */}
-          <Reveal delay={0.1}>
-            <p className="mt-8 max-w-lg text-lg leading-relaxed text-gray-80">
-              Aberto a oportunidades, colaborações e conversas sobre
-              produto, backend, frontend e arquitetura. Se fizer sentido,
-              vamos falar.
-            </p>
-          </Reveal>
-
-          {/* CTAs + contact info */}
-          <div className="mt-10 flex flex-wrap items-start gap-8 sm:gap-16">
-            {/* Liquid CTA — hover fills with ink */}
-            <Reveal delay={0.15}>
-              <div className="flex flex-col gap-4">
-                <LiquidButton
-                  variant="solid"
-                  size="lg"
-                  onClick={() => {
-                    window.location.href =
-                      "mailto:arthuriarleydev@gmail.com?subject=Contato%20via%20portfolio";
-                  }}
-                >
-                  ENVIAR E-MAIL / SEND EMAIL
-                </LiquidButton>
-                <Link href="/sobre" className="btn-outline text-sm">
-                  SOBRE / ABOUT
-                </Link>
+            <Reveal>
+              <div className="flex items-center gap-3 mono-label text-white/50">
+                <span className="h-px w-10 bg-white/40" aria-hidden="true" />
+                <span>{t.contact.label}</span>
               </div>
             </Reveal>
 
-            {/* Terminal-style contact info */}
-            <Reveal delay={0.2}>
-              <div className="hard-border bg-black-4 px-5 py-4 font-mono text-xs leading-loose text-white/70">
-                <p>
-                  <span className="text-white/60">$ </span>mail
-                  &lt;arthuriarleydev@gmail.com&gt;
-                </p>
-                <p>
-                  <span className="text-white/60">$ </span>github &lt;github.com/1arley&gt;
-                </p>
-                <p>
-                  <span className="text-white/60">$ </span>linkedin
-                  &lt;linkedin.com/in/arthuriarley&gt;
-                  <span
-                    className="ml-2 inline-block h-2 w-2 animate-pulse bg-white"
-                    aria-hidden="true"
-                  />
-                </p>
+            {/* Colossal headline */}
+            <Reveal delay={0.05}>
+              <h2
+                id="contact-title"
+                className="mt-6 font-display text-[clamp(3.6rem,14vw,12rem)] font-black uppercase leading-[0.82] tracking-[-0.03em] text-white"
+              >
+                {t.contact.title1}
+                <br />
+                <span className="text-outline-white">{t.contact.title2}</span>
+                <br />
+                {t.contact.title3}
+              </h2>
+            </Reveal>
+
+            {/* Editorial subtitle */}
+            <Reveal delay={0.1}>
+              <p className="mt-8 max-w-lg text-lg leading-relaxed text-gray-80">
+                {t.contact.subtitle}
+              </p>
+            </Reveal>
+
+            {/* CTAs + contact info */}
+            <div className="mt-10 flex flex-wrap items-start gap-8 sm:gap-16">
+              {/* Liquid CTA — hover fills with ink */}
+              <Reveal delay={0.15}>
+                <div className="flex flex-col gap-4">
+                  <LiquidButton
+                    variant="solid"
+                    size="lg"
+                    onClick={() => {
+                      window.location.href =
+                        "mailto:arthuriarleydev@gmail.com?subject=Contato%20via%20portfolio";
+                    }}
+                  >
+                    {t.contact.cta}
+                  </LiquidButton>
+                  <Link href="/sobre" className="btn-outline text-sm">
+                    {t.contact.aboutCta}
+                  </Link>
+                </div>
+              </Reveal>
+
+              {/* Terminal-style contact info */}
+              <Reveal delay={0.2}>
+                <div className="hard-border bg-black-4 px-5 py-4 font-mono text-xs leading-loose text-white/70">
+                  <p>
+                    <span className="text-white/60">$ </span>mail
+                    &lt;arthuriarleydev@gmail.com&gt;
+                  </p>
+                  <p>
+                    <span className="text-white/60">$ </span>github &lt;github.com/1arley&gt;
+                  </p>
+                  <p>
+                    <span className="text-white/60">$ </span>linkedin
+                    &lt;linkedin.com/in/arthuriarley&gt;
+                  </p>
+                  <p>
+                    <span className="text-white/60">$ </span>status
+                    &lt;{t.contact.status}&gt;
+                    <span
+                      className="ml-2 inline-block h-2 w-2 animate-pulse bg-white"
+                      aria-hidden="true"
+                    />
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Footer bar */}
+            <Reveal delay={0.25}>
+              <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[10px] tracking-[0.2em] text-white/60">
+                <span>© 2026 ARTHUR IARLEY</span>
+                <span className="hidden sm:inline">
+                  MADE WITH GRAIN · BRUTAL · MONOCHROME
+                </span>
+                <span>END OF SESSION</span>
               </div>
             </Reveal>
-          </div>
-
-          {/* Footer bar */}
-          <Reveal delay={0.25}>
-            <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[10px] tracking-[0.2em] text-white/60">
-              <span>© 2026 ARTHUR IARLEY</span>
-              <span className="hidden sm:inline">
-                MADE WITH GRAIN · BRUTAL · MONOCHROME
-              </span>
-              <span>END OF SESSION</span>
-            </div>
-          </Reveal>
           </div>
         </div>
       </Ripple>

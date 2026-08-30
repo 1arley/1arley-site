@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Asciify } from "@/components/canvasui/Asciify";
+import { useLocale } from "@/lib/i18n";
 
 /**
  * FOOTER — the end credits.
@@ -9,6 +10,8 @@ import { Asciify } from "@/components/canvasui/Asciify";
  * nav, admin, contact, and a giant watermark. Zero radius, grayscale.
  */
 const Footer = () => {
+  const { t } = useLocale();
+  const year = new Date().getFullYear();
   const mailtoHref =
     "mailto:arthuriarleydev@gmail.com?subject=Contato%20via%20portfolio&body=Ola%2C%20gostaria%20de%20falar%20sobre%20oportunidades.";
 
@@ -50,46 +53,21 @@ const Footer = () => {
                 </div>
               </div>
               <p className="mt-4 text-sm leading-relaxed text-gray-53">
-                Portfólio com informações reais de Arthur Iarley: experiência,
-                projetos, skills e contato.
+                {t.footer.desc}
               </p>
             </div>
 
             {/* Navegação */}
             <div>
               <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
-                Navegação
+                {t.footer.navLabel}
               </h4>
               <div className="flex flex-col gap-2">
                 <Link href="/" className="text-sm text-gray-53 transition-colors hover:text-white">
-                  Home
+                  {t.footer.home}
                 </Link>
                 <Link href="/sobre" className="text-sm text-gray-53 transition-colors hover:text-white">
-                  Sobre
-                </Link>
-                <Link href="/faq" className="text-sm text-gray-53 transition-colors hover:text-white">
-                  FAQ
-                </Link>
-              </div>
-            </div>
-
-            {/* Admin */}
-            <div>
-              <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
-                Admin
-              </h4>
-              <div className="flex flex-col gap-2">
-                <Link href="/admin/content" className="text-sm text-gray-53 transition-colors hover:text-white">
-                  Conteúdo
-                </Link>
-                <Link href="/admin/team" className="text-sm text-gray-53 transition-colors hover:text-white">
-                  Equipe
-                </Link>
-                <Link href="/admin/links" className="text-sm text-gray-53 transition-colors hover:text-white">
-                  Links
-                </Link>
-                <Link href="/admin/users" className="text-sm text-gray-53 transition-colors hover:text-white">
-                  Usuários
+                  {t.footer.about}
                 </Link>
               </div>
             </div>
@@ -97,25 +75,39 @@ const Footer = () => {
             {/* Contato */}
             <div>
               <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
-                Contato
+                {t.footer.contactLabel}
               </h4>
               <a
                 href={mailtoHref}
                 className="inline-flex items-center gap-2 border border-white/20 px-4 py-2.5 text-sm text-white transition-colors hover:bg-white hover:text-black"
               >
                 <span aria-hidden="true">✉</span>
-                Enviar e-mail
+                {t.footer.sendEmail}
               </a>
-              <p className="mt-3 text-sm text-gray-53">
-                contato@seu-dominio.com
-              </p>
+              <div className="mt-3 flex flex-col gap-1 text-sm text-gray-53">
+                <a
+                  href="https://github.com/1arley"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-white"
+                >
+                  GitHub · @1arley
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/arthuriarley"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-white"
+                >
+                  LinkedIn · /in/arthuriarley
+                </a>
+              </div>
             </div>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6">
             <p className="font-mono text-xs text-white/60">
-              © {new Date().getFullYear()} 1arley — Todos os direitos
-              reservados
+              © {year} 1arley — {t.footer.rights}
             </p>
             <p className="hidden font-mono text-[10px] tracking-[0.2em] text-white/50 sm:block">
               GRAIN · BRUTAL · MONOCHROME · ROCK

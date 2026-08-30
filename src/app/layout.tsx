@@ -8,6 +8,7 @@ import Preloader from '@/components/effects/Preloader'
 import { GrainOverlay } from '@/components/effects/GrainOverlay'
 import { CustomCursor } from '@/components/effects/CustomCursor'
 import { CursorTrail } from '@/components/effects/CursorTrail'
+import { LocaleProvider } from '@/lib/i18n'
 
 const anton = Anton({
     variable: '--font-anton',
@@ -65,13 +66,15 @@ export default function RootLayout({
             <body
                 className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} antialiased`}
             >
-                <Preloader />
-                <Navbar />
-                {children}
-                <Footer />
-                <GrainOverlay />
-                <CursorTrail />
-                <CustomCursor />
+                <LocaleProvider>
+                    <Preloader />
+                    <Navbar />
+                    {children}
+                    <Footer />
+                    <GrainOverlay />
+                    <CursorTrail />
+                    <CustomCursor />
+                </LocaleProvider>
             </body>
         </html>
     )

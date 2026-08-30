@@ -37,7 +37,7 @@ export function CustomCursor() {
     const onMove = (e: PointerEvent) => {
       pos.current = { x: e.clientX, y: e.clientY };
       if (!raf.current) {
-        raf.current = requestAnimationFrame(frame);
+        raf.current = requestAnimationFrame(tick);
       }
     };
 
@@ -49,22 +49,35 @@ export function CustomCursor() {
     };
 
     let running = false;
-    const frame = () => {
-      raf.current = 0;
+    const ease = 0.38;
+    const tick = () => {
+      const dx = pos.current.x - target.current.x;
+      const dy = pos.current.y - target.current.y;
+      const dist = Math.hypot(dx, dy);
+
+      target.current.x += dx * ease;
+      target.current.y += dy * ease;
+
+      dot.style.transform = `translate(${target.current.x}px, ${target.current.y}px) translate(-50%, -50%)`;
+
       if (!running) {
         dot.style.opacity = "1";
         running = true;
       }
-      const ease = 0.18;
-      target.current.x += (pos.current.x - target.current.x) * ease;
-      target.current.y += (pos.current.y - target.current.y) * ease;
-      dot.style.transform = `translate(${target.current.x}px, ${target.current.y}px) translate(-50%, -50%)`;
+
+      if (dist > 0.5) {
+        raf.current = requestAnimationFrame(tick);
+      } else {
+        raf.current = 0;
+      }
     };
 
     const show = () => {
       dot.style.opacity = "1";
       running = false;
-      raf.current = requestAnimationFrame(frame);
+      if (!raf.current) {
+        raf.current = requestAnimationFrame(tick);
+      }
     };
     const hide = () => {
       dot.style.opacity = "0";

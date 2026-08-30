@@ -2,30 +2,7 @@
 
 import { Reveal } from "@/components/ui/Reveal";
 import { GlyphRain } from "@/components/canvasui/GlyphRain";
-
-const ENDPOINTS = [
-  { method: "AUTH", path: "JWT + refresh token", note: "login / session" },
-  { method: "DATA", path: "PostgreSQL + Prisma", note: "migrations / modelagem" },
-  { method: "REST", path: "APIs modulares", note: "posts / team / faq / users" },
-  { method: "DEVOPS", path: "Docker + CI/CD", note: "ambientes e deploy" },
-  { method: "SEC", path: "Autorização & roles", note: "admin / guards" },
-  { method: "OPS", path: "TypeScript + strict", note: "qualidade / consistência" },
-];
-
-const FEATURES = [
-  {
-    title: "Autenticação e sessão",
-    body: "Fluxos com login, refresh token e controle de acesso para áreas administrativas.",
-  },
-  {
-    title: "Arquitetura de dados",
-    body: "Modelagem com PostgreSQL, Prisma e estrutura pensada para crescer com o produto.",
-  },
-  {
-    title: "Execução em produção",
-    body: "Docker, CI/CD e disciplina de TypeScript para manter entrega confiável.",
-  },
-];
+import { useLocale } from "@/lib/i18n";
 
 /**
  * BACKEND — "TRACK 05: THE CONSOLE".
@@ -34,6 +11,8 @@ const FEATURES = [
  * (dim ~0.55) while the glyphs dance on top.
  */
 export default function BackendSection() {
+  const { t } = useLocale();
+
   return (
     <section
       className="relative border-t border-white/10 bg-black-4 py-[10vh]"
@@ -81,7 +60,7 @@ export default function BackendSection() {
                 </div>
                 {/* terminal body */}
                 <div className="p-5 font-mono text-[13px] leading-relaxed">
-                  {ENDPOINTS.map((ep) => (
+                  {t.backend.endpoints.map((ep) => (
                     <div
                       key={ep.method + ep.path}
                       className="flex items-baseline gap-3 py-1"
@@ -115,28 +94,26 @@ export default function BackendSection() {
         {/* ---- Right: text + features ---- */}
         <div className="lg:pl-6">
           <Reveal>
-            <p className="mono-label text-white/60">// BACKEND · ENGENHARIA</p>
+            <p className="mono-label text-white/60">{t.backend.label}</p>
             <h2
               id="backend-title"
               className="mt-2 font-headline text-4xl font-bold uppercase leading-[1.02] tracking-tight text-white sm:text-5xl"
             >
-              Engenharia
+              {t.backend.title1}
               <br />
-              <span className="text-outline">por trás do produto.</span>
+              <span className="text-outline">{t.backend.title2}</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-80">
-              Trabalho com backend real, modelagem de dados, autenticação,
-              autorização, integrações REST e decisões de arquitetura que
-              sustentam o produto de ponta a ponta.
+              {t.backend.body}
             </p>
           </Reveal>
 
           <Reveal delay={0.15}>
             <ul className="mt-8 space-y-0">
-              {FEATURES.map((f, i) => (
+              {t.backend.features.map((f, i) => (
                 <li
                   key={f.title}
                   className="group flex gap-4 border-t border-white/10 py-4 transition-colors hover:bg-black-8 hover:px-2"
@@ -159,8 +136,13 @@ export default function BackendSection() {
 
           <Reveal delay={0.2}>
             <div className="mt-8">
-              <a href="/admin/content" className="btn-brutal">
-                VER ARQUITETURA / VIEW ARCHITECTURE
+              <a
+                href="https://github.com/1arley"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-brutal"
+              >
+                {t.backend.cta}
               </a>
             </div>
           </Reveal>

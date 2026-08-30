@@ -4,30 +4,25 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-
-interface NavItem {
-  label: string;
-  href: string;
-}
-
-const navItems: NavItem[] = [
-  { label: "Início", href: "/" },
-  { label: "Sobre", href: "/sobre" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Admin", href: "/admin/content" },
-];
+import { useLocale } from "@/lib/i18n";
 
 /**
  * NAVBAR — the mixing desk strip.
  * Hides on scroll down, resurfaces on scroll up. Zero radius, grayscale,
- * REC indicator, mono type.
+ * REC indicator, mono type. Includes PT/EN language switch.
  */
 const Navbar = () => {
+  const { t, locale, setLocale } = useLocale();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const lastY = useRef(0);
   const pathname = usePathname();
+
+  const navItems = [
+    { label: t.navbar.home, href: "/" },
+    { label: t.navbar.about, href: "/sobre" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,6 +76,37 @@ const Navbar = () => {
     };
   }, [mobileOpen]);
 
+  const LangSwitch = (
+    <div
+      className="flex items-center border border-white/20 font-mono text-[10px] tracking-[0.15em]"
+      role="group"
+      aria-label="Idioma / Language"
+    >
+      <button
+        onClick={() => setLocale("pt")}
+        aria-pressed={locale === "pt"}
+        className={`px-2 py-1 transition-colors ${
+          locale === "pt"
+            ? "bg-white text-black"
+            : "text-white/70 hover:text-white"
+        }`}
+      >
+        PT
+      </button>
+      <button
+        onClick={() => setLocale("en")}
+        aria-pressed={locale === "en"}
+        className={`px-2 py-1 transition-colors ${
+          locale === "en"
+            ? "bg-white text-black"
+            : "text-white/70 hover:text-white"
+        }`}
+      >
+        EN
+      </button>
+    </div>
+  );
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-30 border-b transition-transform duration-300 ${
@@ -110,7 +136,7 @@ const Navbar = () => {
         {/* Desktop nav */}
         <nav
           className="hidden items-center gap-1 md:flex"
-          aria-label="Navegação principal"
+          aria-label={t.navbar.ariaNav}
         >
           {navItems.map((item) => {
             const active = pathname === item.href;
@@ -128,17 +154,21 @@ const Navbar = () => {
               </Link>
             );
           })}
+          {LangSwitch}
         </nav>
 
         {/* Mobile toggle */}
-        <button
-          className="flex h-11 w-11 items-center justify-center border border-white/20 text-white md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-expanded={mobileOpen}
-          aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          {LangSwitch}
+          <button
+            className="flex h-11 w-11 items-center justify-center border border-white/20 text-white"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-expanded={mobileOpen}
+            aria-label={mobileOpen ? t.navbar.ariaClose : t.navbar.ariaOpen}
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile overlay */}
@@ -147,9 +177,9 @@ const Navbar = () => {
           className="border-t border-white/10 bg-black px-4 py-6 md:hidden mobile-nav"
           role="dialog"
           aria-modal="true"
-          aria-label="Navegação móvel"
+          aria-label={t.navbar.ariaMobile}
         >
-          <nav className="flex flex-col" aria-label="Menu móvel">
+          <nav className="flex flex-col" aria-label={t.navbar.ariaMobile}>
             {navItems.map((item, i) => {
               const active = pathname === item.href;
               return (
