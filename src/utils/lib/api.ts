@@ -3,7 +3,7 @@ import axios, { type AxiosError, type AxiosInstance } from "axios";
 import { handleRefreshResponseError } from "@/services/tokenRefresh";
 
 const api = axios.create({
-  baseURL: "/api/v1",
+  baseURL: "/api",
   withCredentials: true,
 });
 
