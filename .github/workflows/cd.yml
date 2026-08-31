@@ -7,7 +7,7 @@ on:
             - dev
 
 env:
-    IMAGE_NAME: your-registry.com/your-org/1arley-template
+    IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/1arley-template
     CACHE_SCOPE: 1arley-template-docker
 
 jobs:
@@ -94,11 +94,11 @@ jobs:
                   path: ${{ runner.temp }}
 
             - name: Log in to registry
-              uses: docker/login-action@v3
+              uses: docker/login-action@v4
               with:
-                  registry: your-registry.com
-                  username: ${{ secrets.REGISTRY_USERNAME }}
-                  password: ${{ secrets.REGISTRY_PASSWORD }}
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Load Docker Image
               run: docker load --input "$RUNNER_TEMP/1arley-template.tar"
