@@ -71,11 +71,27 @@ export interface Dict {
   };
   sobre: {
     label: string;
-    title1: string;
-    title2: string;
-    introLabel: string;
-    introTitle: string;
-  };
+    roleTag: string;
+    heroSubtitle: string;
+    storyLabel: string;
+    storyTitle: string;
+    storyP1: string;
+    storyP2: string;
+    storyP3: string;
+    storyFigLabel: string;
+    storyFigSpec: string;
+    philLabel: string;
+    philTitle: string;
+    philQuotes: { text: string; note: string }[];
+    nowLabel: string;
+    nowTitle: string;
+    nowItems: { label: string; value: string }[];
+    colophonLabel: string;
+    colophonTitle: string;
+    colophonItems: { label: string; value: string }[];
+      ctaContact: string;
+      emailSubject: string;
+    };
   experience: {
     label: string;
     title: string;
@@ -222,10 +238,44 @@ export const dict: Record<Locale, Dict> = {
     },
     sobre: {
       label: "// SOBRE · ARTHUR IARLEY",
-      title1: "Arthur",
-      title2: "Iarley.",
-      introLabel: "// QUEM SOU",
-      introTitle: "Software com estrutura, do requisito à entrega.",
+      roleTag: "FULL-STACK · ARQUITETO · PRODUTOR",
+      heroSubtitle: "Recife, PE · 8°03′S / 34°52′W",
+      storyLabel: "// ORIGEM",
+      storyTitle: "Não comecei pelo código. Comecei pelo problema.",
+      storyP1: "Sou Arthur Iarley — estudante de Sistemas de Informação na UFRPE, desenvolvedor backend/full-stack, Analista de Projetos na Seed a Bit Tecnologia e CTO da SmartRU. Mas esses títulos são só rótulos. O que realmente me define é a obsessão por fazer as coisas funcionarem — com estrutura, com segurança, sem gambiarra.",
+      storyP2: "Comecei a programar porque precisei resolver problemas reais. APIs que precisavam de autenticação robusta. Sistemas que precisavam escalar. Produtos que precisavam de alguém que entendesse tanto o backend quanto a experiência do usuário. Fui me especializando porque o código sem arquitetura é só texto bonito.",
+      storyP3: "Hoje, trabalho com APIs, modelagem de dados, autenticação, arquitetura de software e decisões de produto que mantêm o sistema consistente do requisito ao deploy. Não é sobre ser o melhor em uma ferramenta — é sobre fazer a ferramenta certa funcionar no contexto certo.",
+      storyFigLabel: "FIG.01 — MONO",
+      storyFigSpec: "P&B · retrato",
+      philLabel: "// FILOSOFIA",
+      philTitle: "O que guia minhas decisões",
+      philQuotes: [
+        { text: "Código sem arquitetura é dívida técnica disfarçada de produtividade.", note: "Estrutura antes de velocidade" },
+        { text: "O melhor sistema é o que o usuário nunca percebe que existe.", note: "Invisibilidade como qualidade" },
+        { text: "Segurança não é feature — é pré-requisito.", note: "Zero tolerância a atalhos" },
+      ],
+      nowLabel: "// AGORA",
+      nowTitle: "Onde estou agora",
+      nowItems: [
+        { label: "FORMAÇÃO", value: "Sistemas de Informação — UFRPE" },
+        { label: "TRABALHO", value: "Analista de Projetos — Seed a Bit" },
+        { label: "PRODUTO", value: "CTO — SmartRU" },
+        { label: "FOCO", value: "Backend, APIs, segurança e arquitetura" },
+        { label: "STACK", value: "TypeScript · NestJS · PostgreSQL · Prisma" },
+        { label: "LOCALIZAÇÃO", value: "Recife, PE — Brasil" },
+      ],
+      colophonLabel: "// COLOFON",
+      colophonTitle: "Sobre este portfólio",
+      colophonItems: [
+        { label: "FRAMEWORK", value: "Next.js 16 + React 19" },
+        { label: "ESTILO", value: "Tailwind CSS + shadcn/ui" },
+        { label: "WEBGL", value: "Three.js + canvasui.dev" },
+        { label: "ANIMAÇÃO", value: "Framer Motion" },
+        { label: "TIPOGRAFIA", value: "Anton · Oswald · JetBrains Mono" },
+        { label: "DESIGN", value: "Rockstar Monochrome — P&B brutal" },
+      ],
+      ctaContact: "ENTRAR EM CONTATO",
+      emailSubject: "Contato via portfolio",
     },
     experience: {
       label: "// TRAJETÓRIA · PERFIL",
@@ -458,10 +508,44 @@ export const dict: Record<Locale, Dict> = {
     },
     sobre: {
       label: "// ABOUT · ARTHUR IARLEY",
-      title1: "Arthur",
-      title2: "Iarley.",
-      introLabel: "// WHO I AM",
-      introTitle: "Structured software, from requirement to delivery.",
+      roleTag: "FULL-STACK · ARCHITECT · BUILDER",
+      heroSubtitle: "Recife, BR · 8°03′S / 34°52′W",
+      storyLabel: "// ORIGIN",
+      storyTitle: "I didn't start with code. I started with the problem.",
+      storyP1: "I'm Arthur Iarley — an Information Systems student at UFRPE, backend/full-stack developer, Project Analyst at Seed a Bit Tecnologia, and CTO at SmartRU. But those titles are just labels. What really defines me is the obsession with making things work — with structure, with security, no hacks.",
+      storyP2: "I started programming because I needed to solve real problems. APIs that needed robust authentication. Systems that needed to scale. Products that needed someone who understood both the backend and the user experience. I kept specializing because code without architecture is just pretty text.",
+      storyP3: "Today, I work with APIs, data modeling, authentication, software architecture, and product decisions that keep the system consistent from requirement to deploy. It's not about being the best at one tool — it's about making the right tool work in the right context.",
+      storyFigLabel: "FIG.01 — MONO",
+      storyFigSpec: "B&W · portrait",
+      philLabel: "// PHILOSOPHY",
+      philTitle: "What guides my decisions",
+      philQuotes: [
+        { text: "Code without architecture is technical debt disguised as productivity.", note: "Structure before speed" },
+        { text: "The best system is the one the user never notices exists.", note: "Invisibility as quality" },
+        { text: "Security isn't a feature — it's a prerequisite.", note: "Zero tolerance for shortcuts" },
+      ],
+      nowLabel: "// NOW",
+      nowTitle: "Where I am right now",
+      nowItems: [
+        { label: "EDUCATION", value: "Information Systems — UFRPE" },
+        { label: "WORK", value: "Project Analyst — Seed a Bit" },
+        { label: "PRODUCT", value: "CTO — SmartRU" },
+        { label: "FOCUS", value: "Backend, APIs, security & architecture" },
+        { label: "STACK", value: "TypeScript · NestJS · PostgreSQL · Prisma" },
+        { label: "LOCATION", value: "Recife, BR — Brazil" },
+      ],
+      colophonLabel: "// COLOPHON",
+      colophonTitle: "About this portfolio",
+      colophonItems: [
+        { label: "FRAMEWORK", value: "Next.js 16 + React 19" },
+        { label: "STYLING", value: "Tailwind CSS + shadcn/ui" },
+        { label: "WEBGL", value: "Three.js + canvasui.dev" },
+        { label: "ANIMATION", value: "Framer Motion" },
+        { label: "TYPOGRAPHY", value: "Anton · Oswald · JetBrains Mono" },
+        { label: "DESIGN", value: "Rockstar Monochrome — B&W brutal" },
+      ],
+      ctaContact: "GET IN TOUCH",
+      emailSubject: "Contact via portfolio",
     },
     experience: {
       label: "// CAREER · PROFILE",
