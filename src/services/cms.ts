@@ -2,7 +2,7 @@ import api from "@/utils/lib/api";
 
 /**
  * Cliente do CMS (backend no Render).
- * Usa a instância axios existente (baseURL /api/v1) que passa pelo
+ * Usa a instância axios existente (baseURL /api) que passa pelo
  * proxy /api/[...path] até API_BASE_URL e já anexa o token Bearer.
  */
 

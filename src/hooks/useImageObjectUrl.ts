@@ -28,7 +28,7 @@ export function resolveImageUrl(source: string | null | undefined): string | nul
     ? trimmedSource
     : `/${trimmedSource}`;
 
-  return `/api/v1${normalizedPath}`;
+  return `/api${normalizedPath}`;
 }
 
 /**
