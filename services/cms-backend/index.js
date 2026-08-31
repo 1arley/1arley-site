@@ -11,7 +11,7 @@ app.use(express.json({ limit: "8mb" }));
 
 const PORT = parseInt(process.env.PORT || "3001", 10);
 const EMAIL = (process.env.CMS_ADMIN_EMAIL || "").trim().toLowerCase();
-const PASSWORD = process.env.CMS_ADMIN_PASSWORD || "";
+const PASSWORD = (process.env.CMS_ADMIN_PASSWORD || "").trim();
 const SECRET = process.env.CMS_SECRET || crypto.randomBytes(32).toString("hex");
 
 if (!process.env.DATABASE_URL) {
