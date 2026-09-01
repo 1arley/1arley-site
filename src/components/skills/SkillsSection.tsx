@@ -23,11 +23,11 @@ export default function SkillsSection() {
           className="group flex h-full flex-col border border-white/10 bg-black-2 p-5 transition-colors hover:border-white/40 hover:bg-black-4"
         >
           <div className="flex items-baseline justify-between">
-            <span className="font-mono text-[11px] tracking-[0.25em] text-white/50">
+            <span className="font-mono text-xs tracking-[0.25em] text-white/70">
               {cat.id}
             </span>
             <span
-              className="font-mono text-[10px] text-white/30 group-hover:text-white/70"
+              className="font-mono text-[10px] text-white/50 group-hover:text-white/80"
               aria-hidden="true"
             >
               ▣
@@ -43,7 +43,7 @@ export default function SkillsSection() {
                 className="flex items-baseline gap-2 text-sm text-gray-80"
               >
                 <span
-                  className="font-mono text-[10px] text-white/50"
+                  className="font-mono text-[10px] text-white/70"
                   aria-hidden="true"
                 >
                   {String(idx + 1).padStart(2, "0")}
@@ -67,7 +67,7 @@ export default function SkillsSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">{t.skills.label}</p>
+              <p className="mono-label text-white/70">{t.skills.label}</p>
               <h2
                 id="skills-title"
                 className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl"
@@ -75,7 +75,7 @@ export default function SkillsSection() {
                 {t.skills.title}
               </h2>
             </div>
-            <p className="font-mono text-xs text-white/60">
+            <p className="font-mono text-xs text-white/80">
               [ TOOLS_01 → TOOLS_04 ]
             </p>
           </div>

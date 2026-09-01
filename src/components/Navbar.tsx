@@ -134,7 +134,7 @@ const Navbar = () => {
             <span className="font-display text-[16px] font-black uppercase tracking-wide text-white">
               1arley
             </span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">
+            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/70">
               rock·full-stack
             </span>
           </span>

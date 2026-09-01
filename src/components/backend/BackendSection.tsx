@@ -2,6 +2,8 @@
 
 import { Reveal } from "@/components/ui/Reveal";
 import { GlyphRain } from "@/components/canvasui/GlyphRain";
+import { DecryptedText } from "@/components/animate-ui/decrypted-text";
+import { BorderTrail } from "@/components/animate-ui/border-trail";
 import { useLocale } from "@/lib/i18n";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -72,6 +74,8 @@ export default function BackendSection() {
         {/* ---- Left: terminal with GlyphRain ---- */}
         <Reveal>
           <div className="relative overflow-hidden hard-border">
+            {/* Live-signal ring — an accent beam travels the terminal border. */}
+            <BorderTrail className="absolute inset-0 z-10" color="hsl(17 100% 54%)" trail={100} duration={5} />
             {isMobile ? (
               terminal
             ) : (
@@ -105,7 +109,9 @@ export default function BackendSection() {
         {/* ---- Right: text + features ---- */}
         <div className="lg:pl-6">
           <Reveal>
-            <p className="mono-label text-white/60">{t.backend.label}</p>
+            <p className="mono-label text-white/70">
+              <DecryptedText text={t.backend.label} revealTime={700} />
+            </p>
             <h2
               id="backend-title"
               className="mt-2 font-headline text-4xl font-bold uppercase leading-[1.02] tracking-tight text-white sm:text-5xl"
@@ -117,7 +123,7 @@ export default function BackendSection() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-80">
+            <p className="prose-read mt-6 max-w-xl text-base leading-relaxed text-gray-80">
               {t.backend.body}
             </p>
           </Reveal>
@@ -129,14 +135,14 @@ export default function BackendSection() {
                   key={f.title}
                   className="group flex gap-4 border-t border-white/10 py-4 transition-colors hover:bg-black-8"
                 >
-                  <span className="w-8 shrink-0 font-mono text-sm text-white/60">
+                  <span className="w-8 shrink-0 font-mono text-sm text-white/70">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
                     <h3 className="font-headline text-base font-bold uppercase tracking-wide text-white">
                       {f.title}
                     </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-gray-53">
+                    <p className="prose-read mt-1 text-sm leading-relaxed text-gray-53">
                       {f.body}
                     </p>
                   </div>

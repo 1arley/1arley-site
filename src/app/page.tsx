@@ -8,6 +8,7 @@ import ProjectsSection from '@/components/projects/ProjectsSection'
 import BackendSection from '@/components/backend/BackendSection'
 import ContactSection from '@/components/contact/ContactSection'
 import TickerDivider from '@/components/effects/TickerDivider'
+import { ClickSpark } from '@/components/animate-ui/click-spark'
 import { useLocale } from '@/lib/i18n'
 
 /**
@@ -20,19 +21,26 @@ import { useLocale } from '@/lib/i18n'
 export default function HomePage() {
   const { t } = useLocale();
   return (
-    <main>
-      <HeroSection />
+    <ClickSpark
+      className="relative"
+      sparkColor="#ffffff"
+      sparkSize={3}
+      sparkRadius={16}
+      sparkCount={7}
+      duration={0.45}
+    >
+      <main>
+        <HeroSection />
       <TickerDivider text={t.tickers.t1} />
       <AboutSection />
-      <TickerDivider text={t.tickers.t2} />
       <SkillsSection />
       <TickerDivider text={t.tickers.t3} />
       <ExperienceSection />
       <ProjectsSection />
-      <TickerDivider text={t.tickers.t4} />
       <BackendSection />
-      <TickerDivider text={t.tickers.t5} />
-      <ContactSection />
-    </main>
+        <TickerDivider text={t.tickers.t5} />
+        <ContactSection />
+      </main>
+    </ClickSpark>
   )
 }

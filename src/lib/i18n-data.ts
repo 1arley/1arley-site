@@ -147,9 +147,7 @@ export interface Dict {
     t5: string;
   };
   preloader: {
-    loading: string;
-    loadingTag: string;
-    tagline: string;
+    strap: string;
   };
 }
 
@@ -419,9 +417,7 @@ export const dict: Record<Locale, Dict> = {
       t5: "VAMOS CONVERSAR · SEM COR · SEM CONCESSÃO",
     },
     preloader: {
-      loading: "CARREGANDO…",
-      loadingTag: "[ carregando ]",
-      tagline: "SEM COR · SEM CONCESSÃO",
+      strap: "DESENVOLVEDOR FULL-STACK · RECIFE",
     },
   },
   en: {
@@ -689,9 +685,7 @@ export const dict: Record<Locale, Dict> = {
       t5: "LET'S TALK · NO COLOR · NO COMPROMISE",
     },
     preloader: {
-      loading: "LOADING…",
-      loadingTag: "[ loading ]",
-      tagline: "NO COLOR · NO COMPROMISE",
+      strap: "FULL-STACK DEVELOPER · RECIFE",
     },
   },
 };

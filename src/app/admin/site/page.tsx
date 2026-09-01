@@ -548,12 +548,8 @@ export default function AdminSitePage() {
           </div>
         </Card>
 
-        <Card title="Preloader">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Field label="Carregando" value={d.preloader.loading} onChange={(v) => patch('preloader', { loading: v })} />
-            <Field label="Tag" value={d.preloader.loadingTag} onChange={(v) => patch('preloader', { loadingTag: v })} />
-            <Field label="Slogan" value={d.preloader.tagline} onChange={(v) => patch('preloader', { tagline: v })} />
-          </div>
+        <Card title="Abertura">
+          <Field label="Frase de abertura" value={d.preloader.strap} onChange={(v) => patch('preloader', { strap: v })} />
         </Card>
       </div>
     </div>

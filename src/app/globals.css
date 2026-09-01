@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* BorderTrail — animated ring. --bt-angle is registered so a conic arc can
+ * rotate; engines without @property render a static arc (harmless). */
+@property --bt-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes bt-rotate {
+  to { --bt-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-bt] {
+    animation: none !important;
+  }
+}
+
 @layer base {
   :root {
     --black: 0 0% 0%;
@@ -35,8 +51,10 @@
     --muted: var(--black-6);
     --muted-foreground: var(--gray-53);
 
-    --accent: var(--gray-16);
-    --accent-foreground: var(--white);
+    /* Single surgical accent — the only colour in the system. Used for
+     * action/focus signal (never large fills). Electric stage-light orange. */
+    --accent: 17 100% 54%;
+    --accent-foreground: var(--black);
 
     --destructive: 0 0% 85%;
     --destructive-foreground: var(--black);
@@ -115,7 +133,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid hsl(var(--white));
+    outline: 2px solid hsl(var(--accent));
     outline-offset: 2px;
   }
 
@@ -154,10 +172,17 @@
 @layer components {
   .mono-label {
     font-family: var(--font-mono), monospace;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: hsl(var(--gray-53));
+    color: hsl(var(--gray-80));
+  }
+
+  /* Long-form prose: readable neutral sans. Keeps the condensed display +
+   * mono identity for titles/labels, but paragraphs shouldn't be mono. */
+  .prose-read {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    letter-spacing: -0.005em;
   }
 
   .grain::before {
@@ -204,13 +229,6 @@
   .halftone {
     background-image: radial-gradient(hsl(0 0% 100% / 0.18) 1px, transparent 1px);
     background-size: 7px 7px;
-  }
-
-  .blueprint-grid {
-    background-image:
-      linear-gradient(hsl(0 0% 100% / 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(0 0% 100% / 0.06) 1px, transparent 1px);
-    background-size: 64px 64px;
   }
 
   .hard-border {
@@ -343,6 +361,21 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track {
+      animation: none;
+    }
+  }
+
+  /* ShinyText — a white sheen sweeps across glyphs (clipped to text). The
+   * duration is set inline by the component; motion is decorative. */
+  .animate-shiny {
+    animation: shiny 5s linear infinite;
+  }
+  @keyframes shiny {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-shiny {
       animation: none;
     }
   }

@@ -29,7 +29,7 @@ export default function SobrePage() {
 
         <div className="relative mx-auto max-w-[1400px] px-5 pb-[14vh] pt-[22vh] sm:px-8">
           <Reveal>
-            <p className="mono-label flex items-center gap-3 text-white/60">
+            <p className="mono-label flex items-center gap-3 text-white/70">
               <span className="h-px w-12 bg-white/40" aria-hidden="true" />
               <span>{t.sobre.label}</span>
             </p>
@@ -48,7 +48,7 @@ export default function SobrePage() {
 
           <Reveal delay={0.1}>
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <span className="border border-white/30 bg-white px-4 py-2 font-mono text-[11px] font-bold tracking-[0.15em] text-black">
+              <span className="border border-white/50 bg-white px-4 py-2 font-mono text-[11px] font-bold tracking-[0.15em] text-black">
                 {t.sobre.roleTag}
               </span>
               <span className="font-mono text-xs tracking-[0.2em] text-gray-53">
@@ -108,7 +108,7 @@ export default function SobrePage() {
           {/* Narrative column */}
           <div className="lg:col-span-7 lg:pl-4">
             <Reveal>
-              <p className="mono-label mb-4 text-white/60">
+              <p className="mono-label mb-4 text-white/70">
                 {t.sobre.storyLabel}
               </p>
               <h2
@@ -121,13 +121,13 @@ export default function SobrePage() {
 
             <Reveal delay={0.1}>
               <div className="mt-10 max-w-2xl space-y-6 hard-border-l pl-6">
-                <p className="text-base leading-relaxed text-gray-80">
+                <p className="prose-read text-base leading-relaxed text-gray-80">
                   {t.sobre.storyP1}
                 </p>
-                <p className="text-base leading-relaxed text-gray-53">
+                <p className="prose-read text-base leading-relaxed text-gray-53">
                   {t.sobre.storyP2}
                 </p>
-                <p className="text-base leading-relaxed text-gray-53">
+                <p className="prose-read text-base leading-relaxed text-gray-53">
                   {t.sobre.storyP3}
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function SobrePage() {
       >
         <div className="mx-auto max-w-[1400px] px-5 py-[14vh] sm:px-8">
           <Reveal>
-            <p className="mono-label text-white/50">{t.sobre.philLabel}</p>
+            <p className="mono-label text-white/70">{t.sobre.philLabel}</p>
             <h2
               id="phil-title"
               className="mt-3 max-w-xl font-headline text-3xl font-bold uppercase leading-[1.05] tracking-tight text-white sm:text-5xl"
@@ -180,7 +180,7 @@ export default function SobrePage() {
       >
         <div className="mx-auto max-w-[1400px] px-5 py-[14vh] sm:px-8">
           <Reveal>
-            <p className="mono-label text-white/50">{t.sobre.nowLabel}</p>
+            <p className="mono-label text-white/70">{t.sobre.nowLabel}</p>
             <h2
               id="now-title"
               className="mt-3 font-headline text-3xl font-bold uppercase tracking-tight text-white sm:text-5xl"
@@ -218,7 +218,7 @@ export default function SobrePage() {
       >
         <div className="mx-auto max-w-[1400px] px-5 py-[14vh] sm:px-8">
           <Reveal>
-            <p className="mono-label text-white/50">{t.sobre.colophonLabel}</p>
+            <p className="mono-label text-white/70">{t.sobre.colophonLabel}</p>
             <h2
               id="colophon-title"
               className="mt-3 font-headline text-3xl font-bold uppercase tracking-tight text-white sm:text-5xl"
