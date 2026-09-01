@@ -126,16 +126,27 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+    /* The boot curtain is purely decorative. Without this, a desktop with
+     * reduced motion and JS disabled/aborted keeps the black overlay (same
+     * failure class as the touch-device rule below). */
+    .preloader {
+      display: none !important;
+    }
   }
 
   /*
    * The preloader is decorative. On touch devices, keeping it dependent on
    * client-side hydration can leave the page covered if Safari delays or
    * aborts JavaScript while the page is under memory pressure.
+   *
+   * `!important` is required: the element also carries the `.flex` utility
+   * (`@layer utilities`), which beats this base-layer rule in the cascade
+   * without it. A visible black curtain over the whole viewport was the
+   * reported iPhone symptom.
    */
   @media (hover: none), (pointer: coarse), (max-width: 767px) {
     .preloader {
-      display: none;
+      display: none !important;
     }
   }
 }

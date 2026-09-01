@@ -41,6 +41,15 @@ const Navbar = () => {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Scroll-lock while the mobile menu is open so the page doesn't scroll
+  // behind the dialog.
+  useEffect(() => {
+    document.documentElement.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   useEffect(() => {
     if (!mobileOpen) return;
     const focusTrap = (e: KeyboardEvent) => {
