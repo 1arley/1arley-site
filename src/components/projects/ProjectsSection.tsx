@@ -32,7 +32,7 @@ export default function ProjectsSection() {
               src={proj.img}
               alt={proj.alt}
               fill
-              className="object-cover grayscale contrast-[1.25] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              className="object-cover contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               sizes="(min-width: 1024px) 46vw, 92vw"
             />
             <div className="halftone absolute inset-0 opacity-25 mix-blend-overlay" aria-hidden="true" />
@@ -43,7 +43,7 @@ export default function ProjectsSection() {
               <span className="bg-white px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.15em] text-black">
                 {proj.id}
               </span>
-              <span className="border border-white/40 px-2 py-0.5 font-mono text-[10px] tracking-[0.15em] text-white/80">
+              <span className="border border-white/50 px-2 py-0.5 font-mono text-[10px] tracking-[0.15em] text-white/90">
                 {proj.kind}
               </span>
             </div>
@@ -57,11 +57,11 @@ export default function ProjectsSection() {
 
           <div className="flex items-center justify-between gap-3 border border-t-0 border-white/15 bg-black-4 px-4 py-3">
             <p className="min-w-0 max-w-md text-sm text-gray-53">{proj.body}</p>
-            <span className="ml-4 hidden shrink-0 items-center gap-2 font-mono text-[10px] tracking-[0.15em] text-white/60 sm:flex">
+            <span className="ml-4 hidden shrink-0 items-center gap-2 font-mono text-[10px] tracking-[0.15em] text-accent sm:flex">
               {proj.tags.join(" · ")}
             </span>
             <span
-              className="ml-4 shrink-0 font-mono text-lg text-white/50 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white"
+              className="ml-4 shrink-0 font-mono text-lg text-white/70 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white"
               aria-hidden="true"
             >
               →
@@ -83,7 +83,7 @@ export default function ProjectsSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">{t.projects.label}</p>
+              <p className="mono-label text-white/70">{t.projects.label}</p>
               <h2
                 id="projects-title"
                 className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-6xl"
@@ -91,7 +91,7 @@ export default function ProjectsSection() {
                 {t.projects.title}
               </h2>
             </div>
-            <p className="font-mono text-xs text-white/60">
+            <p className="font-mono text-xs text-white/80">
               {t.projects.count}
             </p>
           </div>

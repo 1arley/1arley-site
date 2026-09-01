@@ -1,25 +1,30 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Preloader', () => {
-  test('preloader oculto, hero visível', async ({ page }) => {
-    await page.goto('/')
-    await expect(page.locator('.preloader')).toBeHidden()
-    await expect(page.locator('h1')).toBeVisible()
-  })
-
-  test('desktop: stroke-draw desenha o wordmark e sai', async ({ page, isMobile }) => {
+  test('desktop: abre com wordmark, honesta e sai', async ({ page, isMobile }) => {
     test.skip(isMobile, 'Só desktop')
     await page.goto('/')
 
-    const path = page.locator('.preloader svg path').first()
-    await expect(path).toHaveAttribute('stroke-dasharray', '1 1')
-    await expect(path).toHaveAttribute('pathLength', '1')
+    const frame = page.locator('.preloader')
+    await expect(frame).toBeVisible()
+    await expect(frame).toContainText(/arthur/i)
+    await expect(frame).toContainText(/iarley/i)
+    await expect(frame).toContainText('RECIFE')
 
-    await expect.poll(() => path.evaluate(el => el.getAttribute('stroke-dashoffset'))).toBe('0')
-    await expect.poll(() => path.evaluate(el => getComputedStyle(el).fillOpacity)).toBe('1')
-
-    await expect(page.locator('.preloader')).toBeHidden()
+    // A cortina deve sumir sozinha após o gate de prontidão (min floor + cap).
+    await expect(frame).toBeHidden({ timeout: 6000 })
     await expect(page.locator('h1')).toBeVisible()
+  })
+
+  test('desktop: toca a cada visita (recarrega de novo)', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'Só desktop')
+    await page.goto('/')
+    await expect(page.locator('.preloader')).toBeHidden({ timeout: 6000 })
+
+    // Recarregar deve tocar a abertura de novo (sem flag persistido).
+    await page.reload()
+    await expect(page.locator('.preloader')).toBeVisible()
+    await expect(page.locator('.preloader')).toBeHidden({ timeout: 6000 })
   })
 
   test.describe('sem JavaScript', () => {

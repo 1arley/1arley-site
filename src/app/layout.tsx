@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Anton, Oswald, JetBrains_Mono } from 'next/font/google';
+import { Anton, Oswald, JetBrains_Mono, Inter } from 'next/font/google';
 import './globals.css'
 import { baseUrl } from '@/config'
 import Navbar from '@/components/Navbar'
@@ -25,6 +25,14 @@ const oswald = Oswald({
 
 const jetbrainsMono = JetBrains_Mono({
     variable: '--font-mono',
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'],
+})
+
+// Reading sans for long prose (labels/eyebrows keep the mono). Neutral
+// grotesque so the condensed display + mono still own the identity.
+const inter = Inter({
+    variable: '--font-sans',
     subsets: ['latin'],
     weight: ['400', '500', '600', '700'],
 })
@@ -71,7 +79,7 @@ export default function RootLayout({
                 <link rel="icon" href="/favicon.png" />
             </head>
             <body
-                className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} antialiased`}
+                className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased`}
             >
                 <LocaleProvider>
                     <Preloader />

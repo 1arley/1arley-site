@@ -23,7 +23,7 @@ export default function ExperienceSection() {
           <li key={`${item.year}-${i}`} className="group">
             <div className="grid grid-cols-1 gap-3 border-b border-white/10 py-6 transition-colors hover:bg-black-8 sm:grid-cols-12 sm:items-baseline sm:px-3 sm:py-8">
               <div className="sm:col-span-3">
-                <span className="font-mono text-xs tracking-[0.2em] text-white/50">
+                <span className="font-mono text-xs tracking-[0.2em] text-white/70">
                   {item.year}
                 </span>
               </div>
@@ -31,12 +31,12 @@ export default function ExperienceSection() {
                 <h3 className="font-headline text-xl font-bold uppercase tracking-tight text-white transition-colors sm:text-2xl">
                   {item.title}
                 </h3>
-                <p className="mt-2 max-w-lg text-sm leading-relaxed text-gray-80">
+                <p className="prose-read mt-2 max-w-lg text-sm leading-relaxed text-gray-80">
                   {item.body}
                 </p>
               </div>
               <div className="sm:col-span-3 sm:text-right">
-                <span className="inline-block border border-white/20 px-3 py-1 font-mono text-[10px] tracking-[0.15em] text-white/60">
+                <span className="inline-block border border-white/40 px-3 py-1 font-mono text-[10px] tracking-[0.15em] text-white/80">
                   {item.tag}
                 </span>
               </div>
@@ -56,7 +56,7 @@ export default function ExperienceSection() {
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
             <div>
-              <p className="mono-label text-white/50">{t.experience.label}</p>
+              <p className="mono-label text-white/70">{t.experience.label}</p>
               <h2
                 id="experience-title"
                 className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl"
@@ -64,7 +64,7 @@ export default function ExperienceSection() {
                 {t.experience.title}
               </h2>
             </div>
-            <p className="font-mono text-xs text-white/60">
+            <p className="font-mono text-xs text-white/80">
               [ BUILD_LOG · scroll ]
             </p>
           </div>

@@ -85,7 +85,7 @@ export default function HeroSection() {
           <span className="hidden sm:inline">[ INDEX ]</span>
           <Link
             href="/sobre"
-            className="inline-flex min-h-[44px] items-center border border-white/30 px-3 font-mono text-[11px] tracking-[0.15em] text-white/80 transition-colors hover:bg-white hover:text-black"
+            className="inline-flex min-h-[44px] items-center border border-white/50 px-3 font-mono text-[11px] tracking-[0.15em] text-white/90 transition-colors hover:bg-white hover:text-black"
           >
             {t.hero.aboutLink}
           </Link>

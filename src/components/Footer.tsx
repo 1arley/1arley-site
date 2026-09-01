@@ -31,7 +31,7 @@ const Footer = () => {
               <span className="font-display text-sm font-black uppercase tracking-wide text-white">
                 1arley
               </span>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/70">
                 rock·full-stack
               </span>
             </div>
@@ -43,7 +43,7 @@ const Footer = () => {
 
         {/* Navegação */}
         <div>
-          <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
+          <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-white/70">
             {t.footer.navLabel}
           </h4>
           <div className="flex flex-col gap-2">
@@ -58,7 +58,7 @@ const Footer = () => {
 
         {/* Contato */}
         <div>
-          <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
+          <h4 className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-white/70">
             {t.footer.contactLabel}
           </h4>
           <a
@@ -93,7 +93,7 @@ const Footer = () => {
         <p className="font-mono text-xs text-white/60">
           © {year} 1arley — {t.footer.rights}
         </p>
-        <p className="hidden font-mono text-[10px] tracking-[0.2em] text-white/50 sm:block">
+        <p className="hidden font-mono text-[10px] tracking-[0.2em] text-white/70 sm:block">
           GRAIN · BRUTAL · MONOCHROME · ROCK
         </p>
       </div>

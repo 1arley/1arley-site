@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-mono)', ...fontFamily.mono],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', ...fontFamily.mono],
         display: ['var(--font-anton)', 'Oswald', ...fontFamily.sans],
         headline: ['var(--font-oswald)', 'Oswald', ...fontFamily.sans],

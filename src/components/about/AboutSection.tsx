@@ -95,7 +95,7 @@ export default function AboutSection() {
         {/* ===== Manifesto column ===== */}
         <div className="lg:col-span-7 lg:pl-6">
           <Reveal>
-            <p className="mono-label mb-4 text-white/60">{t.about.intro}</p>
+            <p className="mono-label mb-4 text-white/70">{t.about.intro}</p>
             <h2
               id="about-title"
               className="font-headline text-4xl font-bold uppercase leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl"
@@ -108,12 +108,12 @@ export default function AboutSection() {
 
           <Reveal delay={0.1}>
             <div className="mt-6 max-w-2xl space-y-4">
-              <p className="text-base leading-relaxed text-gray-80">
+              <p className="prose-read text-base leading-relaxed text-gray-80">
                 {t.about.p1Before}{" "}
                 <strong className="text-white">Arthur Iarley</strong>
                 {t.about.p1After}
               </p>
-              <p className="text-base leading-relaxed text-gray-53">
+              <p className="prose-read text-base leading-relaxed text-gray-53">
                 {t.about.p2}
               </p>
             </div>
@@ -121,7 +121,7 @@ export default function AboutSection() {
 
           {/* Stack grid */}
           <Reveal delay={0.15}>
-            <h3 className="mt-10 font-mono text-[11px] tracking-[0.25em] text-white/50 uppercase">
+            <h3 className="mt-10 font-mono text-xs tracking-[0.25em] text-white/70 uppercase">
               {t.about.stackLabel}
             </h3>
             <ul className="mt-4 grid grid-cols-1 gap-px bg-white/10 sm:grid-cols-2">
@@ -137,7 +137,7 @@ export default function AboutSection() {
                     <p className="mt-0.5 text-xs text-gray-53">{tech.desc}</p>
                   </div>
                   <span
-                    className="mt-1 font-mono text-xs text-white/40 group-hover:text-white"
+                    className="mt-1 font-mono text-xs text-white/60 group-hover:text-white"
                     aria-hidden="true"
                   >
                     →
