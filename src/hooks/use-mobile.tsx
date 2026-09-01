@@ -3,7 +3,10 @@
 import { useState, useEffect } from 'react'
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
+  // Render the lightweight version first. During SSR there is no viewport
+  // information, and assuming desktop here briefly mounts the WebGL effects on
+  // iPhones before this effect can correct it.
+  const [isMobile, setIsMobile] = useState(true)
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)

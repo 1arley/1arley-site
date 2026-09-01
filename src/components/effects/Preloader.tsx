@@ -27,7 +27,7 @@ export default function Preloader() {
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[80] flex flex-col justify-between bg-black px-5 py-4 sm:px-8"
+          className="preloader fixed inset-0 z-[80] flex flex-col justify-between bg-black px-5 py-4 sm:px-8"
           aria-hidden="true"
           exit={{ y: "-100%" }}
           transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}

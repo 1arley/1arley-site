@@ -127,6 +127,17 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /*
+   * The preloader is decorative. On touch devices, keeping it dependent on
+   * client-side hydration can leave the page covered if Safari delays or
+   * aborts JavaScript while the page is under memory pressure.
+   */
+  @media (hover: none), (pointer: coarse), (max-width: 767px) {
+    .preloader {
+      display: none;
+    }
+  }
 }
 
 @layer components {
