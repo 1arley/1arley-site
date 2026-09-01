@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Anton, Oswald, JetBrains_Mono } from 'next/font/google';
 import './globals.css'
 import { baseUrl } from '@/config'
@@ -52,6 +52,12 @@ export const metadata: Metadata = {
         index: true,
         follow: true,
     },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#000000',
 }
 
 export default function RootLayout({

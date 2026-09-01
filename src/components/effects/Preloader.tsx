@@ -17,6 +17,18 @@ export default function Preloader() {
 
   useEffect(() => {
     if (reduce) return;
+    // Touch/coarse pointers skip the boot curtain entirely (belt & suspenders
+    // on top of the CSS `display: none` — no timer, no exit animation wait).
+    // Query must mirror globals.css so a narrow fine-pointer window (<768px)
+    // doesn't schedule a dead timer that the CSS already hides.
+    if (
+      window.matchMedia(
+        "(hover: none), (pointer: coarse), (max-width: 767px)",
+      ).matches
+    ) {
+      setDone(true);
+      return;
+    }
     const t = setTimeout(() => setDone(true), 1050);
     return () => clearTimeout(t);
   }, [reduce]);

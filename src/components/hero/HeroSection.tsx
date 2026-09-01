@@ -40,8 +40,20 @@ export default function HeroSection() {
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.15]);
 
+  // Entrance animation variants — disabled under reduced motion. framer-motion
+  // drives these via JS, so the global CSS `animation-duration` override alone
+  // does not cover them.
+  const entrance = (delay: number, y = 12) =>
+    reduce
+      ? { initial: { opacity: 1, y: 0 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0, delay: 0 } }
+      : {
+          initial: { opacity: 0, y },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay },
+        };
+
   const heroInner = (
-    <div className="relative min-h-screen w-full">
+    <div className="relative min-h-screen min-h-svh w-full">
       {/* ===== Background — guitar photo, CSS tape treatment ===== */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
@@ -60,9 +72,7 @@ export default function HeroSection() {
       {/* ===== Top micro-UI strip ===== */}
       <motion.div
         className="relative z-20 flex items-center justify-between border-b border-white/15 px-5 py-3 font-mono text-[11px] tracking-[0.2em] text-white/70"
-        initial={{ opacity: 0, y: -12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+        {...entrance(0.3, -12)}
       >
         <div className="flex items-center gap-2">
           <span>01</span>
@@ -75,7 +85,7 @@ export default function HeroSection() {
           <span className="hidden sm:inline">[ INDEX ]</span>
           <Link
             href="/sobre"
-            className="border border-white/30 px-3 py-1 font-mono text-[11px] tracking-[0.15em] text-white/80 transition-colors hover:bg-white hover:text-black"
+            className="inline-flex min-h-[44px] items-center border border-white/30 px-3 font-mono text-[11px] tracking-[0.15em] text-white/80 transition-colors hover:bg-white hover:text-black"
           >
             {t.hero.aboutLink}
           </Link>
@@ -83,13 +93,11 @@ export default function HeroSection() {
       </motion.div>
 
       {/* ===== Main content ===== */}
-      <div className="relative z-10 flex min-h-[82vh] flex-col justify-center px-5 pb-12 pt-10 sm:px-8">
+      <div className="relative z-10 flex min-h-[82svh] flex-col justify-center px-5 pb-12 pt-10 sm:px-8">
         {/* Editorial label */}
         <motion.div
           className="mono-label mb-4 flex items-center gap-3 text-white/60"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
+          {...entrance(0.5, 0)}
         >
           <span className="h-px w-10 bg-white/40" aria-hidden="true" />
           <span>{t.hero.label}</span>
@@ -97,7 +105,7 @@ export default function HeroSection() {
 
         {/* ===== Giant title ===== */}
         <motion.h1
-          style={{ y: reduce ? 0 : titleY, opacity: titleOpacity }}
+          style={{ y: reduce ? 0 : titleY, opacity: reduce ? 1 : titleOpacity }}
           className="max-w-4xl font-display font-black uppercase leading-[0.82] tracking-[-0.03em] text-white"
         >
           <span className="block text-[clamp(2.75rem,14vw,12rem)]">
@@ -111,9 +119,7 @@ export default function HeroSection() {
         {/* Subtitle */}
         <motion.p
           className="mt-6 max-w-md text-sm leading-relaxed text-gray-80 sm:text-base"
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55, duration: 0.6 }}
+          {...entrance(0.55, 14)}
         >
           {t.hero.subtitle}
         </motion.p>
@@ -121,9 +127,7 @@ export default function HeroSection() {
         {/* CTAs */}
         <motion.div
           className="mt-8 flex flex-wrap items-center gap-4"
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
+          {...entrance(0.6, 14)}
         >
           <Link
             href="#projetos"
@@ -146,7 +150,7 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden bg-black"
+      className="relative min-h-screen min-h-svh overflow-hidden bg-black"
       aria-label={t.hero.ariaLabel}
     >
       {/* ===== Displacement — whole hero ripples away from cursor ===== */}
