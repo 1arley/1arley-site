@@ -7,6 +7,21 @@ test.describe('Preloader', () => {
     await expect(page.locator('h1')).toBeVisible()
   })
 
+  test('desktop: stroke-draw desenha o wordmark e sai', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'Só desktop')
+    await page.goto('/')
+
+    const path = page.locator('.preloader svg path').first()
+    await expect(path).toHaveAttribute('stroke-dasharray', '1 1')
+    await expect(path).toHaveAttribute('pathLength', '1')
+
+    await expect.poll(() => path.evaluate(el => el.getAttribute('stroke-dashoffset'))).toBe('0')
+    await expect.poll(() => path.evaluate(el => getComputedStyle(el).fillOpacity)).toBe('1')
+
+    await expect(page.locator('.preloader')).toBeHidden()
+    await expect(page.locator('h1')).toBeVisible()
+  })
+
   test.describe('sem JavaScript', () => {
     test.use({ javaScriptEnabled: false })
 
