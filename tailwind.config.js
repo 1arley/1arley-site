@@ -26,7 +26,7 @@ module.exports = {
         blink: 'blink 1s step-end infinite',
       },
       colors: {
-        white: '#FBFAFC',
+        white: '#FFFFFF',
         black: '#000000',
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",

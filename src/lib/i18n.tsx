@@ -51,7 +51,10 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem(STORAGE_KEY);
-      if (saved === "pt" || saved === "en") setLocaleState(saved);
+      if (saved === "pt" || saved === "en") {
+        setLocaleState(saved);
+        document.documentElement.lang = saved === "pt" ? "pt-BR" : "en";
+      }
     } catch {
       /* noop */
     }

@@ -44,6 +44,7 @@ export interface Dict {
   hero: {
     label: string;
     subtitle: string;
+    roles: string[];
     ctaProjects: string;
     ctaAbout: string;
     aboutLink: string;
@@ -157,6 +158,7 @@ export const dict: Record<Locale, Dict> = {
       label: "FULL-STACK · ANALISTA DE PROJETOS",
       subtitle:
         "Desenvolvedor full-stack e analista de projetos, com foco em arquitetura sólida, APIs, segurança e interfaces com identidade forte.",
+      roles: ["arquitetura", "APIs", "segurança", "identidade"],
       ctaProjects: "VER PROJETOS",
       ctaAbout: "SOBRE MIM",
       aboutLink: "SOBRE",
@@ -322,13 +324,13 @@ export const dict: Record<Locale, Dict> = {
         },
         {
           id: "02",
-          title: "Ornn",
-          kind: "OPEN SOURCE · AGENT SKILLS",
-          body: "25 skills de engenharia para agentes de IA (auditoria, segurança, UX e qualidade) distribuídas via npm com zero dependências.",
-          img: "/projects/ornn.png",
-          alt: "Página npm do Ornn",
-          tags: ["PYTHON", "NPM", "AGENTS"],
-          href: "https://www.npmjs.com/package/ornn-forge",
+          title: "Mesa-Redonda",
+          kind: "PLATAFORMA · CRÔNICAS DE RPG",
+          body: "Plataforma para pessoas publicarem suas histórias — de preferência crônicas de RPG. Frontend Next.js/React, backend NestJS com autenticação, autorização, reações e comentários.",
+          img: "/projects/mesa-redonda.png",
+          alt: "Home da Mesa-Redonda em produção",
+          tags: ["NEXT.JS", "NESTJS", "PLATAFORMA"],
+          href: "https://mesa-redonda.1arley.me",
         },
         {
           id: "03",
@@ -425,6 +427,7 @@ export const dict: Record<Locale, Dict> = {
       label: "FULL-STACK · PROJECT ANALYST",
       subtitle:
         "Full-stack developer and project analyst focused on solid architecture, APIs, security, and interfaces with strong identity.",
+      roles: ["architecture", "APIs", "security", "identity"],
       ctaProjects: "SEE PROJECTS",
       ctaAbout: "ABOUT ME",
       aboutLink: "ABOUT",
@@ -590,13 +593,13 @@ export const dict: Record<Locale, Dict> = {
         },
         {
           id: "02",
-          title: "Ornn",
-          kind: "OPEN SOURCE · AGENT SKILLS",
-          body: "25 engineering skills for AI agents (audit, security, UX, and quality) distributed via npm with zero dependencies.",
-          img: "/projects/ornn.png",
-          alt: "Ornn npm page",
-          tags: ["PYTHON", "NPM", "AGENTS"],
-          href: "https://www.npmjs.com/package/ornn-forge",
+          title: "Mesa-Redonda",
+          kind: "PLATFORM · RPG CHRONICLES",
+          body: "Platform for people to publish their stories — preferably RPG chronicles. Next.js/React frontend, NestJS backend with authentication, authorization, reactions, and comments.",
+          img: "/projects/mesa-redonda.png",
+          alt: "Mesa-Redonda home in production",
+          tags: ["NEXT.JS", "NESTJS", "PLATFORM"],
+          href: "https://mesa-redonda.1arley.me",
         },
         {
           id: "03",

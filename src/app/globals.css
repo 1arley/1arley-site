@@ -458,3 +458,32 @@
     }
   }
 }
+
+/* ── GlareHover (React Bits) — sheen sweep across any container ── */
+.gh-glare::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    var(--gh-angle),
+    hsla(0, 0%, 0%, 0) 60%,
+    var(--gh-rgba) 70%,
+    hsla(0, 0%, 0%, 0) 100%
+  );
+  background-size: var(--gh-size) var(--gh-size), 100% 100%;
+  background-repeat: no-repeat;
+  background-position: -100% -100%, 0 0;
+  transition: background-position var(--gh-duration) ease;
+}
+
+.gh-glare:hover::before {
+  background-position: 100% 100%, 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-glare::before {
+    transition: none;
+  }
+}

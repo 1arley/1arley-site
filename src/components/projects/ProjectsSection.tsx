@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { Shatter } from "@/components/canvasui/Shatter";
+import { GlareHover } from "@/components/react-bits/glare-hover";
 import { useLocale } from "@/lib/i18n";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -27,7 +28,14 @@ export default function ProjectsSection() {
           className="group block"
           aria-label={`${proj.title} — ${proj.kind}`}
         >
-          <div className="relative aspect-[16/10] overflow-hidden hard-border bg-black-6">
+          <GlareHover
+            className="aspect-[16/10] overflow-hidden hard-border bg-black-6"
+            glareColor="#ffffff"
+            glareOpacity={0.35}
+            glareAngle={-45}
+            glareSize={250}
+            transitionDuration={900}
+          >
             <Image
               src={proj.img}
               alt={proj.alt}
@@ -53,7 +61,7 @@ export default function ProjectsSection() {
                 {proj.title}
               </h3>
             </div>
-          </div>
+          </GlareHover>
 
           <div className="flex items-center justify-between gap-3 border border-t-0 border-white/15 bg-black-4 px-4 py-3">
             <p className="min-w-0 max-w-md text-sm text-gray-53">{proj.body}</p>
