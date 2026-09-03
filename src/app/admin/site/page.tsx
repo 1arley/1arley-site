@@ -118,6 +118,14 @@ function CmsImageField({
           </div>
         )}
       </div>
+      <div className="mt-2">
+        <Input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="/projects/exemplo.png ou https://..."
+          className="font-mono text-xs"
+        />
+      </div>
       <div className="mt-2 flex gap-2">
         <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleFile(e.target.files?.[0])} />
         <button
@@ -127,7 +135,7 @@ function CmsImageField({
           className="inline-flex items-center gap-1.5 rounded-md border border-input px-3 py-1.5 text-sm text-muted-foreground hover:text-white transition-colors disabled:opacity-50"
         >
           <ImagePlus className="w-4 h-4" />
-          {value ? 'Trocar' : 'Enviar'}
+          Upload
         </button>
         {value && (
           <button
