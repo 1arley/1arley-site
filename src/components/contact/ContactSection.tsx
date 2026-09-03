@@ -7,7 +7,7 @@ import { GravityStarsBackground } from "@/components/animate-ui/gravity-stars";
 import { LiquidButton } from "@/components/animate-ui/liquid-button";
 import { Magnet } from "@/components/animate-ui/magnet";
 import { ShinyText } from "@/components/animate-ui/shiny-text";
-import { Counter } from "@/components/animate-ui/counter";
+import { NumberTicker } from "@/components/react-bits/number-ticker";
 import { useLocale } from "@/lib/i18n";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -74,15 +74,15 @@ export default function ContactSection() {
         <Reveal delay={0.15}>
           <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-3 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">
             <span className="flex items-baseline gap-2">
-              <Counter to={t.projects.projects.length} className="font-display text-3xl font-black text-white" />
+              <NumberTicker value={t.projects.projects.length} className="font-display text-3xl font-black text-white" />
               <span>PROJETOS</span>
             </span>
             <span className="flex items-baseline gap-2">
-              <Counter to={t.about.stack.length} className="font-display text-3xl font-black text-white" />
+              <NumberTicker value={t.about.stack.length} className="font-display text-3xl font-black text-white" />
               <span>STACK</span>
             </span>
             <span className="flex items-baseline gap-2">
-              <Counter to={t.experience.timeline.length} className="font-display text-3xl font-black text-white" />
+              <NumberTicker value={t.experience.timeline.length} className="font-display text-3xl font-black text-white" />
               <span>ROLES</span>
             </span>
           </div>

@@ -8,6 +8,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useLocale } from "@/lib/i18n";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+import { TextLoop } from '@/components/react-bits/text-loop';
 import { Displacement } from "@/components/canvasui/Displacement";
 
 const ParticleObject = dynamic(
@@ -122,6 +123,11 @@ export default function HeroSection() {
           {...entrance(0.55, 14)}
         >
           {t.hero.subtitle}
+          {t.hero.roles.length > 0 && (
+            <span className="mt-2 block font-mono text-[11px] uppercase tracking-[0.2em] text-white/70">
+              [ <TextLoop words={t.hero.roles} /> ]
+            </span>
+          )}
         </motion.p>
 
         {/* CTAs */}

@@ -151,7 +151,7 @@ const Navbar = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-4 py-2 text-[13px] font-semibold uppercase tracking-[0.08em] transition-colors ${
+                className={`inline-flex min-h-[44px] items-center px-4 py-2 text-[13px] font-semibold uppercase tracking-[0.08em] transition-colors ${
                   active
                     ? "bg-white text-black"
                     : "text-gray-80 hover:bg-white/10 hover:text-white"

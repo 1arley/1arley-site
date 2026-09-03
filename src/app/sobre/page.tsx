@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
+import { BlurText } from "@/components/react-bits/blur-text";
 import { useLocale } from "@/lib/i18n";
 
 /**
@@ -35,16 +36,13 @@ export default function SobrePage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.05}>
-            <h1
-              id="sobre-title"
-              className="mt-8 font-display text-[clamp(3.5rem,16vw,14rem)] font-black uppercase leading-[0.78] tracking-[-0.04em] text-white"
-            >
-              Arthur
-              <br />
-              <span className="text-outline-white">Iarley.</span>
-            </h1>
-          </Reveal>
+          <h1
+            id="sobre-title"
+            className="mt-8 font-display text-[clamp(3.5rem,16vw,14rem)] font-black uppercase leading-[0.78] tracking-[-0.04em] text-white"
+          >
+            <BlurText as="span" text="Arthur" delay={80} className="block" />
+            <BlurText as="span" text="Iarley." delay={160} wordClassName="text-outline-white" className="block" />
+          </h1>
 
           <Reveal delay={0.1}>
             <div className="mt-8 flex flex-wrap items-center gap-4">
