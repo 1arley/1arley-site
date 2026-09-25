@@ -2,12 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Anton, Oswald, JetBrains_Mono, Inter } from 'next/font/google';
 import './globals.css'
 import { baseUrl } from '@/config'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import Preloader from '@/components/effects/Preloader'
-import { GrainOverlay } from '@/components/effects/GrainOverlay'
-import { CustomCursor } from '@/components/effects/CustomCursor'
-import { CursorTrail } from '@/components/effects/CursorTrail'
+import Chrome from '@/components/core/Chrome'
 import { LocaleProvider } from '@/lib/i18n'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -82,13 +77,7 @@ export default function RootLayout({
                 className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased`}
             >
                 <LocaleProvider>
-                    <Preloader />
-                    <Navbar />
-                    {children}
-                    <Footer />
-                    <GrainOverlay />
-                    <CursorTrail />
-                    <CustomCursor />
+                    <Chrome>{children}</Chrome>
                     <Toaster richColors position="top-center" />
                 </LocaleProvider>
             </body>
