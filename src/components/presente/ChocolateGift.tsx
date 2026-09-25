@@ -153,15 +153,19 @@ function ChocolateBar({ prefix = "" }: { prefix?: string }) {
 }
 
 const NOTES = [
-  ["♡", "Um abraço cabe aqui. Mas o de verdade fica pra depois."],
+  ["♡", "Um docinho pro sortudo de hoje."],
   ["✦", "Hoje pode ser um daqueles dias. Vai com calma."],
-  ["☾", "Já separa um anime. A companhia tá garantida."],
-  ["∞", "Pode repetir o chocolate. E o abraço também."],
+  ["☾", "Tava precisando de um docinho. Tomara que acalme o dia."],
+  ["∞", "Chocolate bom é assim: sempre dá pra repetir."],
   ["☀", "Uma pausa, um docinho e um pouquinho de carinho."],
   ["✿", "Esse pedacinho é só pra te ver sorrir."],
 ];
-const REWARDS = ["1 abraço de verdade", "1 noite de anime juntos", "1 chocolate de verdade, embrulhado"];
-const SAVED_TICKET = `Bilhete dourado Nº 001 — Para Letícia\n\n${REWARDS.join("\n")}\n\nSem data de validade. Aceito em qualquer dia ruim.\n\nE come direito, viu? Falta de nutrientes deixa triste.\n— Iarley`;
+const REWARDS = [
+  "1 chocolate de verdade, embrulhado",
+  "1 fatia de chocolate quente com marshmallow",
+  "1 pedaço de bolo de chocolate",
+];
+const SAVED_TICKET = `Bilhete dourado Nº 001 — Para Letícia\n\n${REWARDS.join("\n")}\n\nSem data de validade. Aceito em qualquer dia ruim.\n\nHoje o mundo pode pesar. Pega um docinho e desacelera.\n— Iarley`;
 
 export function ChocolateGift({ className }: { className?: string }) {
   const [phase, setPhase] = useState<Phase>("idle");
@@ -209,12 +213,11 @@ export function ChocolateGift({ className }: { className?: string }) {
 
       <div className={styles.layout}>
         <section className={styles.intro}>
-          <p className={styles.greeting}>Oi, Letícia.</p>
-          <h1>{phase === "revealed" ? <>A sorte tem<br />o seu nome.</> : <>Um doce<br />só seu.</>}</h1>
-          <p className={styles.description}>
+          <p className={styles.greeting}>Oooh! Sorte grande.</p>
+          <h1>{phase === "revealed" ? <>A sorte tem<br />o seu nome.</> : <>Um doce<br />só seu.</>}</h1>          <p className={styles.description}>
             {phase === "revealed"
-              ? "Um bilhete dourado, três bons motivos pra sorrir. E alguém que quer dividir tudo isso com você."
-              : "Tem coisas que não cabem numa mensagem. Então eu embrulhei um pouquinho de carinho pra você."}
+              ? "Um bilhete dourado, três prêmios e uma fábrica toda sua. Sorte de quem chegou até aqui."
+              : "Uma caixinha, um laço e um docinho esperando. Será que veio premiado?"}
           </p>
           <ol className={styles.steps} aria-label="Etapas do presente">
             {["Desembrulhe", "Experimente", "Descubra"].map((label, index) => (
@@ -223,7 +226,7 @@ export function ChocolateGift({ className }: { className?: string }) {
               </li>
             ))}
           </ol>
-          <p className={styles.signature}>com carinho, Iarley <span aria-hidden="true">♡</span></p>
+          <p className={styles.signature}>da loja de pequenos carinhos <span aria-hidden="true">♡</span></p>
         </section>
 
         <section className={styles.experience} aria-label="Seu chocolate surpresa" aria-busy={phase === "opening"}>
@@ -310,7 +313,7 @@ export function ChocolateGift({ className }: { className?: string }) {
                 <path d="M154,54 L142,94 L146,98 L154,72 L158,98 L162,72 L166,98 L170,94 L158,54 Z" fill="#E0A31E" stroke="#B47D10" strokeWidth="1.2" />
               </g>
             </svg>
-                  {!opening && <div className={styles.wrapperLabel} aria-hidden="true"><span>feito de carinho</span><strong>Doce<br />surpresa</strong><small>para Letícia ♡</small></div>}
+                  {!opening && <div className={styles.wrapperLabel} aria-hidden="true"><span>feito de carinho</span><strong>Doce<br />surpresa</strong><small>para o premiado ♡</small></div>}
                 </motion.div>
                 <p className={styles.hint} aria-live="polite">{opening ? "Desfazendo o laço…" : shakes ? ["Ouviu? Acho que tem mais que chocolate aí…", "Calma, curiosa. O carinho é frágil!", "Tá bom, tá bom. Pode abrir ♡"][(shakes - 1) % 3] : "Zero calorias. Uma dose extra de carinho."}</p>
                 <button ref={actionRef} type="button" className={styles.primary} onClick={handleOpen} disabled={opening}>{opening ? "Abrindo…" : "Desembrulhar meu chocolate"}<span aria-hidden="true">↗</span></button>
@@ -350,9 +353,9 @@ export function ChocolateGift({ className }: { className?: string }) {
                       <div className={styles.ticketTop}><span>Fábrica da Sorte</span><span>Nº 001</span></div>
                       <span className={styles.ticketStar} aria-hidden="true">✳</span>
                       <h2>Bilhete<br />dourado</h2>
-                      <p className={styles.ticketOwner}>Exclusivamente para <strong>Letícia</strong></p>
+                      <p className={styles.ticketOwner}>Parabéns! Você tirou<br />o bilhete premiado.</p>
                       <div className={styles.rewards}>
-                        <p>Por qual carinho a gente começa?</p>
+                        <p>Quem venceu o prêmio?</p>
                         {REWARDS.map((label, index) => <button key={label} type="button" aria-pressed={reward === index} onClick={() => setReward(index)}><span aria-hidden="true">{reward === index ? "♥" : "♡"}</span>{label}<span aria-hidden="true">{reward === index ? "✓" : "+"}</span></button>)}
                       </div>
                       <p className={styles.ticketFine}>Sem data de validade.<br />Aceito em qualquer dia ruim.</p>
@@ -361,16 +364,16 @@ export function ChocolateGift({ className }: { className?: string }) {
                       <span className={styles.ticketTop}>Um recadinho do outro lado</span>
                       <span className={styles.letterHeart} aria-hidden="true">♡</span>
                       <h2>Pra você, Letícia.</h2>
-                      <p>e come direito, viu? falta de nutrientes deixa triste.</p>
+                      <p>hoje o mundo pode pesar. pega um docinho e desacelera.</p>
                       <span className={styles.letterSignature}>— Iarley</span>
                       <span className={styles.ticketFine}>O chocolate é virtual. O carinho é de verdade.</span>
                     </div>
                   </div>
                 </div>
-                <p className={styles.rewardNote} aria-live="polite">{reward === null ? "Os três são seus. Escolhe só qual vem primeiro ♡" : ["Um abraço primeiro. Daqueles sem pressa ♡", "Noite de anime primeiro. Você escolhe o episódio ♡", "Chocolate primeiro. Dessa vez, de verdade ♡"][reward]}</p>
+                <p className={styles.rewardNote} aria-live="polite">{reward === null ? "Os três são seus. Escolhe qual vem primeiro ♡" : ["Chocolate primeiro. Dessa vez, de verdade ♡", "Chocolate quente primeiro. Com marshmallow por cima ♡", "Bolo primeiro. O doce compensa o dia ♡"][reward]}</p>
                 <button ref={actionRef} type="button" className={styles.primary} onClick={() => setFlipped(value => !value)} aria-pressed={flipped}>{flipped ? "Voltar ao bilhete" : "Ler o verso do bilhete"}<span aria-hidden="true">↻</span></button>
                 <div className={styles.ticketActions}>
-                  <a className={styles.textButton} href={`data:text/plain;charset=utf-8,${encodeURIComponent(SAVED_TICKET)}`} download="bilhete-dourado-leticia.txt">Guardar meu bilhete ↓</a>
+                  <a className={styles.textButton} href={`data:text/plain;charset=utf-8,${encodeURIComponent(SAVED_TICKET)}`} download="bilhete-dourado.txt">Guardar meu bilhete ↓</a>
                   <button className={styles.textButton} type="button" onClick={handleReplay}>Abrir de novo</button>
                 </div>
               </motion.div>
