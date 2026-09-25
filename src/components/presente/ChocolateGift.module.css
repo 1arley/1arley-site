@@ -30,7 +30,7 @@
 .layout { width: 100%; max-width: 1220px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; padding: 60px 0; flex: 1; }
 .intro { padding-bottom: 20px; }
 .greeting { font-family: var(--font-hand); color: var(--gold); font-size: 38px; margin-bottom: 18px; transform: rotate(-3deg); transform-origin: left; }
-.intro h1 { color: inherit; font-family: var(--font-wonka); font-size: clamp(64px, 7.8vw, 112px); line-height: .98; letter-spacing: -.035em; font-weight: 400; text-wrap: balance; }
+.intro h1 { color: inherit; font-family: var(--font-wonka); font-size: clamp(64px, 7.8vw, 112px); line-height: .98; letter-spacing: -.035em; word-spacing: .035em; font-weight: 400; }
 .description { color: var(--muted); font-size: 17px; line-height: 1.8; max-width: 35ch; margin: 28px 0 36px; }
 .steps { display: flex; gap: 24px; padding: 0; list-style: none; }
 .steps li { color: var(--muted); font-size: 12px; display: flex; flex-direction: column; gap: 10px; }
