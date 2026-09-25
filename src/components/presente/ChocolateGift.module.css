@@ -109,7 +109,6 @@
   .intro { text-align: center; padding-bottom: 0; }
   .greeting { font-size: 30px; transform-origin: center; margin-bottom: 12px; }
   .intro h1 { font-size: clamp(58px, 13vw, 80px); }
-  .intro h1 br { display: none; }
   .description { margin: 18px auto 24px; font-size: 14px; line-height: 1.7; }
   .steps { justify-content: center; gap: 28px; }
   .steps li { align-items: center; font-size: 11px; gap: 7px; }
