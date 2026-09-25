@@ -214,7 +214,8 @@ export function ChocolateGift({ className }: { className?: string }) {
       <div className={styles.layout}>
         <section className={styles.intro}>
           <p className={styles.greeting}>Oooh! Sorte grande.</p>
-          <h1>{phase === "revealed" ? <>A sorte tem<br />o seu nome.</> : <>Um doce<br />só seu.</>}</h1>          <p className={styles.description}>
+          <h1>{phase === "revealed" ? <>A sorte tem o seu nome.</> : <>Um doce só seu.</>}</h1>
+          <p className={styles.description}>
             {phase === "revealed"
               ? "Um bilhete dourado, três prêmios e uma fábrica toda sua. Sorte de quem chegou até aqui."
               : "Uma caixinha, um laço e um docinho esperando. Será que veio premiado?"}
