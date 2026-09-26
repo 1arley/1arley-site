@@ -1,23 +1,49 @@
-name: 1arley-template
+# Producao do portfolio 1arley.me.
+# Imagem buildada por .github/workflows/cd.yml no push para main
+# (ghcr.io/1arley/1arley-template:latest). Watchtower detecta a nova
+# imagem e recria o container.
+# Canonical = apex 1arley.me; www e redirecionado (301) aqui no Traefik.
+# Este arquivo e copiado para /srv/1arley/1arley-site/ na VPS, que e
+# onde o container roda (nao ha build na VPS: 1 CPU / 2GB RAM).
+name: 1arley-site
 
 services:
     app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
-        image: 1arley-template:latest
-        container_name: 1arley-template-prod
+        image: ghcr.io/1arley/1arley-template:latest
+        container_name: 1arley-site-app-1
         restart: unless-stopped
-        ports:
-            - "80:80"
+        security_opt:
+            - no-new-privileges:true
         environment:
             - NODE_ENV=production
+            - PORT=3000
+            - HOSTNAME=0.0.0.0
+            - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
             - API_BASE_URL=${API_BASE_URL}
+        mem_limit: 512m
+        mem_reservation: 256m
         networks:
-            - app-network
+            - web
+        labels:
+            traefik.enable: "true"
+            traefik.docker.network: "web"
+            traefik.http.routers.1arley-site.entrypoints: "websecure"
+            traefik.http.routers.1arley-site.rule: "Host(`1arley.me`)"
+            traefik.http.routers.1arley-site.service: "1arley-site"
+            traefik.http.routers.1arley-site.tls: "true"
+            traefik.http.routers.1arley-site.tls.certresolver: "letsencrypt"
+            traefik.http.services.1arley-site.loadbalancer.server.port: "3000"
+            traefik.http.routers.1arley-site-www.entrypoints: "websecure"
+            traefik.http.routers.1arley-site-www.rule: "Host(`www.1arley.me`)"
+            traefik.http.routers.1arley-site-www.middlewares: "1arley-site-strip-www"
+            traefik.http.routers.1arley-site-www.service: "1arley-site"
+            traefik.http.routers.1arley-site-www.tls: "true"
+            traefik.http.routers.1arley-site-www.tls.certresolver: "letsencrypt"
+            traefik.http.middlewares.1arley-site-strip-www.redirectregex.regex: "^https://www\\.1arley\\.me(.*)"
+            traefik.http.middlewares.1arley-site-strip-www.redirectregex.replacement: "https://1arley.me$$1"
+            traefik.http.middlewares.1arley-site-strip-www.redirectregex.permanent: "true"
+            com.centurylinklabs.watchtower.enable: "true"
 
 networks:
-    app-network:
-        driver: bridge
+    web:
+        external: true
