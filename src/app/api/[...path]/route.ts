@@ -28,10 +28,14 @@ async function proxyRequest(
   try {
     apiBaseUrl = getRuntimeApiBaseUrl();
   } catch (error) {
+    if (request.method === "GET" && path.join("/") === "site") {
+      return NextResponse.json({ data: {} });
+    }
+
     const message =
       error instanceof Error ? error.message : "Falha ao resolver API_BASE_URL.";
 
-    return NextResponse.json({ message }, { status: 500 });
+    return NextResponse.json({ message }, { status: 503 });
   }
 
   const targetUrl = new URL(

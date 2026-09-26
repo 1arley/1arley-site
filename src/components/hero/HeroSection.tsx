@@ -1,223 +1,145 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type PointerEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { ArrowDownRight } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
-import { useIsMobile } from "@/hooks/use-mobile";
 
-import { TextLoop } from '@/components/react-bits/text-loop';
-import { Displacement } from "@/components/canvasui/Displacement";
-
-const ParticleObject = dynamic(
-  () => import("@/components/canvasui/ParticleObject"),
-  { ssr: false },
-);
-
-/**
- * HERO — the stage.
- * A full-screen rock concert opener: Displacement ripples the entire viewport,
- * a grain-treated guitar photo fills the background, and a static particle-
- * rendered 3D guitar floats mid-air. Particles scatter from the cursor and
- * spring back.
- *
- * WebGL budget: 2 contexts (Displacement + ParticleObject) to stay under the
- * browser's 16-context limit so every section effect actually renders.
- * Pointer-driven layers (Displacement + particle guitar) are skipped on
- * touch/mobile so the copy is never covered and gestures stay free.
- */
 export default function HeroSection() {
   const { t } = useLocale();
-  const containerRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const isMobile = useIsMobile();
-
+  const photoX = useMotionValue(0);
+  const photoY = useMotionValue(0);
+  const titleX = useMotionValue(0);
+  const titleY = useMotionValue(0);
+  const spring = { stiffness: 100, damping: 20, mass: 1 };
+  const photoSpringX = useSpring(photoX, spring);
+  const photoSpringY = useSpring(photoY, spring);
+  const titleSpringX = useSpring(titleX, spring);
+  const titleSpringY = useSpring(titleY, spring);
+  const photoPointerTransform = useMotionTemplate`translate3d(${photoSpringX}px, ${photoSpringY}px, 0)`;
+  const titlePointerTransform = useMotionTemplate`translate3d(${titleSpringX}px, ${titleSpringY}px, 0)`;
   const { scrollYProgress } = useScroll({
-    target: containerRef as React.RefObject<HTMLElement>,
+    target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.15]);
 
-  // Entrance animation variants — disabled under reduced motion. framer-motion
-  // drives these via JS, so the global CSS `animation-duration` override alone
-  // does not cover them.
-  const entrance = (delay: number, y = 12) =>
+  const photoTransform = useTransform(
+    scrollYProgress,
+    [0, 1],
     reduce
-      ? { initial: { opacity: 1, y: 0 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0, delay: 0 } }
-      : {
-          initial: { opacity: 0, y },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay },
-        };
-
-  const heroInner = (
-    <div className="relative min-h-screen min-h-svh w-full">
-      {/* ===== Background — guitar photo, CSS tape treatment ===== */}
-      <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src="/header-guitar.jpg"
-          alt=""
-          fill
-          priority
-          fetchPriority="high"
-          className="object-cover object-center grayscale contrast-[1.4] brightness-[0.45]"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" aria-hidden="true" />
-        <div className="scanlines absolute inset-0 z-[5]" aria-hidden="true" />
-      </div>
-
-      {/* ===== Top micro-UI strip ===== */}
-      <motion.div
-        className="relative z-20 flex items-center justify-between border-b border-white/15 px-5 py-3 font-mono text-[11px] tracking-[0.2em] text-white/70"
-        {...entrance(0.3, -12)}
-      >
-        <div className="flex items-center gap-2">
-          <span>01</span>
-        </div>
-        <div className="hidden items-center gap-6 sm:flex">
-          <span>{t.hero.coords}</span>
-          <span className="hidden md:inline">{t.hero.place}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="hidden sm:inline">[ INDEX ]</span>
-          <Link
-            href="/sobre"
-            className="inline-flex min-h-[44px] items-center border border-white/50 px-3 font-mono text-[11px] tracking-[0.15em] text-white/90 transition-colors hover:bg-white hover:text-black"
-          >
-            {t.hero.aboutLink}
-          </Link>
-        </div>
-      </motion.div>
-
-      {/* ===== Main content ===== */}
-      <div className="relative z-10 flex min-h-[82svh] flex-col justify-center px-5 pb-12 pt-10 sm:px-8">
-        {/* Editorial label */}
-        <motion.div
-          className="mono-label mb-4 flex items-center gap-3 text-white/60"
-          {...entrance(0.5, 0)}
-        >
-          <span className="h-px w-10 bg-white/40" aria-hidden="true" />
-          <span>{t.hero.label}</span>
-        </motion.div>
-
-        {/* ===== Giant title ===== */}
-        <motion.h1
-          style={{ y: reduce ? 0 : titleY, opacity: reduce ? 1 : titleOpacity }}
-          className="max-w-4xl font-display font-black uppercase leading-[0.82] tracking-[-0.03em] text-white"
-        >
-          <span className="block text-[clamp(2.75rem,14vw,12rem)]">
-            Arthur
-          </span>
-          <span className="block text-[clamp(2.75rem,14vw,12rem)]">
-            Iarley
-          </span>
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p
-          className="mt-6 max-w-md text-sm leading-relaxed text-gray-80 sm:text-base"
-          {...entrance(0.55, 14)}
-        >
-          {t.hero.subtitle}
-          {t.hero.roles.length > 0 && (
-            <span className="mt-2 block font-mono text-[11px] uppercase tracking-[0.2em] text-white/70">
-              [ <TextLoop words={t.hero.roles} /> ]
-            </span>
-          )}
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          className="mt-8 flex flex-wrap items-center gap-4"
-          {...entrance(0.6, 14)}
-        >
-          <Link
-            href="#projetos"
-            className="btn-brutal"
-          >
-            {t.hero.ctaProjects}
-          </Link>
-          <Link
-            href="/sobre"
-            className="btn-outline"
-          >
-            {t.hero.ctaAbout}
-          </Link>
-        </motion.div>
-      </div>
-
-    </div>
+      ? ["scale(1) translate3d(0,0,0)", "scale(1) translate3d(0,0,0)"]
+      : [
+          "scale(1.01) translate3d(0,0,0)",
+          "scale(1.09) translate3d(0,5%,0)",
+        ],
   );
+  const titleTransform = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce
+      ? ["translate3d(0,0,0)", "translate3d(0,0,0)"]
+      : ["translate3d(0,0,0)", "translate3d(0,-10%,0)"],
+  );
+
+  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
+    if (reduce || event.pointerType !== "mouse") return;
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+
+    photoX.set(x * 8);
+    photoY.set(y * 6);
+    titleX.set(x * -5);
+    titleY.set(y * -4);
+  };
+
+  const handlePointerLeave = () => {
+    photoX.set(0);
+    photoY.set(0);
+    titleX.set(0);
+    titleY.set(0);
+  };
 
   return (
     <section
-      ref={containerRef}
-      className="relative min-h-screen min-h-svh overflow-hidden bg-black"
+      ref={sectionRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      className="hero-stage relative min-h-[92dvh] overflow-hidden bg-black pt-16"
       aria-label={t.hero.ariaLabel}
     >
-      {/* ===== Displacement — whole hero ripples away from cursor ===== */}
-      {isMobile ? (
-        heroInner
-      ) : (
-        <Displacement
-          grid={40}
-          cellAspect={1}
-          radius={0.15}
-          strength={0.1}
-          threshold={600}
-          relaxation={0.92}
-          shift={1.8}
-          aberration={0.6}
-          grain={0.08}
-          grainSize={1.5}
-          grainSpeed={1.2}
-          scramble={0.6}
-          className="absolute inset-0"
+      <motion.div
+        className="absolute inset-0"
+        style={{ transform: photoTransform }}
+        aria-hidden="true"
+      >
+        <motion.div
+          className="absolute inset-[-1rem]"
+          style={{ transform: photoPointerTransform }}
         >
-          {heroInner}
-        </Displacement>
-      )}
-
-      {/* ===== 3D Particle Guitar — desktop only. Outside Displacement so the
-          canvas is a real DOM node that receives pointer events (html-in-canvas
-          would swallow the subtree as a texture, killing the particle scatter).
-          Slow autoRotate turntable so the front is shown; particles still
-          scatter from the cursor and spring back. ===== */}
-      {!isMobile && (
-        <div
-          className="absolute bottom-[4vh] right-0 z-[20] h-[82vh] w-[42vw]"
-          aria-hidden="true"
-        >
-          <ParticleObject
-            className="h-full w-full"
-            src="/models/guitar.glb"
-            count={12000}
-            size={3.2}
-            sizeVariance={0.5}
-            color=""
-            radius={160}
-            strength={1.2}
-            swirl={0.4}
-            spring={0.8}
-            damping={0.3}
-            drift={0.4}
-            scale={2.4}
-            fov={44}
-            cameraDistance={4.6}
-            floatIntensity={0.6}
-            rotationIntensity={0.3}
-            floatSpeed={1}
-            autoRotate
-            autoRotateSpeed={2}
-            orbit={false}
-            zoom={false}
+          <Image
+            src="/hero-guitar-wide.webp"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            className="object-cover object-[64%_center] grayscale"
+            sizes="100vw"
           />
+        </motion.div>
+      </motion.div>
+
+      <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
+
+      <div
+        className="pointer-events-none absolute inset-0 border-x border-white/10"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto grid min-h-[calc(92dvh-4rem)] max-w-[1600px] grid-cols-4 grid-rows-[1fr_auto] px-5 pb-6 pt-7 sm:px-8 lg:grid-cols-12 lg:pb-8 lg:pt-9">
+        <motion.h1
+          style={{ transform: titleTransform }}
+          className="hero-title col-span-4 self-center font-display uppercase text-white lg:col-span-10"
+        >
+          <motion.span
+            className="block"
+            style={{ transform: titlePointerTransform }}
+          >
+            <span className="block">Arthur</span>
+            <span className="block pl-[9vw] lg:pl-[16vw]">Iarley</span>
+          </motion.span>
+        </motion.h1>
+
+        <div className="col-span-4 -mx-5 grid gap-6 border-t border-white/30 bg-black/75 px-5 py-5 sm:-mx-8 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end sm:px-8 lg:col-span-12 lg:mx-0 lg:grid-cols-12 lg:px-5">
+          <p className="prose-read max-w-lg text-sm leading-relaxed text-white sm:text-base lg:col-span-5">
+            {t.hero.subtitle}
+          </p>
+
+          <Link
+            href="#projetos"
+            className="hero-cta group inline-flex min-h-12 items-center justify-between gap-8 border border-white bg-white px-5 font-mono text-xs font-bold uppercase text-black sm:min-w-52 lg:col-span-2 lg:col-start-11"
+          >
+            {t.hero.ctaProjects}
+            <ArrowDownRight
+              size={17}
+              className="transition-transform duration-150 group-hover:translate-x-0.5 group-hover:translate-y-0.5"
+            />
+          </Link>
         </div>
-      )}
+      </div>
     </section>
   );
 }
