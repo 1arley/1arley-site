@@ -5,10 +5,13 @@ on:
         branches:
             - main
             - dev
+    workflow_dispatch:
 
 env:
     IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/1arley-template
     CACHE_SCOPE: 1arley-template-docker
+    # Inlined no bundle em build time: metadataBase, sitemap.xml e robots.txt.
+    NEXT_PUBLIC_SITE_URL: https://1arley.me
 
 jobs:
     install-dependencies:
@@ -58,6 +61,8 @@ jobs:
                   context: .
                   file: ./Dockerfile
                   push: false
+                  build-args: |
+                      NEXT_PUBLIC_SITE_URL=${{ env.NEXT_PUBLIC_SITE_URL }}
                   tags: |
                       ${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.value }}
                       ${{ env.IMAGE_NAME }}:${{ github.sha }}
