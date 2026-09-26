@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
-import { Anton, Oswald, JetBrains_Mono, Inter } from 'next/font/google';
+import { Anton, Oswald, JetBrains_Mono } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
 import './globals.css'
 import { baseUrl } from '@/config'
 import Chrome from '@/components/core/Chrome'
@@ -24,17 +25,9 @@ const jetbrainsMono = JetBrains_Mono({
     weight: ['400', '500', '600', '700'],
 })
 
-// Reading sans for long prose (labels/eyebrows keep the mono). Neutral
-// grotesque so the condensed display + mono still own the identity.
-const inter = Inter({
-    variable: '--font-sans',
-    subsets: ['latin'],
-    weight: ['400', '500', '600', '700'],
-})
-
 export const metadata: Metadata = {
     title: {
-        default: 'Arthur Iarley — Desenvolvedor Full-Stack',
+        default: 'Arthur Iarley - Desenvolvedor Full-Stack',
         template: '%s | Arthur Iarley',
     },
     description: 'Portfólio de Arthur Iarley com experiências reais, projetos, skills, links e contato. Design Rockstar 2 em P&B.',
@@ -74,7 +67,7 @@ export default function RootLayout({
                 <link rel="icon" href="/favicon.png" />
             </head>
             <body
-                className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased`}
+                className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} ${GeistSans.variable} antialiased`}
             >
                 <LocaleProvider>
                     <Chrome>{children}</Chrome>

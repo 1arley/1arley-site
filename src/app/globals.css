@@ -51,16 +51,14 @@
     --muted: var(--black-6);
     --muted-foreground: var(--gray-53);
 
-    /* Single surgical accent — the only colour in the system. Used for
-     * action/focus signal (never large fills). Electric stage-light orange. */
-    --accent: 17 100% 54%;
+    --accent: var(--white);
     --accent-foreground: var(--black);
 
     --destructive: 0 0% 85%;
     --destructive-foreground: var(--black);
 
-    --border: var(--gray-16);
-    --input: var(--gray-16);
+    --border: var(--black-16);
+    --input: var(--black-16);
     --ring: var(--gray-95);
 
     --radius: 0px;
@@ -73,7 +71,7 @@
     --sidebar-primary-foreground: var(--black);
     --sidebar-accent: var(--black-10);
     --sidebar-accent-foreground: var(--gray-95);
-    --sidebar-border: var(--gray-16);
+    --sidebar-border: var(--black-16);
     --sidebar-ring: var(--gray-95);
   }
 
@@ -89,7 +87,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-mono antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
     overflow-x: hidden;
     background-color: hsl(var(--background));
     font-size: 15px;
@@ -144,28 +142,6 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-    /* The boot curtain is purely decorative. Without this, a desktop with
-     * reduced motion and JS disabled/aborted keeps the black overlay (same
-     * failure class as the touch-device rule below). */
-    .preloader {
-      display: none !important;
-    }
-  }
-
-  /*
-   * The preloader is decorative. On touch devices, keeping it dependent on
-   * client-side hydration can leave the page covered if Safari delays or
-   * aborts JavaScript while the page is under memory pressure.
-   *
-   * `!important` is required: the element also carries the `.flex` utility
-   * (`@layer utilities`), which beats this base-layer rule in the cascade
-   * without it. A visible black curtain over the whole viewport was the
-   * reported iPhone symptom.
-   */
-  @media (hover: none), (pointer: coarse), (max-width: 767px) {
-    .preloader {
-      display: none !important;
-    }
   }
 }
 
@@ -178,37 +154,20 @@
     color: hsl(var(--gray-80));
   }
 
-  /* Long-form prose: readable neutral sans. Keeps the condensed display +
-   * mono identity for titles/labels, but paragraphs shouldn't be mono. */
   .prose-read {
-    font-family: var(--font-sans), system-ui, sans-serif;
-    letter-spacing: -0.005em;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    letter-spacing: 0;
   }
 
   .grain::before {
     content: '';
     position: absolute;
-    inset: -50%;
+    inset: 0;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: var(--grain-opacity, 0.055);
-    animation: grain-shift 8s steps(10) infinite;
-  }
-
-  @keyframes grain-shift {
-    0%, 100% { transform: translate(0, 0); }
-    10% { transform: translate(-5%, -10%); }
-    30% { transform: translate(3%, -15%); }
-    50% { transform: translate(12%, 9%); }
-    70% { transform: translate(9%, 4%); }
-    90% { transform: translate(-1%, 7%); }
-  }
-
-  /* Grain animation is decorative — skip the repaint cost on touch devices */
-  @media (hover: none), (pointer: coarse) {
-    .grain::before {
-      animation: none;
-    }
+    background-image: url("/noise.png");
+    background-size: 180px 180px;
+    opacity: var(--grain-opacity, 0.04);
+    mix-blend-mode: soft-light;
   }
 
   .scanlines::after {
@@ -285,7 +244,7 @@
     letter-spacing: 0.08em;
     font-size: 0.8125rem;
     cursor: pointer;
-    transition: background 0.12s ease, color 0.12s ease;
+    transition: background 0.14s ease, color 0.14s ease, transform 0.14s ease;
   }
   .btn-brutal:hover {
     background: hsl(var(--gray-80));
@@ -310,7 +269,7 @@
     letter-spacing: 0.08em;
     font-size: 0.8125rem;
     cursor: pointer;
-    transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+    transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease, transform 0.14s ease;
   }
   .btn-outline:hover {
     border-color: hsl(var(--white));
@@ -340,14 +299,11 @@
     }
   }
 
-  .reveal {
+  .reveal,
+  .reveal-block {
     opacity: 1;
     transform: none;
-  }
-
-  .reveal-block:focus-within {
-    opacity: 1 !important;
-    transform: none !important;
+    clip-path: inset(0 0 0 0);
   }
 
   .marquee-track {
@@ -417,21 +373,96 @@
   .film-frame::before { top: 0; }
   .film-frame::after { bottom: 0; }
 
-  /* ---- Custom cursor (clean inverting dot) ---- */
-  .cursor-dot {
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .cursor-dot-active .cursor-dot {
-    transform: scale(0.5);
+  .icon-link {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid hsl(var(--white) / 0.2);
+    color: hsl(var(--white) / 0.72);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
 
-  /* Hide the native cursor where the custom one is active (fine pointers only) */
+  .text-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid hsl(var(--white) / 0.35);
+    font-family: var(--font-mono), monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: hsl(var(--white));
+    transition: border-color 0.15s ease;
+  }
+
+  .contact-social {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border: 1px solid hsl(var(--white) / 0.2);
+    font-family: var(--font-mono), monospace;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: hsl(var(--white) / 0.68);
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
   @media (hover: hover) and (pointer: fine) {
-    .custom-cursor-on * {
-      cursor: none !important;
+    .icon-link:hover,
+    .contact-social:hover {
+      border-color: hsl(var(--white));
+      background: hsl(var(--white));
+      color: hsl(var(--black));
+    }
+
+    .text-link:hover {
+      border-color: hsl(var(--white));
     }
   }
 }
+
+.hero-title {
+  font-size: 9rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.project-scan,
+.portrait-screen {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    hsl(0 0% 100% / 0.08) 3px,
+    hsl(0 0% 100% / 0.08) 4px
+  );
+  mix-blend-mode: overlay;
+}
+
+.terminal-screen {
+  background-image: linear-gradient(
+    hsl(0 0% 100% / 0.02) 1px,
+    transparent 1px
+  );
+  background-size: 100% 28px;
+}
+
+@media (max-width: 767px) {
+  .hero-title {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-title { font-size: 11rem; }
+}
+
+main h2 { line-height: 1; letter-spacing: 0; }
 
 @layer utilities {
   .text-balance {

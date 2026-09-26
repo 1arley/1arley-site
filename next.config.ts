@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
       ?.replace(/\/api\/v\d+$/, "")
       .replace(/\/api$/, "");
 
+    if (!apiHost) return [];
+
     return [
       {
         source: "/uploads/:path*",

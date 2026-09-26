@@ -1,167 +1,88 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
-import { GlyphRain } from "@/components/canvasui/GlyphRain";
-import { DecryptedText } from "@/components/animate-ui/decrypted-text";
-import { BorderTrail } from "@/components/animate-ui/border-trail";
 import { useLocale } from "@/lib/i18n";
-import { useIsMobile } from "@/hooks/use-mobile";
 
-/**
- * BACKEND — "TRACK 05: THE CONSOLE".
- * On fine pointers a glyph rain terminal: the API contract is lit by falling
- * character streams that surge where the cursor cuts through. The terminal
- * stays readable (dim ~0.55) while the glyphs dance on top. On touch the
- * terminal renders plain.
- */
 export default function BackendSection() {
   const { t } = useLocale();
-  const isMobile = useIsMobile();
-
-  const terminal = (
-    <div className="h-full">
-      {/* terminal header */}
-      <div className="flex items-center justify-between border-b border-white/15 bg-black-8 px-4 py-3">
-        <div className="flex items-center gap-2">
-          <span className="h-3 w-3 bg-white/30" aria-hidden="true" />
-          <span className="h-3 w-3 bg-white/15" aria-hidden="true" />
-          <span className="h-3 w-3 bg-white/40" aria-hidden="true" />
-          <span className="ml-2 font-mono text-xs text-white/60">
-            contrato-api.ts
-          </span>
-        </div>
-        <span className="font-mono text-[10px] tracking-[0.2em] text-white/60">
-          API REST
-        </span>
-      </div>
-      {/* terminal body */}
-      <div className="p-5 font-mono text-[13px] leading-relaxed">
-        {t.backend.endpoints.map((ep) => (
-          <div
-            key={ep.method + ep.path}
-            className="flex items-baseline gap-3 py-1"
-          >
-            <span
-              className={`w-12 shrink-0 font-bold ${
-                ep.method === "GET" ? "text-white" : "text-gray-53"
-              }`}
-            >
-              {ep.method}
-            </span>
-            <span className="min-w-0 break-words text-gray-95">{ep.path}</span>
-            <span className="ml-auto hidden text-white/60 sm:inline">
-              {ep.note}
-            </span>
-          </div>
-        ))}
-        <div className="mt-4 flex items-center gap-2 border-t border-white/10 pt-3 text-white/60">
-          <span className="text-white" aria-hidden="true">
-            ❯
-          </span>
-          <span className="inline-block h-3 w-2 animate-blink bg-white/70" aria-hidden="true" />
-          <span className="ml-2">ready</span>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <section
-      className="relative border-t border-white/10 bg-black-4 py-[10vh]"
+      className="bg-black-4 py-24 sm:py-32"
       aria-labelledby="backend-title"
     >
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-12 px-5 sm:px-8 lg:grid-cols-2">
-        {/* ---- Left: terminal with GlyphRain ---- */}
-        <Reveal>
-          <div className="relative overflow-hidden hard-border">
-            {/* Live-signal ring — an accent beam travels the terminal border. */}
-            <BorderTrail className="absolute inset-0 z-10" color="hsl(17 100% 54%)" trail={100} duration={5} />
-            {isMobile ? (
-              terminal
-            ) : (
-              <GlyphRain
-                cell={16}
-                color={[0.6, 0.6, 0.6]}
-                headColor={[1, 1, 1]}
-                speed={0.8}
-                speedVariance={0.5}
-                density={0.5}
-                trail={1.5}
-                glow={1.2}
-                mutate={2}
-                flicker={0.3}
-                layers={2}
-                dim={0.78}
-                light={0.9}
-                lightRadius={180}
-                lightHeight={40}
-                relief={0.3}
-                stir={0.3}
-                stirRadius={120}
-                settle={1.5}
-              >
-                {terminal}
-              </GlyphRain>
-            )}
+      <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-8">
+        <Reveal className="lg:col-span-7">
+          <div className="overflow-hidden border border-white/20 bg-black">
+            <div className="flex min-h-12 items-center justify-between border-b border-white/15 px-4 font-mono text-[10px] uppercase text-white/58">
+              <span>contrato-api.ts</span>
+              <span>REST / production</span>
+            </div>
+            <div className="terminal-screen p-4 sm:p-6">
+              {t.backend.endpoints.map((endpoint) => (
+                <div
+                  key={`${endpoint.method}-${endpoint.path}`}
+                  className="grid gap-2 border-b border-white/10 py-4 font-mono text-xs sm:grid-cols-[5rem_minmax(0,1fr)_auto] sm:items-baseline"
+                >
+                  <span className="text-white">{endpoint.method}</span>
+                  <code className="break-words text-white/75">
+                    {endpoint.path}
+                  </code>
+                  <span className="text-white/58">{endpoint.note}</span>
+                </div>
+              ))}
+              <p className="mt-5 font-mono text-xs text-white/50">
+                <span className="text-white">&gt;_</span> ready
+              </p>
+            </div>
           </div>
         </Reveal>
 
-        {/* ---- Right: text + features ---- */}
-        <div className="lg:pl-6">
+        <div className="lg:col-span-4 lg:col-start-9">
           <Reveal>
-            <p className="mono-label text-white/70">
-              <DecryptedText text={t.backend.label} revealTime={700} />
-            </p>
             <h2
               id="backend-title"
-              className="mt-2 font-headline text-4xl font-bold uppercase leading-[1.02] tracking-tight text-white sm:text-5xl"
+              className="font-headline text-4xl sm:text-6xl uppercase leading-none text-white"
             >
-              {t.backend.title1}
-              <br />
+              {t.backend.title1}{" "}
               <span className="text-outline">{t.backend.title2}</span>
             </h2>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <p className="prose-read mt-6 max-w-xl text-base leading-relaxed text-gray-80">
+            <p className="prose-read mt-6 text-base leading-relaxed text-white/58">
               {t.backend.body}
             </p>
           </Reveal>
 
-          <Reveal delay={0.15}>
-            <ul className="mt-8 space-y-0">
-              {t.backend.features.map((f, i) => (
-                <li
-                  key={f.title}
-                  className="group flex gap-4 border-t border-white/10 py-4 transition-colors hover:bg-black-8"
-                >
-                  <span className="w-8 shrink-0 font-mono text-sm text-white/70">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="font-headline text-base font-bold uppercase tracking-wide text-white">
-                      {f.title}
-                    </h3>
-                    <p className="prose-read mt-1 text-sm leading-relaxed text-gray-53">
-                      {f.body}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <div className="mt-8">
-              <a
-                href="https://github.com/1arley"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-brutal"
+          <div className="mt-10">
+            {t.backend.features.map((feature, index) => (
+              <Reveal
+                key={feature.title}
+                className="border-t border-white/15 py-5"
+                delay={index * 0.03}
               >
-                {t.backend.cta}
-              </a>
-            </div>
+                <h3 className="font-headline text-lg uppercase text-white">
+                  {feature.title}
+                </h3>
+                <p className="prose-read mt-2 text-sm leading-relaxed text-white/58">
+                  {feature.body}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal className="mt-7">
+            <a
+              href="https://github.com/1arley"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-link group"
+            >
+              {t.backend.cta}
+              <ArrowUpRight
+                size={17}
+                className="transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </a>
           </Reveal>
         </div>
       </div>

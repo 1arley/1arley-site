@@ -1,98 +1,57 @@
 "use client";
 
 import { Reveal } from "@/components/ui/Reveal";
-import { ParticleScroll } from "@/components/canvasui/ParticleScroll";
 import { useLocale } from "@/lib/i18n";
-import { useIsMobile } from "@/hooks/use-mobile";
 
-/**
- * EXPERIENCE — "TRACK 03: THE BUILD LOG".
- * On fine pointers the timeline lives inside a ParticleScroll stage: content
- * below the formation line dissolves into fine sand and reassembles as the
- * page scrolls — a build log that assembles itself while you read. On touch
- * the timeline renders as plain flow.
- */
 export default function ExperienceSection() {
   const { t } = useLocale();
-  const isMobile = useIsMobile();
-
-  const timeline = (
-    <div className="mx-auto max-w-[1400px] px-5 py-4 sm:px-8">
-      <ol className="mt-0">
-        {t.experience.timeline.map((item, i) => (
-          <li key={`${item.year}-${i}`} className="group">
-            <div className="grid grid-cols-1 gap-3 border-b border-white/10 py-6 transition-colors hover:bg-black-8 sm:grid-cols-12 sm:items-baseline sm:px-3 sm:py-8">
-              <div className="sm:col-span-3">
-                <span className="font-mono text-xs tracking-[0.2em] text-white/70">
-                  {item.year}
-                </span>
-              </div>
-              <div className="sm:col-span-6">
-                <h3 className="font-headline text-xl font-bold uppercase tracking-tight text-white transition-colors sm:text-2xl">
-                  {item.title}
-                </h3>
-                <p className="prose-read mt-2 max-w-lg text-sm leading-relaxed text-gray-80">
-                  {item.body}
-                </p>
-              </div>
-              <div className="sm:col-span-3 sm:text-right">
-                <span className="inline-block border border-white/40 px-3 py-1 font-mono text-[10px] tracking-[0.15em] text-white/80">
-                  {item.tag}
-                </span>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
 
   return (
     <section
-      className="relative border-t border-white/10 bg-black-4"
+      className="bg-black-2 py-24 sm:py-32"
       aria-labelledby="experience-title"
     >
-      <div className="mx-auto max-w-[1400px] px-5 pb-8 pt-[10vh] sm:px-8">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
-            <div>
-              <p className="mono-label text-white/70">{t.experience.label}</p>
-              <h2
-                id="experience-title"
-                className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl"
-              >
-                {t.experience.title}
-              </h2>
-            </div>
-            <p className="font-mono text-xs text-white/80">
-              [ BUILD_LOG · scroll ]
+      <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-8">
+        <Reveal className="lg:col-span-4">
+          <div className="lg:sticky lg:top-28">
+            <h2
+              id="experience-title"
+              className="font-display text-4xl sm:text-6xl lg:text-7xl uppercase leading-none text-white"
+            >
+              {t.experience.title}
+            </h2>
+            <p className="prose-read mt-6 max-w-sm text-sm leading-relaxed text-white/58">
+              {t.about.p2}
             </p>
           </div>
         </Reveal>
-      </div>
 
-      {/* ParticleScroll stage — dissolves/reassembles on scroll (desktop) */}
-      {isMobile ? (
-        <div className="relative">{timeline}</div>
-      ) : (
-        <ParticleScroll
-          className="relative h-[150vh]"
-          point={0.68}
-          band={460}
-          density={2}
-          size={1.25}
-          spread={240}
-          gravity={0.25}
-          drift={0.15}
-          swirl={60}
-          stagger={0.4}
-          fade={0.55}
-          settle={0.9}
-          smoothing={0.12}
-        >
-          {timeline}
-        </ParticleScroll>
-      )}
+        <ol className="lg:col-span-7 lg:col-start-6">
+          {t.experience.timeline.map((item, index) => (
+            <Reveal
+              key={`${item.year}-${item.title}`}
+              as="li"
+              className="grid gap-4 border-t border-white/20 py-8 sm:grid-cols-[7rem_minmax(0,1fr)] sm:py-10"
+              delay={index * 0.03}
+            >
+              <p className="font-mono text-[10px] uppercase text-white/58">
+                {item.year}
+              </p>
+              <div>
+                <h3 className="font-headline text-2xl uppercase leading-tight text-white sm:text-3xl">
+                  {item.title}
+                </h3>
+                <p className="prose-read mt-3 max-w-xl text-sm leading-relaxed text-white/55">
+                  {item.body}
+                </p>
+                <p className="mt-4 font-mono text-[10px] uppercase text-white/55">
+                  {item.tag}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }

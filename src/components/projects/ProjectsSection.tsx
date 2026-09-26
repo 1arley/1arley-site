@@ -1,138 +1,109 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
-import { Shatter } from "@/components/canvasui/Shatter";
-import { GlareHover } from "@/components/react-bits/glare-hover";
 import { useLocale } from "@/lib/i18n";
-import { useIsMobile } from "@/hooks/use-mobile";
 
-/**
- * PROJECTS — "TRACK 04: THE RECORDS".
- * The protagonists. On fine pointers the covers break into 3D glass shards
- * that lift, float and refract around the cursor. Zero color, pure
- * glass-and-grain. On touch the grid renders plain.
- */
+const projectLayouts = [
+  "lg:col-span-8",
+  "lg:col-span-5 lg:col-start-8 lg:mt-28",
+  "lg:col-span-7 lg:mt-8",
+  "lg:col-span-6 lg:col-start-7 lg:mt-24",
+];
+
+const projectAspects = [
+  "aspect-[16/9]",
+  "aspect-[4/3]",
+  "aspect-[3/2]",
+  "aspect-[16/10]",
+];
+
 export default function ProjectsSection() {
   const { t } = useLocale();
-  const isMobile = useIsMobile();
-
-  const projectsGrid = (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      {t.projects.projects.map((proj) => (
-        <a
-          key={proj.id}
-          href={proj.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group block"
-          aria-label={`${proj.title} — ${proj.kind}`}
-        >
-          <GlareHover
-            className="aspect-[16/10] overflow-hidden hard-border bg-black-6"
-            glareColor="#ffffff"
-            glareOpacity={0.35}
-            glareAngle={-45}
-            glareSize={250}
-            transitionDuration={900}
-          >
-            <Image
-              src={proj.img}
-              alt={proj.alt}
-              fill
-              className="object-cover contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              sizes="(min-width: 1024px) 46vw, 92vw"
-            />
-            <div className="halftone absolute inset-0 opacity-25 mix-blend-overlay" aria-hidden="true" />
-            <div className="scanlines absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true" />
-            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/85 to-transparent" aria-hidden="true" />
-
-            <div className="absolute left-4 top-4 flex items-center gap-2">
-              <span className="bg-white px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.15em] text-black">
-                {proj.id}
-              </span>
-              <span className="border border-white/50 px-2 py-0.5 font-mono text-[10px] tracking-[0.15em] text-white/90">
-                {proj.kind}
-              </span>
-            </div>
-
-            <div className="absolute inset-x-4 bottom-4">
-              <h3 className="font-headline text-3xl font-bold uppercase leading-none tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] sm:text-4xl">
-                {proj.title}
-              </h3>
-            </div>
-          </GlareHover>
-
-          <div className="flex items-center justify-between gap-3 border border-t-0 border-white/15 bg-black-4 px-4 py-3">
-            <p className="min-w-0 max-w-md text-sm text-gray-53">{proj.body}</p>
-            <span className="ml-4 hidden shrink-0 items-center gap-2 font-mono text-[10px] tracking-[0.15em] text-accent sm:flex">
-              {proj.tags.join(" · ")}
-            </span>
-            <span
-              className="ml-4 shrink-0 font-mono text-lg text-white/70 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white"
-              aria-hidden="true"
-            >
-              →
-            </span>
-          </div>
-        </a>
-      ))}
-    </div>
-  );
 
   return (
     <section
       id="projetos"
-      className="relative border-t border-white/10 bg-black-2 py-[12vh]"
+      className="relative bg-black-2 py-24 sm:py-32"
       aria-labelledby="projects-title"
     >
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-        {/* Section header */}
+      <div className="mx-auto max-w-[1600px] px-5 sm:px-8">
         <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/15 pb-4">
-            <div>
-              <p className="mono-label text-white/70">{t.projects.label}</p>
-              <h2
-                id="projects-title"
-                className="mt-2 font-headline text-4xl font-bold uppercase tracking-tight text-white sm:text-6xl"
-              >
-                {t.projects.title}
-              </h2>
-            </div>
-            <p className="font-mono text-xs text-white/80">
+          <div className="border-b border-white/20 pb-6">
+            <h2
+              id="projects-title"
+              className="max-w-5xl font-display text-4xl sm:text-6xl lg:text-8xl uppercase leading-none text-white"
+            >
+              {t.projects.title}
+            </h2>
+            <p className="mt-5 font-mono text-[10px] uppercase text-white/50">
               {t.projects.count}
             </p>
           </div>
         </Reveal>
 
-        {/* Shatter stage — covers break into glass shards under cursor */}
-        <div className="mt-10">
-          {isMobile ? (
-            projectsGrid
-          ) : (
-            <Shatter
-              radius={0.5}
-              softness={0.4}
-              tileSize={72}
-              shards={0.35}
-              corner={2}
-              lift={110}
-              tilt={1.4}
-              scatter={60}
-              perspective={900}
-              gapColor={[0.02, 0.02, 0.02]}
-              shadow={0.7}
-              shading={0.6}
-              refraction={0.7}
-              dispersion={0.4}
-              floatSpeed={1.2}
-              strength={1}
-              baseStrength={0}
-              followSpeed={6}
+        <div className="mt-14 grid grid-cols-1 gap-y-20 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-28">
+          {t.projects.projects.map((project, index) => (
+            <Reveal
+              key={project.id}
+              className={`min-w-0 ${projectLayouts[index] ?? "lg:col-span-6"}`}
+              delay={index * 0.04}
             >
-              {projectsGrid}
-            </Shatter>
-          )}
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-link group block"
+                aria-label={`${project.title} - ${project.kind}`}
+              >
+                <div className="mb-3 flex items-center justify-between gap-4 border-b border-white/15 pb-3 font-mono text-[10px] uppercase text-white/55">
+                  <span>{project.kind}</span>
+                  <span>{project.id}</span>
+                </div>
+
+                <div
+                  className={`relative overflow-hidden bg-black-8 ${projectAspects[index]}`}
+                >
+                  <Image
+                    src={project.img}
+                    alt={project.alt}
+                    fill
+                    className="object-cover grayscale contrast-[1.08] transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.025]"
+                    sizes={
+                      index === 0
+                        ? "(min-width: 1024px) 65vw, 100vw"
+                        : "(min-width: 1024px) 48vw, 100vw"
+                    }
+                  />
+                  <div
+                    className="project-scan absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <div className="mt-5 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
+                  <div>
+                    <h3 className="font-headline text-3xl uppercase leading-none text-white sm:text-4xl">
+                      {project.title}
+                    </h3>
+                    <p className="prose-read mt-3 max-w-2xl text-sm leading-relaxed text-white/58">
+                      {project.body}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] uppercase text-white/55">
+                      {project.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <span className="grid h-12 w-12 shrink-0 place-items-center border border-white/25 text-white transition-colors duration-150 group-hover:bg-white group-hover:text-black">
+                    <ArrowUpRight size={19} />
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
