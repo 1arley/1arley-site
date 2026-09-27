@@ -147,9 +147,6 @@ export interface Dict {
     t4: string;
     t5: string;
   };
-  preloader: {
-    strap: string;
-  };
 }
 
 export const dict: Record<Locale, Dict> = {
@@ -418,9 +415,6 @@ export const dict: Record<Locale, Dict> = {
       t4: "O PONTO ALTO · O GRÃO · O PALCO · O RUIDO",
       t5: "VAMOS CONVERSAR · SEM COR · SEM CONCESSÃO",
     },
-    preloader: {
-      strap: "DESENVOLVEDOR FULL-STACK · RECIFE",
-    },
   },
   en: {
     hero: {
@@ -686,9 +680,6 @@ export const dict: Record<Locale, Dict> = {
       t3: "TOOLS · TYPESCRIPT · NODE · NEST · PYTHON",
       t4: "THE HIGHLIGHT · THE GRAIN · THE STAGE · THE NOISE",
       t5: "LET'S TALK · NO COLOR · NO COMPROMISE",
-    },
-    preloader: {
-      strap: "FULL-STACK DEVELOPER · RECIFE",
     },
   },
 };

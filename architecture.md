@@ -18,7 +18,6 @@ Aplicar ajustes responsivos progressivos para 320 px ou mais, sem reescrever a e
 - src/components/projects/ProjectsSection.tsx (desativar Shatter por ponteiro, ajustar heading e metadados dos cards)
 - src/components/backend/BackendSection.tsx (desativar GlyphRain por ponteiro, reorganizar linhas do terminal e remover estados hover apenas decorativos)
 - src/components/contact/ContactSection.tsx (reduzir título/spacing, desligar Ripple e efeitos de cursor, permitir quebra segura das informações de contato)
-- src/components/effects/Preloader.tsx (ajustar tipografia e microtexto para viewport estreito)
 - src/app/sobre/page.tsx (ajustar padding, tipografia e bloco monoespaçado para não cortar em 320 px)
 - src/app/login/page.tsx (adequar padding e altura útil em telas curtas)
 - src/app/admin/layout.tsx (transformar a navegação lateral em navegação mobile utilizável, sem coluna comprimida)
