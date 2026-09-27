@@ -78,3 +78,23 @@ test.describe("Navbar", () => {
     ).toBe("");
   });
 });
+
+test("Manim intro lands on the header and releases the hero", async ({ page }) => {
+  await page.goto("/");
+  const intro = page.locator("[data-site-intro]");
+  await expect(intro).toBeVisible();
+  await expect(intro).toBeHidden({ timeout: 5000 });
+  await expect(page.locator("[data-header-mark]")).toHaveCSS("opacity", "1");
+  await expect(page.locator("h1")).toBeVisible();
+});
+
+test("intro skips reduced motion and recovers from missing media", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.locator("[data-site-intro]")).toBeHidden();
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.route("**/animations/terminal-intro.mp4", route => route.abort());
+  await page.reload();
+  await expect(page.locator("[data-site-intro]")).toBeHidden();
+  await expect(page.locator("[data-header-mark]")).toHaveCSS("opacity", "1");
+});

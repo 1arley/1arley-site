@@ -13,6 +13,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
+import SiteIntro from "./SiteIntro";
 import { useLocale } from "@/lib/i18n";
 
 export default function HeroSection() {
@@ -81,6 +82,7 @@ export default function HeroSection() {
       className="hero-stage relative min-h-[92dvh] overflow-hidden bg-black pt-16"
       aria-label={t.hero.ariaLabel}
     >
+      <SiteIntro />
       <motion.div
         className="absolute inset-0"
         style={{ transform: photoTransform }}
