@@ -79,6 +79,9 @@ test.describe("Navbar", () => {
   });
 });
 
+// Runs on both projects (desktop + Pixel 7) on purpose: mobile must get the
+// intro too. If this ever starts passing only on desktop, a skip crept into
+// INTRO_SKIP_QUERY — touch and narrow viewports are not skip reasons.
 test("Manim intro lands on the header and releases the hero", async ({ page }) => {
   await page.goto("/");
   const intro = page.locator("[data-site-intro]");
