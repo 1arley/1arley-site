@@ -78,7 +78,7 @@ export default function Navbar() {
           className="group flex min-h-11 items-center gap-3 pr-4"
           aria-label="1arley, início"
         >
-          <span className="grid h-8 w-8 place-items-center bg-white font-mono text-xs font-bold text-black transition-colors group-hover:bg-gray-80">
+          <span data-header-mark className="grid h-8 w-8 place-items-center bg-white font-mono text-xs font-bold text-black transition-colors group-hover:bg-gray-80">
             &gt;_
           </span>
           <span className="font-display text-lg uppercase leading-none text-white">
