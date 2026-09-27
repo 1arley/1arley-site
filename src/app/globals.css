@@ -425,6 +425,24 @@
   }
 }
 
+/* ── Opening curtain ──
+   The intro owns the first frame: the site stays behind an opaque veil until the
+   mark lands in the header, so nothing of the portfolio is ever visible — or
+   clickable — before it.
+
+   The veil is server-rendered (it paints with the HTML, no JS round trip) but
+   stays display:none until the blocking <head> script confirms this visitor is
+   actually getting an intro. A reduced-motion or mobile visit therefore never
+   pays for a black frame it did not ask for. Only [data-site-intro] reads the
+   flag, so pages without an intro are unaffected by its presence on <html>. */
+[data-site-intro] {
+  display: none;
+}
+
+html[data-intro-curtain="on"] [data-site-intro] {
+  display: block;
+}
+
 .hero-title {
   font-size: 9rem;
   line-height: 1;

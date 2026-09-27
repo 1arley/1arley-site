@@ -6,6 +6,7 @@ import { baseUrl } from '@/config'
 import Chrome from '@/components/core/Chrome'
 import { LocaleProvider } from '@/lib/i18n'
 import { Toaster } from '@/components/ui/sonner'
+import { INTRO_BOOT, INTRO_SRC } from '@/lib/site-intro'
 
 const anton = Anton({
     variable: '--font-anton',
@@ -65,6 +66,21 @@ export default function RootLayout({
         <html lang='pt-BR' data-scroll-behavior="smooth">
             <head>
                 <link rel="icon" href="/favicon.png" />
+                {/*
+                  The intro clip is the last thing the hero needs and the first
+                  thing it plays. Preloading it here puts the request in flight
+                  while the HTML and the JS chunks are still downloading, so
+                  hydration finds it in cache instead of waiting on the network.
+                  Browsers that ignore as="video" fall back to the <video src>.
+                */}
+                <link rel="preload" as="video" href={INTRO_SRC} type="video/mp4" />
+                {/*
+                  Blocking by design. The intro curtain must be on screen at the
+                  very first paint, and a React effect only runs after hydration
+                  — by then the portfolio has already been seen. Runs in <head>,
+                  so its verdict on <html> is settled before the body parses.
+                */}
+                <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT }} />
             </head>
             <body
                 className={`${anton.variable} ${oswald.variable} ${jetbrainsMono.variable} ${GeistSans.variable} antialiased`}
