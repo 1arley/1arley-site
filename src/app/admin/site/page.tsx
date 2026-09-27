@@ -555,10 +555,6 @@ export default function AdminSitePage() {
             <Field label="Sobre" value={d.navbar.about} onChange={(v) => patch('navbar', { about: v })} />
           </div>
         </Card>
-
-        <Card title="Abertura">
-          <Field label="Frase de abertura" value={d.preloader.strap} onChange={(v) => patch('preloader', { strap: v })} />
-        </Card>
       </div>
     </div>
   )

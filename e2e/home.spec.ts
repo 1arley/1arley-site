@@ -13,7 +13,6 @@ test.describe("Home", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: /arthur iarley/i }),
     ).toBeVisible();
-    await expect(page.locator(".preloader")).toHaveCount(0);
     await expect(page.locator("#projetos a[target='_blank']")).toHaveCount(4);
 
     const hasHorizontalOverflow = await page.evaluate(

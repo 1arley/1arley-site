@@ -270,9 +270,9 @@
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
-    "mtime": 1790454240.2198253,
-    "seen": 1790455404.69155,
-    "ast_hash": "4b8c3c6f42027e46d0969d66822c6dd8",
+    "mtime": 1790536324.1475325,
+    "seen": 1790536598.1102717,
+    "ast_hash": "380220e5b6679caa70f60dae57b1ce31",
     "semantic_hash": ""
   },
   "src/app/login/page.tsx": {
@@ -318,9 +318,9 @@
     "semantic_hash": ""
   },
   "src/components/Navbar.tsx": {
-    "mtime": 1790455326.1203804,
-    "seen": 1790455404.6917014,
-    "ast_hash": "b80dfe2662791af80ed24cfa5056cb65",
+    "mtime": 1790533906.1520376,
+    "seen": 1790533988.8770509,
+    "ast_hash": "4cdf6aede7f04cfb6d8edc4de3a233f0",
     "semantic_hash": ""
   },
   "src/components/ScrollToTop.tsx": {
@@ -558,9 +558,9 @@
     "semantic_hash": ""
   },
   "src/components/hero/HeroSection.tsx": {
-    "mtime": 1790455490.4348156,
-    "seen": 1790455542.7273052,
-    "ast_hash": "3f25c65040f3c6db9ad9e34f558be41d",
+    "mtime": 1790533906.1522489,
+    "seen": 1790533988.878133,
+    "ast_hash": "7acad7a6421c54cfac421109584515bb",
     "semantic_hash": ""
   },
   "src/components/presente/ChocolateGift.tsx": {
@@ -2298,8 +2298,8 @@
     "semantic_hash": ""
   },
   "public/robots.txt": {
-    "mtime": 1790454477.7473347,
-    "seen": 1790455404.7018032,
+    "mtime": 1790536368.46132,
+    "seen": 1790536598.1212451,
     "ast_hash": "4d4c74402de6a32aa434371f3445dd2d",
     "semantic_hash": ""
   },
@@ -2370,9 +2370,9 @@
     "semantic_hash": ""
   },
   "e2e/home.spec.ts": {
-    "mtime": 1790455490.4358156,
-    "seen": 1790455542.725483,
-    "ast_hash": "f7c3a5b3bb745121296cdf5c12c1963e",
+    "mtime": 1790533921.5518997,
+    "seen": 1790533988.8763044,
+    "ast_hash": "f048c387c0d2a152731f1d8e159e8574",
     "semantic_hash": ""
   },
   ".impeccable/home-brief-body.md": {
@@ -2445,6 +2445,30 @@
     "mtime": 1790455453.0467486,
     "seen": 1790455542.7366822,
     "ast_hash": "97eac5a0be437aa34aa286839cdf5963",
+    "semantic_hash": ""
+  },
+  "scripts/manim/intro.py": {
+    "mtime": 1790533963.1047106,
+    "seen": 1790533988.876474,
+    "ast_hash": "9a0e0395fcd4901aa2c4aa816488d09a",
+    "semantic_hash": ""
+  },
+  "src/components/hero/SiteIntro.tsx": {
+    "mtime": 1790536337.297469,
+    "seen": 1790536598.1117804,
+    "ast_hash": "5102d78448926bc4c91b1ff8672ab856",
+    "semantic_hash": ""
+  },
+  "public/animations/terminal-intro.mp4": {
+    "mtime": 1790533981.837304,
+    "seen": 1790533988.8866453,
+    "ast_hash": "524e432522607afa2eeef054cdcd988c",
+    "semantic_hash": ""
+  },
+  "src/lib/site-intro.ts": {
+    "mtime": 1790536330.1075037,
+    "seen": 1790536598.1138802,
+    "ast_hash": "ee5534f09cca01fa2583378d313f9b77",
     "semantic_hash": ""
   }
 }

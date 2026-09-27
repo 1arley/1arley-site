@@ -15,7 +15,6 @@
     "src/components/projects/ProjectsSection.tsx",
     "src/components/backend/BackendSection.tsx",
     "src/components/contact/ContactSection.tsx",
-    "src/components/effects/Preloader.tsx",
     "src/app/sobre/page.tsx",
     "src/app/login/page.tsx",
     "src/app/admin/layout.tsx",
