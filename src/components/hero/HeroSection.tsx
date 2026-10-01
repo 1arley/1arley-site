@@ -14,6 +14,7 @@ import {
 } from "framer-motion";
 import { ArrowDownRight } from "lucide-react";
 import SiteIntro from "./SiteIntro";
+import IdentityObject from "./IdentityObject";
 import { useLocale } from "@/lib/i18n";
 
 export default function HeroSection() {
@@ -84,7 +85,7 @@ export default function HeroSection() {
     >
       <SiteIntro />
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 z-0"
         style={{ transform: photoTransform }}
         aria-hidden="true"
       >
@@ -104,10 +105,12 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
-      <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
+      <IdentityObject />
+
+      <div className="absolute inset-0 z-[2] bg-black/25" aria-hidden="true" />
 
       <div
-        className="pointer-events-none absolute inset-0 border-x border-white/10"
+        className="pointer-events-none absolute inset-0 z-[4] border-x border-white/10"
         aria-hidden="true"
       />
 
