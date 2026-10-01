@@ -47,6 +47,8 @@ export interface Dict {
     roles: string[];
     ctaProjects: string;
     ctaAbout: string;
+    pauseIdentityMotion: string;
+    resumeIdentityMotion: string;
     aboutLink: string;
     ariaLabel: string;
     coords: string;
@@ -158,6 +160,8 @@ export const dict: Record<Locale, Dict> = {
       roles: ["arquitetura", "APIs", "segurança", "identidade"],
       ctaProjects: "VER PROJETOS",
       ctaAbout: "SOBRE MIM",
+      pauseIdentityMotion: "Pausar animação da guitarra",
+      resumeIdentityMotion: "Retomar animação da guitarra",
       aboutLink: "SOBRE",
       ariaLabel: "Arthur Iarley — portfólio",
       coords: "8°03′S / 34°52′W",
@@ -424,6 +428,8 @@ export const dict: Record<Locale, Dict> = {
       roles: ["architecture", "APIs", "security", "identity"],
       ctaProjects: "SEE PROJECTS",
       ctaAbout: "ABOUT ME",
+      pauseIdentityMotion: "Pause guitar animation",
+      resumeIdentityMotion: "Resume guitar animation",
       aboutLink: "ABOUT",
       ariaLabel: "Arthur Iarley — portfolio",
       coords: "8°03′S / 34°52′W",
