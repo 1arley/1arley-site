@@ -11,6 +11,10 @@ import { createRectCache } from "../rect-cache";
 export interface ParticleObjectOptions {
   /** URL of the asset to display: GLB/glTF, SVG, PNG, JPEG, WebP, or GIF. Object URLs from a file input work too. The format is sniffed from the bytes, not the extension. */
   src?: string;
+  /** Optional destination asset for a particle shape transition. */
+  morphSrc?: string;
+  /** Interpolation between src (0) and morphSrc (1). */
+  morph?: number;
   /** Number of particles the asset is rebuilt from. */
   count?: number;
   /** Particle size in CSS pixels at the model's distance. */
@@ -71,7 +75,7 @@ export interface ParticleObjectElements {
 }
 
 export interface ParticleObjectInstance {
-  /** Update options live. Changing src loads the new asset. */
+  /** Update options live. Changing either asset URL rebuilds the point clouds. */
   setOptions: (options: ParticleObjectOptions) => void;
   /** Re-read canvas size. Call when the element is resized. */
   resize: () => void;
@@ -81,6 +85,8 @@ export interface ParticleObjectInstance {
 
 const DEFAULTS: Required<ParticleObjectOptions> = {
   src: "",
+  morphSrc: "",
+  morph: 0,
   count: 14000,
   size: 2.4,
   sizeVariance: 0.6,
@@ -204,6 +210,10 @@ function disposeObject(root: THREE.Object3D) {
       material.dispose();
     }
   });
+}
+
+function disposeAssetSource(source: AssetSource | null) {
+  if (source?.kind === "mesh") disposeObject(source.scene);
 }
 
 function readAlbedo(map: THREE.Texture | null): ImageData | null {
@@ -596,11 +606,14 @@ export function createParticleObject(
 
   let points: THREE.Points | null = null;
   let homes: Float32Array | null = null;
+  let morphHomes: Float32Array | null = null;
   let velocities: Float32Array | null = null;
   let particleCount = 0;
   let assetSource: AssetSource | null = null;
+  let morphAssetSource: AssetSource | null = null;
   let builtCount = -1;
   let loadedSrc: string | null = null;
+  let loadedMorphSrc: string | null = null;
   let loadToken = 0;
   let disposed = false;
 
@@ -615,13 +628,16 @@ export function createParticleObject(
     points.geometry.dispose();
     points = null;
     homes = null;
+    morphHomes = null;
     velocities = null;
     particleCount = 0;
   }
 
   function clearAsset() {
-    if (assetSource?.kind === "mesh") disposeObject(assetSource.scene);
+    disposeAssetSource(assetSource);
+    disposeAssetSource(morphAssetSource);
     assetSource = null;
+    morphAssetSource = null;
     builtCount = -1;
     clearPoints();
   }
@@ -638,6 +654,12 @@ export function createParticleObject(
         ? sampleMesh(assetSource.scene, count)
         : sampleImage(assetSource.data, count);
     normalizeCloud(sample);
+    const morphSample = morphAssetSource
+      ? morphAssetSource.kind === "mesh"
+        ? sampleMesh(morphAssetSource.scene, count)
+        : sampleImage(morphAssetSource.data, count)
+      : null;
+    if (morphSample) normalizeCloud(morphSample);
 
     const seeds = new Float32Array(count);
     for (let i = 0; i < count; i++) seeds[i] = Math.random();
@@ -657,6 +679,7 @@ export function createParticleObject(
     geometry.setAttribute("aSeed", new THREE.BufferAttribute(seeds, 1));
 
     homes = sample.positions;
+    morphHomes = morphSample?.positions ?? null;
     velocities = new Float32Array(count * 3);
     particleCount = count;
     points = new THREE.Points(geometry, material);
@@ -664,49 +687,71 @@ export function createParticleObject(
     fitGroup.add(points);
   }
 
+  async function loadSource(src: string): Promise<AssetSource> {
+    const response = await fetch(src);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const buffer = await response.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    const kind = sniffKind(bytes);
+    if (!kind) throw new Error("Unrecognized asset format");
+
+    if (kind === "glb" || kind === "gltf") {
+      draco.setDecoderPath(config.dracoDecoderPath);
+      const resourcePath = src.slice(0, src.lastIndexOf("/") + 1);
+      const data = kind === "glb" ? buffer : new TextDecoder().decode(bytes);
+      const gltf = await loader.parseAsync(data, resourcePath);
+      return { kind: "mesh", scene: gltf.scene };
+    }
+
+    const blob = new Blob([buffer], {
+      type: kind === "svg" ? "image/svg+xml" : "",
+    });
+    return { kind: "image", data: await rasterizeImage(blob) };
+  }
+
   async function loadAsset() {
     const src = config.src;
-    if (src === loadedSrc) return;
+    const morphSrc = config.morphSrc;
+    if (src === loadedSrc && morphSrc === loadedMorphSrc) return;
     loadedSrc = src;
+    loadedMorphSrc = morphSrc;
     const token = ++loadToken;
     if (!src) {
       clearAsset();
       return;
     }
-    try {
-      const response = await fetch(src);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const buffer = await response.arrayBuffer();
-      if (disposed || token !== loadToken) return;
-      const bytes = new Uint8Array(buffer);
-      const kind = sniffKind(bytes);
-      if (!kind) throw new Error("Unrecognized asset format");
 
-      if (kind === "glb" || kind === "gltf") {
-        draco.setDecoderPath(config.dracoDecoderPath);
-        const resourcePath = src.slice(0, src.lastIndexOf("/") + 1);
-        const data = kind === "glb" ? buffer : new TextDecoder().decode(bytes);
-        const gltf = await loader.parseAsync(data, resourcePath);
-        if (disposed || token !== loadToken) {
-          disposeObject(gltf.scene);
-          return;
-        }
-        clearAsset();
-        assetSource = { kind: "mesh", scene: gltf.scene };
-      } else {
-        const blob = new Blob([buffer], {
-          type: kind === "svg" ? "image/svg+xml" : "",
-        });
-        const data = await rasterizeImage(blob);
-        if (disposed || token !== loadToken) return;
-        clearAsset();
-        assetSource = { kind: "image", data };
-      }
-      buildCloud();
-      config.onLoad?.();
-    } catch (error) {
-      if (disposed || token !== loadToken) return;
-      config.onError?.(error);
+    const [baseResult, morphResult] = await Promise.allSettled([
+      loadSource(src),
+      morphSrc ? loadSource(morphSrc) : Promise.resolve(null),
+    ]);
+    const nextAsset = baseResult.status === "fulfilled" ? baseResult.value : null;
+    const nextMorphAsset =
+      morphResult.status === "fulfilled" ? morphResult.value : null;
+
+    if (disposed || token !== loadToken) {
+      disposeAssetSource(nextAsset);
+      disposeAssetSource(nextMorphAsset);
+      return;
+    }
+
+    if (!nextAsset) {
+      disposeAssetSource(nextMorphAsset);
+      config.onError?.(
+        baseResult.status === "rejected"
+          ? baseResult.reason
+          : new Error("Could not load the primary asset"),
+      );
+      return;
+    }
+
+    clearAsset();
+    assetSource = nextAsset;
+    morphAssetSource = nextMorphAsset;
+    buildCloud();
+    config.onLoad?.();
+    if (morphResult.status === "rejected") {
+      config.onError?.(morphResult.reason);
     }
   }
 
@@ -832,7 +877,11 @@ export function createParticleObject(
     ) as THREE.BufferAttribute;
     const p = positionAttr.array as Float32Array;
     const h = homes;
+    const morph = morphHomes;
     const v = velocities;
+    const targetMix = reducedMotion
+      ? 0
+      : THREE.MathUtils.clamp(config.morph, 0, 1);
 
     const stiffness = 60 * Math.max(config.spring, 0.05);
     const dampingRate = 3 + 12 * Math.min(Math.max(config.damping, 0), 1);
@@ -922,9 +971,18 @@ export function createParticleObject(
         }
       }
 
-      vx += (h[ix] - p[ix]) * stiffness * delta;
-      vy += (h[iy] - p[iy]) * stiffness * delta;
-      vz += (h[iz] - p[iz]) * stiffness * delta;
+      vx +=
+        (h[ix] + ((morph?.[ix] ?? h[ix]) - h[ix]) * targetMix - p[ix]) *
+        stiffness *
+        delta;
+      vy +=
+        (h[iy] + ((morph?.[iy] ?? h[iy]) - h[iy]) * targetMix - p[iy]) *
+        stiffness *
+        delta;
+      vz +=
+        (h[iz] + ((morph?.[iz] ?? h[iz]) - h[iz]) * targetMix - p[iz]) *
+        stiffness *
+        delta;
       vx *= decay;
       vy *= decay;
       vz *= decay;
@@ -1088,7 +1146,7 @@ export function ParticleObject({
           width: "100%",
           height: "100%",
           display: "block",
-          touchAction: "none",
+          touchAction: "pan-y",
         }}
       />
     </div>
