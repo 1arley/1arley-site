@@ -1,17 +1,17 @@
-# Graph Report - 1arley-site  (2026-09-27)
+# Graph Report - 1arley-site  (2026-10-03)
 
 ## Corpus Check
-- 372 files · ~704,396 words
+- 373 files · ~707,019 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 25 file(s) not represented in the graph (top: (none) 11, .toml 4, .example 3)
 
 ## Summary
-- 4498 nodes · 7300 edges · 308 communities (271 shown, 37 thin omitted)
+- 4508 nodes · 7429 edges · 308 communities (270 shown, 38 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 247 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7fa7f20a`
+- Built from commit: `5a752b75`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -43,7 +43,7 @@
 - generate-guitar-glb.mjs
 - hooks/use-toast.ts
 - createGlyphRain
-- Peel.tsx
+- createPeel
 - lucide-react
 - createRipple
 - mountSvelteComponentVariant
@@ -60,7 +60,7 @@
 - initGlobalBar
 - components.json
 - admin-auth.ts
-- command.tsx
+- links/page.tsx
 - Glitch.tsx
 - animation-map.test.mjs
 - i18n.tsx
@@ -79,21 +79,21 @@
 - form.tsx
 - createRetroDither
 - implicit_animation.dart
-- utils/lib/utils.ts
-- class-variance-authority
-- createRectCache
+- framer-motion
+- Grid.tsx
+- Displacement.tsx
 - chart.tsx
-- Common Patterns
+- IdentityObject.tsx
 - next
 - createDisplacement
 - entities.ts
 - jt
 - scripts
 - RetroDither.tsx
-- teamMembers.ts
+- createShatter
 - upright-guitar-glb.mjs
 - Product
-- Shatter.tsx
+- createRectCache
 - Staggered Animations Reference
 - route.ts
 - live-browser-ignores.js
@@ -120,7 +120,7 @@
 - Responsive Design
 - Chart Scrub Readout
 - React View Transitions
-- Card Morph Anchor
+- Theme Crossfade Morph
 - live.md
 - onboard.md
 - Spring-Pop Entrance
@@ -156,8 +156,8 @@
 - View Transitions in Next.js
 - Patterns and Guidelines
 - createHexFloat
-- Context-Sensitive Cursor
-- document.md
+- Card Morph Anchor
+- Scan mode (approach C: auto-extract, then confirm descriptive language)
 - generate.md
 - Animation Audit Playbook
 - 4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)
@@ -169,8 +169,8 @@
 - critique.md
 - Simplify the Design
 - Hardening Dimensions
-- createParticleReveal
-- Control-Target Sync
+- Common Patterns
+- useImageObjectUrl.ts
 - Three.js for HyperFrames
 - clarify.md
 - Nielsen's 10 Heuristics
@@ -180,7 +180,7 @@
 - quieter.md
 - scheduleAcceptCleanup
 - HeroSection.tsx
-- tabs.tsx
+- Peel.tsx
 - Building Animations
 - 10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know)
 - Built-in Curves
@@ -208,7 +208,7 @@
 - 3D Text Depth Layers
 - AI Tracking Box
 - Avatar Cloud Network
-- Waterfall Entry
+- ref_identityobject
 - Coordinate Target Zoom
 - Dynamic Content Sequencing
 - Multi-Phase Camera
@@ -246,7 +246,7 @@
 - Cognitive Load Assessment
 - Impeccable Finish Reviewer
 - Impeccable Manual Edit Applier
-- Grid.tsx
+- The Build Sequence
 - Architecture: Correções incrementais de UX mobile para todo o site
 - start
 - Text Effects — Reference
@@ -256,8 +256,10 @@
 - Distortion
 - Linear / Push
 - 5. IMAGE COUNT & PAGE SLICING
+- document.md
 - Diagnostic Scan
 - impeccable/SKILL.md
+- Improving Animations
 - React View Transitions Skill
 - 12. THE BLOCK LIBRARY (Contract - Implementations Land Here Iteratively)
 - 5. CONTEXT-AWARE PROACTIVITY
@@ -273,7 +275,6 @@
 - 21. MOBILE ANTI-AI-TELLS RULE
 - Rockstar Monochrome
 - Component review
-- Multi-Cursor Choreography
 - TerminalIntro
 - 7. DIAL DEFINITIONS (Technical Reference)
 - Blur
@@ -287,8 +288,7 @@
 - 20. EXAMPLE INTERPRETATIONS
 - Heuristics Scoring Guide
 - $impeccable hooks
-- useImageObjectUrl.ts
-- Theme Crossfade Morph
+- Visualize: Direction Comps & Asset Production
 - Best Practices
 - Choosing the Right Curve
 - Curve Composition
@@ -325,7 +325,7 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 194 edges
-2. `react` - 87 edges
+2. `react` - 88 edges
 3. `CORE DIRECTIVE: PREMIUM MOBILE APP IMAGE DIRECTION` - 39 edges
 4. `createHexFloat()` - 38 edges
 5. `connectSSE()` - 34 edges
@@ -336,21 +336,21 @@
 10. `initGlobalBar()` - 30 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `2. Easing & duration` --references--> `ease()`  [INFERRED]
-  .agents/skills/improve-animations/AUDIT.md → src/components/canvasui/AsciiSweep.tsx
+- `Creating a Timeline` --references--> `ease()`  [INFERRED]
+  .agents/skills/hyperframes-animation/adapters/gsap-timeline-and-labels.md → src/components/canvasui/AsciiSweep.tsx
+- `Operating Context` --references--> `LocaleProvider()`  [INFERRED]
+  PRODUCT.md → src/lib/i18n.tsx
 - `Toast` --references--> `ease()`  [INFERRED]
   .agents/skills/animate/RECIPES.md → src/components/canvasui/AsciiSweep.tsx
 - `5. Easing and duration — or a spring` --references--> `ease()`  [INFERRED]
   .agents/skills/animate/SKILL.md → src/components/canvasui/AsciiSweep.tsx
 - `Anime.js for HyperFrames` --references--> `ease()`  [INFERRED]
   .agents/skills/hyperframes-animation/adapters/animejs.md → src/components/canvasui/AsciiSweep.tsx
-- `Creating a Timeline` --references--> `ease()`  [INFERRED]
-  .agents/skills/hyperframes-animation/adapters/gsap-timeline-and-labels.md → src/components/canvasui/AsciiSweep.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (308 total, 37 thin omitted)
+## Communities (308 total, 38 thin omitted)
 
 ### Community 0 - "live-browser.js"
 Cohesion: 0.03
@@ -358,7 +358,7 @@ Nodes (141): applyGlobalBarLabelState(), applyLiveBarPreference(), applyPlacehol
 
 ### Community 1 - "cn"
 Cohesion: 0.04
-Nodes (78): @radix-ui/react-accordion, @radix-ui/react-avatar, @radix-ui/react-dropdown-menu, @radix-ui/react-select, AccordionContent, AccordionItem, AccordionTrigger, Avatar (+70 more)
+Nodes (91): @radix-ui/react-accordion, @radix-ui/react-avatar, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu, @radix-ui/react-select, @radix-ui/react-tabs, react-resizable-panels, AccordionContent (+83 more)
 
 ### Community 2 - "resumeSession"
 Cohesion: 0.07
@@ -369,8 +369,8 @@ Cohesion: 0.12
 Nodes (35): ae(), be(), bt(), Ce(), s(), Ct(), _e(), Ee() (+27 more)
 
 ### Community 4 - "package.json"
-Cohesion: 0.04
-Nodes (40): description, name, private, version, @babel/preset-env, @babel/preset-react, @babel/preset-typescript, dotenv (+32 more)
+Cohesion: 0.03
+Nodes (49): description, name, private, version, @babel/preset-env, @babel/preset-react, @babel/preset-typescript, clsx (+41 more)
 
 ### Community 5 - "AsciiSweep.tsx"
 Cohesion: 0.09
@@ -401,8 +401,8 @@ Cohesion: 0.26
 Nodes (18): actOnAgentTarget(), agentTargetBusyReason(), agentTargetOverlayGone(), agentTargetTaken(), claimAgentTarget(), claimAndActOnAgentTarget(), declineAgentTargetBusy(), declineAgentTargetUnresolvable() (+10 more)
 
 ### Community 12 - "react"
-Cohesion: 0.15
-Nodes (23): react, sonner, EMPTY, FormState, EMPTY, FormState, Lang, EMPTY (+15 more)
+Cohesion: 0.10
+Nodes (44): react, sonner, AdminContentPage(), handleDelete(), handleSave(), load(), EMPTY, FormState (+36 more)
 
 ### Community 13 - "DitheredObject.tsx"
 Cohesion: 0.08
@@ -429,8 +429,8 @@ Cohesion: 0.20
 Nodes (17): beginEditPin(), buildAnnotationsForCapture(), buildPinElement(), cancelEditingPin(), clampPlaceholderSize(), finalizeEditingPin(), initAnnotOverlay(), localCoords() (+9 more)
 
 ### Community 19 - "ParticleObject.tsx"
-Cohesion: 0.09
-Nodes (30): three, AssetSource, CAMERA_DIR, CloudSample, createParticleObject(), buildCloud(), clearAsset(), clearPoints() (+22 more)
+Cohesion: 0.08
+Nodes (32): three, AssetSource, CAMERA_DIR, CloudSample, createParticleObject(), buildCloud(), clearAsset(), clearPoints() (+24 more)
 
 ### Community 20 - "createForceField"
 Cohesion: 0.09
@@ -441,8 +441,8 @@ Cohesion: 0.06
 Nodes (31): cors, ref_crypto, express, multer, pg, app, cors, crypto (+23 more)
 
 ### Community 22 - "src/lib/utils.ts"
-Cohesion: 0.07
-Nodes (19): @radix-ui/react-checkbox, @radix-ui/react-popover, @radix-ui/react-progress, @radix-ui/react-radio-group, @radix-ui/react-scroll-area, @radix-ui/react-slider, @radix-ui/react-switch, GlareHover() (+11 more)
+Cohesion: 0.06
+Nodes (31): class-variance-authority, @radix-ui/react-checkbox, @radix-ui/react-popover, @radix-ui/react-progress, @radix-ui/react-scroll-area, @radix-ui/react-slider, @radix-ui/react-switch, @radix-ui/react-toggle (+23 more)
 
 ### Community 23 - "DecryptReveal.tsx"
 Cohesion: 0.10
@@ -453,19 +453,19 @@ Cohesion: 0.07
 Nodes (27): body, bodyGeo, bodyShape, box, bridge, center, exporter, fretboard (+19 more)
 
 ### Community 25 - "hooks/use-toast.ts"
-Cohesion: 0.12
+Cohesion: 0.13
 Nodes (25): @radix-ui/react-toast, Toast, ToastAction, ToastActionElement, ToastClose, ToastDescription, ToastProps, src_components_ui_toast_toastprovider (+17 more)
 
 ### Community 26 - "createGlyphRain"
 Cohesion: 0.12
 Nodes (25): buildAtlas(), createGlyphRain(), frame(), onMotionChange(), onPointerDown(), onPointerMove(), pointerNorm(), readPageLum() (+17 more)
 
-### Community 27 - "Peel.tsx"
-Cohesion: 0.11
-Nodes (27): createPeel(), compile(), frame(), link(), onMotionChange(), onPointerLeave(), onPointerMove(), onThemeShift() (+19 more)
+### Community 27 - "createPeel"
+Cohesion: 0.25
+Nodes (14): createPeel(), compile(), frame(), link(), onMotionChange(), onPointerLeave(), onPointerMove(), onThemeShift() (+6 more)
 
 ### Community 28 - "lucide-react"
-Cohesion: 0.19
+Cohesion: 0.24
 Nodes (16): lucide-react, HomePage(), SobrePage(), AboutSection(), BackendSection(), ContactSection(), TickerDivider(), ExperienceSection() (+8 more)
 
 ### Community 29 - "createRipple"
@@ -489,8 +489,8 @@ Cohesion: 0.14
 Nodes (24): ancestors(), assertPinnedPackageSpecs(), bootstrapWithNpmInstall(), bundleCompositionForCapture(), confirmBootstrap(), envNodeModulesDirs(), exportEntry(), FALLBACK_TRANSIENT_PATTERNS (+16 more)
 
 ### Community 34 - "isBrowser"
-Cohesion: 0.21
-Nodes (15): GlowAnimation, GravityStarsBackground(), GravityStarsProps, MouseGravity, Particle, StarsInteractionType, CursorTrail(), CustomCursor() (+7 more)
+Cohesion: 0.23
+Nodes (13): GlowAnimation, GravityStarsBackground(), GravityStarsProps, MouseGravity, Particle, StarsInteractionType, CursorTrail(), CustomCursor() (+5 more)
 
 ### Community 35 - "transform-guitar-glb.mjs"
 Cohesion: 0.08
@@ -509,8 +509,8 @@ Cohesion: 0.09
 Nodes (21): animation, _animationDuration, borderRadius, build, _buildAnimation, color, _controller, createState (+13 more)
 
 ### Community 39 - "ParticleReveal.tsx"
-Cohesion: 0.24
-Nodes (10): DEFAULTS, ElementImageContext, emptySubscribe(), PaintableCanvas, ParticleReveal(), ParticleRevealElements, ParticleRevealInstance, ParticleRevealOptions (+2 more)
+Cohesion: 0.14
+Nodes (19): createParticleReveal(), frame(), onMotionChange(), onPointerLeave(), onPointerMove(), render(), start(), uploadContent() (+11 more)
 
 ### Community 40 - "VHS.tsx"
 Cohesion: 0.24
@@ -525,12 +525,12 @@ Cohesion: 0.10
 Nodes (20): aliases, components, hooks, lib, ui, utils, iconLibrary, registries (+12 more)
 
 ### Community 43 - "admin-auth.ts"
-Cohesion: 0.07
-Nodes (39): axios, AdminContentPage(), handleDelete(), handleSave(), load(), AdminLayout(), adminLinks, CmsImageField() (+31 more)
+Cohesion: 0.13
+Nodes (22): AdminLayout(), adminLinks, handleRefreshResponseError(), refreshAccessToken(), AdminRole, LoginCredentials, LoginResponse, LoginUser (+14 more)
 
-### Community 44 - "command.tsx"
-Cohesion: 0.10
-Nodes (18): cmdk, @radix-ui/react-dialog, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList (+10 more)
+### Community 44 - "links/page.tsx"
+Cohesion: 0.11
+Nodes (26): cmdk, AdminLinksPage(), handleDelete(), handleSave(), load(), EMPTY, FormState, Command (+18 more)
 
 ### Community 45 - "Glitch.tsx"
 Cohesion: 0.14
@@ -541,12 +541,12 @@ Cohesion: 0.14
 Nodes (13): sampleTweenBboxes(), FAKE_PARENT_DRIVER_ENV, FAKE_PRODUCER_COMMON, FAKE_PROXY_DRIVER_ENV, HELPERS, REPO_ROOT, HERE, ref_node_assert (+5 more)
 
 ### Community 47 - "i18n.tsx"
-Cohesion: 0.14
-Nodes (19): Operating Context, AdminSitePage(), handleSave(), move(), BackendEndpoint, BackendFeature, dict, Locale (+11 more)
+Cohesion: 0.20
+Nodes (12): BackendEndpoint, BackendFeature, dict, Locale, ProjectItem, SkillCategory, StackItem, TimelineItem (+4 more)
 
 ### Community 48 - "ChocolateGift.tsx"
-Cohesion: 0.12
-Nodes (12): fontHand, fontWonka, metadata, burstConfetti(), ChocolateGift(), CONFETTI_COLORS, src_components_presente_chocolategift_module, NOTES (+4 more)
+Cohesion: 0.14
+Nodes (14): fontHand, fontWonka, metadata, PresentePage(), burstConfetti(), ChocolateBar(), ChocolateGift(), CONFETTI_COLORS (+6 more)
 
 ### Community 49 - "State"
 Cohesion: 0.18
@@ -585,8 +585,8 @@ Cohesion: 0.14
 Nodes (14): ref_fs, ref_path, baseUrl, fs, outputPath, path, formatUrl(), fs (+6 more)
 
 ### Community 58 - "app/layout.tsx"
-Cohesion: 0.14
-Nodes (12): geist, next-themes, src_app_globals, anton, jetbrainsMono, metadata, oswald, viewport (+4 more)
+Cohesion: 0.16
+Nodes (13): geist, next-themes, src_app_globals, anton, jetbrainsMono, metadata, oswald, RootLayout() (+5 more)
 
 ### Community 59 - "carousel.tsx"
 Cohesion: 0.17
@@ -604,37 +604,37 @@ Nodes (13): createRetroDither(), buildTextMask(), frame(), onMotionChange(), onP
 Cohesion: 0.16
 Nodes (13): _animated, build, createState, _expanded, FadeExample, _FadeExampleState, ImplicitAnimationApp, main (+5 more)
 
-### Community 63 - "utils/lib/utils.ts"
-Cohesion: 0.06
-Nodes (25): clsx, framer-motion, tailwind-merge, BorderTrail(), BorderTrailProps, ClickSpark(), ClickSparkProps, Spark (+17 more)
+### Community 63 - "framer-motion"
+Cohesion: 0.09
+Nodes (15): framer-motion, ClickSpark(), ClickSparkProps, Spark, Counter(), CounterProps, LiquidButton(), LiquidButtonProps (+7 more)
 
-### Community 64 - "class-variance-authority"
-Cohesion: 0.14
-Nodes (15): class-variance-authority, @radix-ui/react-toggle, @radix-ui/react-toggle-group, Alert, AlertDescription, AlertTitle, alertVariants, Badge() (+7 more)
+### Community 64 - "Grid.tsx"
+Cohesion: 0.24
+Nodes (10): DEFAULTS, ElementImageContext, emptySubscribe(), Grid(), GridElements, GridInstance, GridOptions, GridProps (+2 more)
 
-### Community 65 - "createRectCache"
-Cohesion: 0.19
-Nodes (12): DEFAULTS, Displacement(), DisplacementElements, DisplacementInstance, DisplacementOptions, DisplacementProps, ElementImageContext, emptySubscribe() (+4 more)
+### Community 65 - "Displacement.tsx"
+Cohesion: 0.24
+Nodes (10): DEFAULTS, Displacement(), DisplacementElements, DisplacementInstance, DisplacementOptions, DisplacementProps, ElementImageContext, emptySubscribe() (+2 more)
 
 ### Community 66 - "chart.tsx"
-Cohesion: 0.21
-Nodes (11): recharts, ChartConfig, ChartContainer, ChartContext, ChartContextProps, ChartLegendContent, ChartPayloadType, ChartTooltipContent (+3 more)
+Cohesion: 0.22
+Nodes (12): recharts, ChartConfig, ChartContainer, ChartContext, ChartContextProps, ChartLegendContent, ChartPayloadType, ChartStyle() (+4 more)
 
-### Community 67 - "Common Patterns"
-Cohesion: 0.29
-Nodes (7): Common Patterns, Composing Shared Elements with List Identity, Enter/Exit, Force Re-Enter with `key`, Layout Displacement Morph, List Reorder, Suspense Fallback to Content
+### Community 67 - "IdentityObject.tsx"
+Cohesion: 0.31
+Nodes (9): buildNameTarget(), IdentityObject(), IdleWindow, morphAt(), NAME_LINES, smoothstep(), usePrefersReducedMotion(), observeLifecycle() (+1 more)
 
 ### Community 68 - "next"
 Cohesion: 0.14
-Nodes (6): nextConfig, next, metadata, BARE_ROUTES, Footer(), Navbar()
+Nodes (7): nextConfig, next, metadata, BARE_ROUTES, Chrome(), Footer(), Navbar()
 
 ### Community 69 - "createDisplacement"
 Cohesion: 0.26
 Nodes (11): createDisplacement(), frame(), onMotionChange(), onPointerMove(), render(), start(), stepSimulation(), syncCanvasSize() (+3 more)
 
 ### Community 70 - "entities.ts"
-Cohesion: 0.09
-Nodes (26): AdminLinksPage(), handleDelete(), handleSave(), load(), AdminUsersPage(), handleDelete(), handleSave(), load() (+18 more)
+Cohesion: 0.07
+Nodes (30): axios, AdminTeamPage(), handleDelete(), handleSave(), load(), AdminUsersPage(), handleDelete(), handleSave() (+22 more)
 
 ### Community 71 - "jt"
 Cohesion: 0.50
@@ -648,21 +648,21 @@ Nodes (14): scripts, build, check-code, clean-build, clean-dev, clean-install, d
 Cohesion: 0.21
 Nodes (11): DEFAULTS, ElementImageContext, emptySubscribe(), PaintableCanvas, PATTERNS, RetroDither(), RetroDitherElements, RetroDitherInstance (+3 more)
 
-### Community 74 - "teamMembers.ts"
-Cohesion: 0.27
-Nodes (11): AdminTeamPage(), handleDelete(), handleSave(), load(), createMember(), deleteMember(), getMembers(), MemberGetParams (+3 more)
+### Community 74 - "createShatter"
+Cohesion: 0.33
+Nodes (8): createShatter(), frame(), onMotionChange(), onPointerLeave(), onPointerMove(), render(), start(), uploadContent()
 
 ### Community 75 - "upright-guitar-glb.mjs"
 Cohesion: 0.18
 Nodes (10): ref_node_path, binData, binLen, buf, file, json, jsonLen, jsonStr (+2 more)
 
 ### Community 76 - "Product"
-Cohesion: 0.18
-Nodes (10): Accessibility & Inclusion, Brand Commitments, Capabilities and Constraints, Evidence on Hand, Platform, Positioning, Product, Product Principles (+2 more)
+Cohesion: 0.17
+Nodes (11): Accessibility & Inclusion, Brand Commitments, Capabilities and Constraints, Evidence on Hand, Operating Context, Platform, Positioning, Product (+3 more)
 
-### Community 77 - "Shatter.tsx"
-Cohesion: 0.14
-Nodes (18): createShatter(), frame(), onMotionChange(), onPointerLeave(), onPointerMove(), render(), start(), uploadContent() (+10 more)
+### Community 77 - "createRectCache"
+Cohesion: 0.19
+Nodes (12): DEFAULTS, ElementImageContext, emptySubscribe(), PaintableCanvas, Shatter(), ShatterElements, ShatterInstance, ShatterOptions (+4 more)
 
 ### Community 78 - "Staggered Animations Reference"
 Cohesion: 0.05
@@ -689,8 +689,8 @@ Cohesion: 0.67
 Nodes (3): build, build, MaterialPageRoute
 
 ### Community 87 - "adapt.native.md"
-Cohesion: 0.13
-Nodes (12): Adaptation Strategies, Assess Adaptation Challenge, Implement & Verify, Orientation & foldables, Phone → Tablet (iPad / large screens), Platform → platform (iOS ↔ Android), Web → native (porting a website or web app), After approval: the comp becomes a spec (+4 more)
+Cohesion: 0.25
+Nodes (7): Adaptation Strategies, Assess Adaptation Challenge, Implement & Verify, Orientation & foldables, Phone → Tablet (iPad / large screens), Platform → platform (iOS ↔ Android), Web → native (porting a website or web app)
 
 ### Community 93 - "applyEditing"
 Cohesion: 0.06
@@ -717,8 +717,8 @@ Cohesion: 0.07
 Nodes (28): AnimatedAlign, AnimatedContainer, AnimatedContainer (Multiple Properties), AnimatedDefaultTextStyle, AnimatedOpacity, AnimatedPadding, AnimatedPhysicalModel, AnimatedPositioned (+20 more)
 
 ### Community 99 - "discrete-text-sequence.md"
-Cohesion: 0.11
-Nodes (13): Critical Constraints, Cursor Click Ripple, Recipe, See also, Values, Variations, Critical Constraints, Discrete Text Sequence (+5 more)
+Cohesion: 0.08
+Nodes (21): Context-Sensitive Cursor, Critical Constraints, How It Works, Recipe, See also, Values, Variations, Control-Target Sync (+13 more)
 
 ### Community 100 - "Examples"
 Cohesion: 0.07
@@ -744,9 +744,9 @@ Nodes (22): Chart Scrub Readout, Critical Constraints, How It Works, Recipe, See
 Cohesion: 0.06
 Nodes (32): Accessibility, Animation Triggers, Availability, Choosing Animation Style, Common Patterns, Composing Shared Elements with List Identity, Core Concepts, Critical Placement Rule (+24 more)
 
-### Community 106 - "Card Morph Anchor"
+### Community 106 - "Theme Crossfade Morph"
 Cohesion: 0.09
-Nodes (20): Card Morph Anchor, Critical Constraints, How It Works, Morph channels, Recipe, See also, Values, Variations (+12 more)
+Nodes (19): Critical Constraints, Reactive Displacement, Recipe, See also, Values, Variations, Critical Constraints, Recipe (+11 more)
 
 ### Community 107 - "live.md"
 Cohesion: 0.08
@@ -761,7 +761,7 @@ Cohesion: 0.09
 Nodes (19): Critical Constraints, Physics Press Reaction (Cursor + Element Synced), Recipe, See also, Values, Variations, Critical Constraints, Press-Release Spring Chain (+11 more)
 
 ### Community 110 - "alert-dialog.tsx"
-Cohesion: 0.22
+Cohesion: 0.24
 Nodes (10): @radix-ui/react-alert-dialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter(), AlertDialogHeader(), AlertDialogOverlay (+2 more)
 
 ### Community 111 - "Operate mode depth (and Read notes)"
@@ -841,7 +841,7 @@ Cohesion: 0.13
 Nodes (14): 10. Performance, 11. Conteúdo — REGRAS, 12. Referências consultadas, 1. Identidade, 2. Paleta — GRAYSCALE ABSOLUTO, 3. Tipografia, 4. Forma & Geometria, 5. Texturas (layers) (+6 more)
 
 ### Community 130 - "Animation Recipes"
-Cohesion: 0.12
+Cohesion: 0.14
 Nodes (14): Accordion / collapse, Animation Recipes, Button press, Drag to dismiss, Drawer / sheet, Dropdown, popover, menu, select, Hold to confirm, Masking a crossfade that won't settle (+6 more)
 
 ### Community 131 - "Scene Transitions"
@@ -888,21 +888,21 @@ Nodes (14): Animation Timing, Card Expand/Collapse with `startTransition`, Compo
 Cohesion: 0.21
 Nodes (10): createHexFloat(), compile(), compileSim(), createDoubleTarget(), createPostProgram(), createPostTarget(), createSimProgram(), createTarget() (+2 more)
 
-### Community 142 - "Context-Sensitive Cursor"
-Cohesion: 0.29
-Nodes (7): Context-Sensitive Cursor, Critical Constraints, How It Works, Recipe, See also, Values, Variations
+### Community 142 - "Card Morph Anchor"
+Cohesion: 0.25
+Nodes (8): Card Morph Anchor, Critical Constraints, How It Works, Morph channels, Recipe, See also, Values, Variations
 
-### Community 143 - "document.md"
-Cohesion: 0.08
-Nodes (23): Component translation rules, Narrative mapping, Pitfalls, Scan mode (approach C: auto-extract, then confirm descriptive language), Schema, Seed mode, Step 1: Find the design assets, Step 1: Route through new-work's workshop (+15 more)
+### Community 143 - "Scan mode (approach C: auto-extract, then confirm descriptive language)"
+Cohesion: 0.15
+Nodes (13): Component translation rules, Narrative mapping, Scan mode (approach C: auto-extract, then confirm descriptive language), Schema, Step 1: Find the design assets, Step 2: Auto-extract what can be auto-extracted, Step 2b: Stage the frontmatter, Step 3: Ask the user for qualitative language (+5 more)
 
 ### Community 144 - "generate.md"
 Cohesion: 0.15
 Nodes (11): Step 1: Parse the request, Step 2: Reuse the page, then start, Step 3: Generate, Step 4: Accept and close, append-arrays, append-string, Config drift, Consent prompt (use this phrasing) (+3 more)
 
 ### Community 145 - "Animation Audit Playbook"
-Cohesion: 0.08
-Nodes (22): 1. Purpose & frequency, 2. Easing & duration, 3. Physicality & origin, 4. Interruptibility, 5. Performance, 6. Accessibility, 7. Cohesion & tokens, 8. Missed opportunities (+14 more)
+Cohesion: 0.17
+Nodes (10): 1. Purpose & frequency, 3. Physicality & origin, 4. Interruptibility, 5. Performance, 6. Accessibility, 7. Cohesion & tokens, 8. Missed opportunities, Animation Audit Playbook (+2 more)
 
 ### Community 146 - "4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)"
 Cohesion: 0.17
@@ -940,13 +940,9 @@ Nodes (11): Assess Current State, Code Simplification, Content Simplification, D
 Cohesion: 0.17
 Nodes (11): Accessibility Resilience, Assess Hardening Needs, Edge Cases & Boundary Conditions, Error Handling, Hardening Dimensions, Input Validation & Sanitization, Internationalization (i18n), Performance Resilience (+3 more)
 
-### Community 155 - "createParticleReveal"
+### Community 155 - "Common Patterns"
 Cohesion: 0.29
-Nodes (9): createParticleReveal(), frame(), onMotionChange(), onPointerLeave(), onPointerMove(), render(), start(), uploadContent() (+1 more)
-
-### Community 156 - "Control-Target Sync"
-Cohesion: 0.29
-Nodes (7): Control-Target Sync, Critical Constraints, How It Works, Recipe, See also, Values, Variations
+Nodes (7): Common Patterns, Composing Shared Elements with List Identity, Enter/Exit, Force Re-Enter with `key`, Layout Displacement Morph, List Reorder, Suspense Fallback to Content
 
 ### Community 157 - "Three.js for HyperFrames"
 Cohesion: 0.18
@@ -981,16 +977,16 @@ Cohesion: 0.31
 Nodes (11): acceptedDomAlreadyClean(), clearHandledWrapperReloadStamp(), deferredRecoverySuperseded(), ensureAcceptedDomClean(), findAcceptedRuntimeWrappers(), handledWrapperReloadKey(), reloadAfterMissingAcceptedDom(), restoreAcceptedDomFromSnapshot() (+3 more)
 
 ### Community 165 - "HeroSection.tsx"
-Cohesion: 0.39
-Nodes (5): SiteIntro(), INTRO_BOOT, INTRO_FLAG, INTRO_SKIP_QUERY, INTRO_SRC
+Cohesion: 0.36
+Nodes (6): HeroSection(), SiteIntro(), INTRO_BOOT, INTRO_FLAG, INTRO_SKIP_QUERY, INTRO_SRC
 
-### Community 166 - "tabs.tsx"
-Cohesion: 0.40
-Nodes (4): @radix-ui/react-tabs, TabsContent, TabsList, TabsTrigger
+### Community 166 - "Peel.tsx"
+Cohesion: 0.18
+Nodes (13): DEFAULTS, ElementImageContext, emptySubscribe(), PaintableCanvas, Peel(), PeelElements, PeelInstance, PeelMode (+5 more)
 
 ### Community 167 - "Building Animations"
-Cohesion: 0.13
-Nodes (15): 1. Should this animate at all?, 2. What is the purpose?, 3. Pick the tool — cheapest that works, 4. Pick the properties, 6. Interruption and exit, 7. Reduced motion and pointer gating, Building Animations, Hard Rules (+7 more)
+Cohesion: 0.20
+Nodes (8): Building Animations, Hard Rules, Initial Response, Never Ship, Operating Posture, Output, Recipes, Tone
 
 ### Community 168 - "10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know)"
 Cohesion: 0.20
@@ -1077,8 +1073,8 @@ Cohesion: 0.25
 Nodes (7): Constraints, Decision Guide, Flutter Animations, Principle 0, Resource Routing, Validation, Workflow
 
 ### Community 190 - "Timelines and Labels"
-Cohesion: 0.18
-Nodes (10): Toast, 5. Easing and duration — or a spring, Creating a Timeline, Inside Sub-Compositions: prefer `fromTo` over `from`, Labels, Nesting Timelines, Playback Control (debug / preview only), Position Parameter (+2 more)
+Cohesion: 0.25
+Nodes (7): Creating a Timeline, Inside Sub-Compositions: prefer `fromTo` over `from`, Labels, Nesting Timelines, Playback Control (debug / preview only), Position Parameter, Timelines and Labels
 
 ### Community 191 - "3D Text Depth Layers"
 Cohesion: 0.25
@@ -1091,10 +1087,6 @@ Nodes (7): AI Tracking Box, Critical Constraints, How It Works, Recipe, See also
 ### Community 193 - "Avatar Cloud Network"
 Cohesion: 0.25
 Nodes (7): Avatar Cloud Network, Critical Constraints, How It Works, Recipe, See also, Values, Variations
-
-### Community 194 - "Waterfall Entry"
-Cohesion: 0.40
-Nodes (4): Anti-patterns, Choreography, JS, Waterfall Entry
 
 ### Community 195 - "Coordinate Target Zoom"
 Cohesion: 0.25
@@ -1193,8 +1185,8 @@ Cohesion: 0.29
 Nodes (7): Anchored Layout Expand, Critical Constraints, How It Works, Recipe, See also, Values, Variations
 
 ### Community 219 - "Cursor Drag"
-Cohesion: 0.29
-Nodes (7): Critical Constraints, Cursor Drag, How It Works, Recipe, See also, Values, Variations
+Cohesion: 0.07
+Nodes (24): Critical Constraints, Cursor Click Ripple, Recipe, See also, Values, Variations, Critical Constraints, Cursor Drag (+16 more)
 
 ### Community 220 - "Depth-of-Field Blur (Selective Focus / Rack Focus)"
 Cohesion: 0.29
@@ -1244,9 +1236,9 @@ Nodes (6): Checks, in order, Disposition, Impeccable Finish Reviewer, Input Cont
 Cohesion: 0.29
 Nodes (6): Checks, Entry Atomicity, Impeccable Manual Edit Applier, Input Contract, Output Contract, Workflow
 
-### Community 232 - "Grid.tsx"
-Cohesion: 0.24
-Nodes (10): DEFAULTS, ElementImageContext, emptySubscribe(), Grid(), GridElements, GridInstance, GridOptions, GridProps (+2 more)
+### Community 232 - "The Build Sequence"
+Cohesion: 0.18
+Nodes (11): Toast, 1. Should this animate at all?, 2. What is the purpose?, 3. Pick the tool — cheapest that works, 4. Pick the properties, 5. Easing and duration — or a spring, 6. Interruption and exit, 7. Reduced motion and pointer gating (+3 more)
 
 ### Community 233 - "Architecture: Correções incrementais de UX mobile para todo o site"
 Cohesion: 0.29
@@ -1284,6 +1276,10 @@ Nodes (5): Elastic Push, Linear / Push, Push Slide, Squeeze, Vertical Push
 Cohesion: 0.33
 Nodes (6): 5. IMAGE COUNT & PAGE SLICING, Continuity Rule, Counting rule, Format, Section size variety, THIS IS THE PRIMARY OUTPUT RULE
 
+### Community 242 - "document.md"
+Cohesion: 0.18
+Nodes (10): Pitfalls, Seed mode, Step 1: Route through new-work's workshop, Step 2: Write seed DESIGN.md, Step 3: Confirm, Style guidelines, The frontmatter: token schema, The markdown body: eight sections (canonical order) (+2 more)
+
 ### Community 243 - "Diagnostic Scan"
 Cohesion: 0.33
 Nodes (6): 1. Accessibility (VoiceOver / TalkBack), 2. Performance, 3. Appearance & Theming, 4. Platform Conformance (CRITICAL), 5. Adaptivity, Diagnostic Scan
@@ -1291,6 +1287,10 @@ Nodes (6): 1. Accessibility (VoiceOver / TalkBack), 2. Performance, 3. Appearanc
 ### Community 244 - "impeccable/SKILL.md"
 Cohesion: 0.10
 Nodes (15): Before you finish, Scope is sovereign, The amplification, The skeleton test, Why it reads flat, Craft floor, Refuse, Verify (+7 more)
+
+### Community 245 - "Improving Animations"
+Cohesion: 0.18
+Nodes (11): Hard Rules, Improving Animations, Initial Response, Invocation Variants, Operating Posture, Phase 1 — Recon (always first), Phase 2 — Audit (parallel), Phase 3 — Vet, prioritize, confirm (+3 more)
 
 ### Community 246 - "React View Transitions Skill"
 Cohesion: 0.33
@@ -1352,10 +1352,6 @@ Nodes (9): Colors, Components, Do's and Don'ts, Elevation & Depth, Layout, Overv
 Cohesion: 0.40
 Nodes (4): Assemble and review, Component review, Prepare the component kit, Present and wait
 
-### Community 261 - "Multi-Cursor Choreography"
-Cohesion: 0.29
-Nodes (7): Critical Constraints, How It Works, Multi-Cursor Choreography, Recipe, See also, Values, Variations
-
 ### Community 262 - "TerminalIntro"
 Cohesion: 0.40
 Nodes (3): Scene, Render: manim -r 320,320 --fps 30 scripts/manim/intro.py TerminalIntro Copy the…, TerminalIntro
@@ -1408,9 +1404,9 @@ Nodes (4): Heuristics Scoring Guide, Issue Severity (P0–P3), Reference Materia
 Cohesion: 0.33
 Nodes (6): Constraints, Failure modes, Flow, $impeccable hooks, Routing, Triage findings
 
-### Community 278 - "Theme Crossfade Morph"
-Cohesion: 0.29
-Nodes (7): Critical Constraints, How It Works, Recipe, See also, Theme Crossfade Morph, Values, Variations
+### Community 275 - "Visualize: Direction Comps & Asset Production"
+Cohesion: 0.33
+Nodes (5): After approval: the comp becomes a spec, Generate three compositional options, One approval point, Plates and provenance, Visualize: Direction Comps & Asset Production
 
 ### Community 279 - "Best Practices"
 Cohesion: 0.67
@@ -1437,24 +1433,24 @@ Cohesion: 0.67
 Nodes (3): Debugging Curves, Print Curve Values, Visualize Curve
 
 ## Knowledge Gaps
-- **2137 isolated node(s):** `_controller`, `_animation`, `child`, `_opacityTween`, `_sizeTween` (+2132 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2378 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **37 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2138 isolated node(s):** `_controller`, `_animation`, `child`, `_opacityTween`, `_sizeTween` (+2133 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2369 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **38 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react` connect `react` to `cn`, `package.json`, `AsciiSweep.tsx`, `HexFloat.tsx`, `Asciify.tsx`, `DitheredObject.tsx`, `ParticleObject.tsx`, `createForceField`, `useImageObjectUrl.ts`, `src/lib/utils.ts`, `DecryptReveal.tsx`, `hooks/use-toast.ts`, `createGlyphRain`, `Peel.tsx`, `lucide-react`, `createRipple`, `isBrowser`, `createParticleScroll`, `HeroSection.tsx`, `tabs.tsx`, `ParticleReveal.tsx`, `VHS.tsx`, `admin-auth.ts`, `command.tsx`, `Glitch.tsx`, `i18n.tsx`, `ChocolateGift.tsx`, `carousel.tsx`, `form.tsx`, `utils/lib/utils.ts`, `class-variance-authority`, `createRectCache`, `chart.tsx`, `next`, `RetroDither.tsx`, `Shatter.tsx`, `Grid.tsx`, `alert-dialog.tsx`?**
-  _High betweenness centrality (0.364) - this node is a cross-community bridge._
-- **Why does `x()` connect `x` to `modern-screenshot.umd.js`, `Building Animations`, `Chart Scrub Readout`, `jt`, `Card Morph Anchor`, `HyperFrames GSAP`, `Motion blur — shutter smear on any animated element`, `Ambient Glow Bloom`, `Animation Audit Playbook`, `Transforms and Performance`, `z`, `Lottie for HyperFrames`, `Rules Index`, `HyperFrames Animation`, `Chromatic Glitch`, `Control-Target Sync`?**
-  _High betweenness centrality (0.321) - this node is a cross-community bridge._
-- **Why does `initializeAsciiSweep()` connect `initializeAsciiSweep` to `AsciiSweep.tsx`, `Timelines and Labels`?**
-  _High betweenness centrality (0.296) - this node is a cross-community bridge._
+- **Why does `react` connect `react` to `cn`, `package.json`, `AsciiSweep.tsx`, `HexFloat.tsx`, `Asciify.tsx`, `DitheredObject.tsx`, `ParticleObject.tsx`, `createForceField`, `src/lib/utils.ts`, `DecryptReveal.tsx`, `hooks/use-toast.ts`, `createGlyphRain`, `lucide-react`, `createRipple`, `useImageObjectUrl.ts`, `isBrowser`, `createParticleScroll`, `HeroSection.tsx`, `Peel.tsx`, `ParticleReveal.tsx`, `VHS.tsx`, `admin-auth.ts`, `links/page.tsx`, `Glitch.tsx`, `i18n.tsx`, `ChocolateGift.tsx`, `carousel.tsx`, `form.tsx`, `framer-motion`, `Grid.tsx`, `Displacement.tsx`, `chart.tsx`, `IdentityObject.tsx`, `next`, `RetroDither.tsx`, `createRectCache`, `alert-dialog.tsx`?**
+  _High betweenness centrality (0.368) - this node is a cross-community bridge._
+- **Why does `x()` connect `x` to `discrete-text-sequence.md`, `modern-screenshot.umd.js`, `Building Animations`, `The Build Sequence`, `Chart Scrub Readout`, `jt`, `HyperFrames GSAP`, `Motion blur — shutter smear on any animated element`, `Card Morph Anchor`, `Ambient Glow Bloom`, `Animation Audit Playbook`, `Transforms and Performance`, `z`, `Lottie for HyperFrames`, `Rules Index`, `HyperFrames Animation`, `Chromatic Glitch`?**
+  _High betweenness centrality (0.324) - this node is a cross-community bridge._
+- **Why does `ease()` connect `The Build Sequence` to `initializeAsciiSweep`, `Anime.js for HyperFrames`, `Timelines and Labels`?**
+  _High betweenness centrality (0.301) - this node is a cross-community bridge._
 - **Are the 8 inferred relationships involving `createHexFloat()` (e.g. with `onClick()` and `onMotionChange()`) actually correct?**
   _`createHexFloat()` has 8 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `_controller`, `_animation`, `child` to the rest of the system?**
-  _2137 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2138 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `live-browser.js` be split into smaller, more focused modules?**
   _Cohesion score 0.027479562690830295 - nodes in this community are weakly interconnected._
 - **Should `cn` be split into smaller, more focused modules?**
-  _Cohesion score 0.04136874361593463 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.03644688644688645 - nodes in this community are weakly interconnected._
