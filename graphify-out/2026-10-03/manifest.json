@@ -552,9 +552,9 @@
     "semantic_hash": ""
   },
   "src/components/hero/HeroSection.tsx": {
-    "mtime": 1791074306.0933843,
-    "seen": 1791074870.055853,
-    "ast_hash": "2579cee0658168f85587eb561f617eaa",
+    "mtime": 1791068061.6780095,
+    "seen": 1791068075.6952443,
+    "ast_hash": "0cea61057db7a0eaf8edd97b2c2cf423",
     "semantic_hash": ""
   },
   "src/components/presente/ChocolateGift.tsx": {
@@ -2292,8 +2292,8 @@
     "semantic_hash": ""
   },
   "public/robots.txt": {
-    "mtime": 1791074366.6883066,
-    "seen": 1791074870.0641754,
+    "mtime": 1791068061.6736434,
+    "seen": 1791068075.6955378,
     "ast_hash": "4d4c74402de6a32aa434371f3445dd2d",
     "semantic_hash": ""
   },
@@ -2364,9 +2364,9 @@
     "semantic_hash": ""
   },
   "e2e/home.spec.ts": {
-    "mtime": 1791072026.106942,
-    "seen": 1791072182.7280147,
-    "ast_hash": "008a20d3bb197ab6ef3ddc0080b0a3de",
+    "mtime": 1791068061.6303465,
+    "seen": 1791068075.6951737,
+    "ast_hash": "ff8415b017bf35ebb4736a7f57915c2c",
     "semantic_hash": ""
   },
   ".impeccable/home-brief-body.md": {
@@ -2388,9 +2388,9 @@
     "semantic_hash": ""
   },
   "docs/ASSET_PROVENANCE.md": {
-    "mtime": 1791068593.09191,
-    "seen": 1791072182.7374299,
-    "ast_hash": "7b134b625ad276323fcf4480176df9c9",
+    "mtime": 1791068061.6303465,
+    "seen": 1791068075.695537,
+    "ast_hash": "39b403060530ae79a42a20bef8b59fb4",
     "semantic_hash": ""
   },
   ".impeccable/review/desktop.png": {
@@ -2463,12 +2463,6 @@
     "mtime": 1791068061.680474,
     "seen": 1791068075.6953113,
     "ast_hash": "a6d214b63e9c570ba217574d0580860d",
-    "semantic_hash": ""
-  },
-  "src/components/hero/IdentityObject.tsx": {
-    "mtime": 1791071222.9753704,
-    "seen": 1791072182.7297456,
-    "ast_hash": "b116f8b15f83986a65bb0493392f55cc",
     "semantic_hash": ""
   }
 }
