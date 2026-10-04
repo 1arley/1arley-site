@@ -135,7 +135,13 @@ export default function HeroSection() {
 
           <Link
             href="#projetos"
-            className="hero-cta group inline-flex min-h-12 items-center justify-between gap-8 border border-white bg-white px-5 font-mono text-xs font-bold uppercase text-black sm:min-w-52 lg:col-span-2 lg:col-start-11"
+            // Three columns, not two: `sm:min-w-52` is 208px, and at the lg
+            // breakpoint two of twelve columns inside this bar are only ~137px.
+            // The minimum wins over the track and pushed the arrow past the
+            // viewport edge between 1024px and ~1200px. Three columns clears it
+            // at the breakpoint; `justify-self-end` keeps the button at its own
+            // 208px instead of stretching it across the wider track.
+            className="hero-cta group inline-flex min-h-12 items-center justify-between gap-8 border border-white bg-white px-5 font-mono text-xs font-bold uppercase text-black sm:min-w-52 lg:col-span-3 lg:col-start-10 lg:justify-self-end"
           >
             {t.hero.ctaProjects}
             <ArrowDownRight
