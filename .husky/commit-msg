@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# Bloqueia trailers de co-autoria (Co-Authored-By) nas mensagens de commit.
+#
+# Politica: commits sao atribuidos apenas ao desenvolvedor humano, mesmo quando
+# um agente escreveu o codigo. Ver AGENTS.md.
+
+msg_file="$1"
+
+# Sem argumento ou arquivo inexistente: nada a inspecionar.
+[ -z "$msg_file" ] && exit 0
+[ ! -f "$msg_file" ] && exit 0
+
+# Escape hatch para o caso legitimo de co-autoria real.
+[ "${ALLOW_AI_COAUTHOR:-0}" = "1" ] && exit 0
+
+if grep -qiE '^[[:space:]]*Co-Authored-By:' "$msg_file"; then
+  {
+    echo ""
+    echo "[commit-msg] ERRO: trailer 'Co-Authored-By' nao permitido."
+    echo "[commit-msg] Commits sao atribuidos apenas ao desenvolvedor humano."
+    echo "[commit-msg] Remova a linha e tente de novo."
+    echo "[commit-msg] Bypass explicito: git commit --no-verify"
+    echo "[commit-msg] Linhas rejeitadas:"
+    grep -inE '^[[:space:]]*Co-Authored-By:' "$msg_file"
+    echo ""
+  } >&2
+  exit 1
+fi
+
+exit 0
