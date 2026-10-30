@@ -38,7 +38,7 @@ export default function SobrePage() {
 
           <h1
             id="sobre-title"
-            className="mt-8 font-display text-[clamp(3.5rem,16vw,14rem)] font-black uppercase leading-[0.78] tracking-[-0.04em] text-white"
+            className="mt-8 font-display text-5xl uppercase leading-none text-white sm:text-7xl lg:text-8xl xl:text-9xl"
           >
             <BlurText as="span" text="Arthur" delay={80} className="block" />
             <BlurText as="span" text="Iarley." delay={160} wordClassName="text-outline-white" className="block" />
@@ -258,7 +258,7 @@ export default function SobrePage() {
           <Reveal>
             <h2
               id="cta-title"
-              className="font-display text-[clamp(2.5rem,10vw,8rem)] font-black uppercase leading-[0.85] tracking-[-0.03em] text-white"
+              className="font-display text-4xl uppercase leading-none text-white sm:text-6xl lg:text-8xl"
             >
               {t.sobre.ctaContact}
             </h2>

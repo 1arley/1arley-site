@@ -125,11 +125,20 @@ test("particle identity mark is absent on narrow viewports", async ({ page, view
   ).toBe(0);
 });
 
-test("reduced motion never mounts the particle identity mark", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
-  await page.waitForTimeout(3000);
+  test("reduced motion never mounts the particle identity mark", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    await page.waitForTimeout(3000);
 
-  await expect(page.locator("[data-identity-object] canvas")).toHaveCount(0);
-  await expect(page.locator("h1")).toBeVisible();
+    await expect(page.locator("[data-identity-object] canvas")).toHaveCount(0);
+    await expect(page.locator("h1")).toBeVisible();
+  });
+
+test("Sobre h1 BlurText animates into view with opacity 1", async ({ page }) => {
+  await page.goto("/sobre");
+  const h1 = page.locator("#sobre-title");
+  await expect(h1).toBeVisible();
+  await expect(h1.locator("span > span").first()).toHaveCSS("opacity", "1", {
+    timeout: 5000,
+  });
 });
