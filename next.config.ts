@@ -13,22 +13,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    if (process.env.NODE_ENV !== "development") return [];
-
-    const apiHost = process.env.API_BASE_URL
-      ?.replace(/\/api\/v\d+$/, "")
-      .replace(/\/api$/, "");
-
-    if (!apiHost) return [];
-
-    return [
-      {
-        source: "/uploads/:path*",
-        destination: `${apiHost}/uploads/:path*`,
-      },
-    ];
-  },
 };
 
 export default nextConfig;
