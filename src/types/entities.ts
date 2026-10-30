@@ -37,24 +37,6 @@ export interface QuickLink {
 
 export type QuickLinkInput = Omit<QuickLink, "id">
 
-export interface FaqTopic {
-  id: string
-  name: string
-  questions: FaqQuestion[]
-}
-
-export type SaveFaqTopic = Omit<FaqTopic, "id" | "questions"> & { id?: string }
-
-export interface FaqQuestion {
-  id: string
-  question: string
-  answer: string
-  topicId: string
-  isPublished: boolean
-}
-
-export type SaveFaqQuestion = Omit<FaqQuestion, "id"> & { id?: string }
-
 export interface AdminUser {
   id: string
   name: string
