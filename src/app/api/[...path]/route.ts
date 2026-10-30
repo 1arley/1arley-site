@@ -28,7 +28,7 @@ async function proxyRequest(
   try {
     apiBaseUrl = getRuntimeApiBaseUrl();
   } catch (error) {
-    if (request.method === "GET" && path.join("/") === "site") {
+    if (request.method === "GET" && path.join("/") === "v1/site") {
       return NextResponse.json({ data: {} });
     }
 
