@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import { deepMerge } from '@/lib/i18n'
 import { dict, type Dict } from '@/lib/i18n-data'
 import { getSiteContent, saveSiteContent, uploadImage } from '@/services/cms'
+import { isHttpUrl, isValidImageSrc } from '@/utils/lib/url'
 
 type Lang = 'pt' | 'en'
 
@@ -108,8 +109,8 @@ function CmsImageField({
     <div>
       <Label htmlFor={urlInputId} className="text-xs text-muted-foreground">{label}</Label>
       <div className={`mt-1 relative overflow-hidden border border-input bg-black/30 ${aspect}`}>
-        {value ? (
-          <Image src={value} alt="" fill className="object-cover" unoptimized />
+        {isValidImageSrc(value) ? (
+          <Image src={value.trim()} alt="" fill className="object-cover" unoptimized />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm">
             Sem imagem
@@ -229,6 +230,16 @@ export default function AdminSitePage() {
     setState({ ...state, [lang]: { ...d, [key]: { ...(d[key] as object), ...value } } })
 
   async function handleSave() {
+    if (!state) return
+    for (const l of ['pt', 'en'] as const) {
+      const invalidProject = state[l].projects.projects.find(
+        (proj) => proj.href && !isHttpUrl(proj.href),
+      )
+      if (invalidProject) {
+        toast.error('URL de projeto inválida (use http:// ou https://)')
+        return
+      }
+    }
     setSaving(true)
     try {
       await saveSiteContent(state)

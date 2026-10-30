@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { useLocale } from "@/lib/i18n";
+import { isHttpUrl, isValidImageSrc } from "@/utils/lib/url";
 
 const projectLayouts = [
   "lg:col-span-8",
@@ -55,7 +56,7 @@ export default function ProjectsSection() {
               delay={index * 0.04}
             >
               <a
-                href={project.href}
+                href={isHttpUrl(project.href) ? project.href : "#projetos"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="project-link group block"
@@ -69,17 +70,19 @@ export default function ProjectsSection() {
                 <div
                   className={`relative overflow-hidden bg-black-8 ${projectAspects[index]}`}
                 >
-                  <Image
-                    src={project.img}
-                    alt={project.alt}
-                    fill
-                    className="object-cover grayscale contrast-[1.08] transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.025]"
-                    sizes={
-                      index === 0
-                        ? "(min-width: 1024px) 65vw, 100vw"
-                        : "(min-width: 1024px) 48vw, 100vw"
-                    }
-                  />
+                  {isValidImageSrc(project.img) ? (
+                    <Image
+                      src={project.img.trim()}
+                      alt={project.alt}
+                      fill
+                      className="object-cover grayscale contrast-[1.08] transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.025]"
+                      sizes={
+                        index === 0
+                          ? "(min-width: 1024px) 65vw, 100vw"
+                          : "(min-width: 1024px) 48vw, 100vw"
+                      }
+                    />
+                  ) : null}
                   <div
                     className="project-scan absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
                     aria-hidden="true"

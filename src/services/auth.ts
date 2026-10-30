@@ -2,11 +2,8 @@ import api from "@/utils/lib/api";
 import { LoginCredentials, LoginResponse } from "../types/auth";
 import { AxiosError } from "axios";
 
-export function disableCredentials() {
-  api.defaults.withCredentials = false;
-}
-
 export async function login(credentials: LoginCredentials): Promise<LoginResponse> {
+  api.defaults.withCredentials = true;
   return api
     .post("/auth/login", { ...credentials })
     .then((response) => response.data)
@@ -17,6 +14,7 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
 
 export function setSession(token: string, user: { role: string }) {
   if (typeof window === "undefined") return;
+  api.defaults.withCredentials = true;
   window.sessionStorage.setItem("adminAuthToken", token);
   window.sessionStorage.setItem("adminUser", JSON.stringify(user));
   window.sessionStorage.setItem("adminRole", user.role);

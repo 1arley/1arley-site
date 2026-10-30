@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, Pencil, Trash2, ExternalLink, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { getLinks, createLink, updateLink, deleteLink } from '@/services/quickAccess'
+import { isHttpUrl } from '@/utils/lib/url'
 import type { QuickLink } from '@/types/entities'
 
 interface FormState {
@@ -43,6 +44,10 @@ export default function AdminLinksPage() {
 
   async function handleSave() {
     if (!form.title || !form.url) return
+    if (!isHttpUrl(form.url)) {
+      toast.error('Informe uma URL HTTP/HTTPS válida')
+      return
+    }
     setSaving(true)
     try {
       if (editing) {
@@ -131,9 +136,13 @@ export default function AdminLinksPage() {
             <div className="min-w-0 mr-4">
               <h3 className="text-white font-medium">{link.title}</h3>
               <p className="text-muted-foreground text-sm truncate">{link.description}</p>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-white/80 hover:underline inline-flex min-h-11 items-center gap-1 mt-1 break-all">
-                {link.url} <ExternalLink className="w-3 h-3 shrink-0" />
-              </a>
+              {isHttpUrl(link.url) ? (
+                <a href={link.url} target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-white/80 hover:underline inline-flex min-h-11 items-center gap-1 mt-1 break-all">
+                  {link.url} <ExternalLink className="w-3 h-3 shrink-0" />
+                </a>
+              ) : (
+                <span className="font-mono text-xs text-muted-foreground mt-1 inline-block break-all">{link.url}</span>
+              )}
             </div>
             <div className="flex gap-2 shrink-0">
               <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Editar ${link.title}`} onClick={() => handleEdit(link)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>

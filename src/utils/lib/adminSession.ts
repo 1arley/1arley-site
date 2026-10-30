@@ -18,10 +18,4 @@ export function clearAdminSession(): void {
   window.sessionStorage.removeItem(ADMIN_AUTH_TOKEN_KEY);
   window.sessionStorage.removeItem(ADMIN_USER_KEY);
   window.sessionStorage.removeItem(ADMIN_ROLE_KEY);
-
-  import("@/services/auth").then((auth) => {
-    if (auth.disableCredentials) {
-      auth.disableCredentials();
-    }
-  });
 }

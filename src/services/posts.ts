@@ -1,4 +1,5 @@
 import api from "@/utils/lib/api"
+import { uploadImage } from "@/services/cms"
 import type { PostProps, PostInput } from "@/types/entities"
 
 export async function getPosts(): Promise<PostProps[]> {
@@ -12,25 +13,27 @@ export async function getPostById(id: string): Promise<PostProps> {
 }
 
 export async function createPost(data: PostInput): Promise<void> {
-  const formData = new FormData()
-  formData.append("title", data.title)
-  formData.append("description", data.description)
-  formData.append("content", data.content)
-  formData.append("category", data.category)
-  if (data.isHighlighted) formData.append("isHighlighted", "true")
-  if (data.file) formData.append("file", data.file)
-  await api.post("/posts", formData)
+  const coverImage = data.file ? await uploadImage(data.file) : data.coverImage
+  await api.post("/posts", {
+    title: data.title,
+    description: data.description,
+    content: data.content,
+    category: data.category,
+    isHighlighted: Boolean(data.isHighlighted),
+    ...(coverImage !== undefined ? { coverImage } : {}),
+  })
 }
 
 export async function updatePost(id: string, data: PostInput): Promise<void> {
-  const formData = new FormData()
-  formData.append("title", data.title)
-  formData.append("description", data.description)
-  formData.append("content", data.content)
-  formData.append("category", data.category)
-  if (data.isHighlighted) formData.append("isHighlighted", "true")
-  if (data.file) formData.append("file", data.file)
-  await api.patch(`/posts/${id}`, formData)
+  const coverImage = data.file ? await uploadImage(data.file) : data.coverImage
+  await api.patch(`/posts/${id}`, {
+    title: data.title,
+    description: data.description,
+    content: data.content,
+    category: data.category,
+    isHighlighted: Boolean(data.isHighlighted),
+    ...(coverImage !== undefined ? { coverImage } : {}),
+  })
 }
 
 export async function deletePost(id: string): Promise<void> {

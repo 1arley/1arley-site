@@ -6,3 +6,13 @@ export const isHttpUrl = (value: string): boolean => {
     return false;
   }
 };
+
+export const isValidImageSrc = (value: string): boolean => {
+  if (!value || typeof value !== "string") return false;
+  const trimmed = value.trim();
+  if (!trimmed) return false;
+  if (trimmed.startsWith("/") && !trimmed.startsWith("//")) {
+    return true;
+  }
+  return isHttpUrl(trimmed);
+};

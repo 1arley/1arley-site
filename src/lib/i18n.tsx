@@ -31,17 +31,29 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   );
 }
 
-/** Merge profundo: objetos se combinam, arrays e primitivos são substituídos. */
+/** Merge profundo: objetos se combinam, arrays e primitivos são substituídos (null-safe). */
 export function deepMerge<T>(base: T, override: unknown): T {
-  if (!isPlainObject(override) || !isPlainObject(base)) {
-    return (override === undefined ? base : (override as T));
+  if (override === undefined || override === null) {
+    return base;
   }
-  const out: Record<string, unknown> = { ...(base as Record<string, unknown>) };
-  for (const [key, value] of Object.entries(override)) {
-    if (value === undefined) continue;
-    out[key] = deepMerge((base as Record<string, unknown>)[key], value);
+  if (Array.isArray(base)) {
+    return (Array.isArray(override) ? override : base) as T;
   }
-  return out as T;
+  if (isPlainObject(base)) {
+    if (!isPlainObject(override)) {
+      return base;
+    }
+    const out: Record<string, unknown> = { ...(base as Record<string, unknown>) };
+    for (const [key, value] of Object.entries(override)) {
+      if (value === undefined || value === null) continue;
+      out[key] = deepMerge((base as Record<string, unknown>)[key], value);
+    }
+    return out as T;
+  }
+  if (base !== undefined && typeof override !== typeof base) {
+    return base;
+  }
+  return override as T;
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
