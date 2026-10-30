@@ -5,7 +5,7 @@ test.describe("Home", () => {
     page,
   }) => {
     const siteContent = page.waitForResponse((response) =>
-      response.url().endsWith("/api/site"),
+      response.url().endsWith("/api/v1/site"),
     );
     await page.goto("/");
 
@@ -13,7 +13,7 @@ test.describe("Home", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: /arthur iarley/i }),
     ).toBeVisible();
-    await expect(page.locator("#projetos a[target='_blank']")).toHaveCount(4);
+    await expect(page.locator("#projetos a[target='_blank']")).toHaveCount(6);
 
     const hasHorizontalOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,

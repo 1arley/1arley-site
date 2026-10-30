@@ -57,8 +57,11 @@ jobs:
             - name: Run ESLint
               run: npm run lint
 
+            - name: Run TypeScript Typecheck
+              run: npm run typecheck
+
     build:
-        name: "Build Application"
+        name: "Build and E2E Verification"
         needs: lint
         runs-on: self-hosted
         steps:
@@ -78,8 +81,11 @@ jobs:
                   path: node_modules
                   key: node-modules-v2-${{ hashFiles('package-lock.json') }}
 
-            - name: Build Application
-              run: npm run build
+            - name: Install Playwright Browsers
+              run: npx playwright install --with-deps chromium
+
+            - name: Run Playwright E2E Tests
+              run: npm run test:e2e
 
     docker-build:
         name: "Container Image Build"
