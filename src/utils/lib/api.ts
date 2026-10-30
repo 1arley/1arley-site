@@ -1,6 +1,11 @@
 import axios, { type AxiosError, type AxiosInstance } from "axios";
 
 import { handleRefreshResponseError } from "@/services/tokenRefresh";
+import { purgeLegacyAdminToken } from "@/utils/lib/adminSession";
+
+if (typeof window !== "undefined") {
+  purgeLegacyAdminToken();
+}
 
 const api = axios.create({
   baseURL: "/api/v1",
@@ -9,24 +14,13 @@ const api = axios.create({
 
 function setupHttpInterceptors(apiInstance: AxiosInstance): void {
   apiInstance.interceptors.request.use((config) => {
+    purgeLegacyAdminToken();
     config.headers.Accept = "application/json";
 
     const method = config.method?.toLowerCase();
     if (method === "post" || method === "put" || method === "patch") {
       if (!(config.data instanceof FormData)) {
         config.headers["Content-Type"] = "application/json";
-      }
-    }
-
-    if (
-      !config.url?.includes("/auth/refresh") &&
-      !config.url?.includes("/auth/login")
-    ) {
-      if (typeof window !== "undefined") {
-        const token = window.sessionStorage.getItem("adminAuthToken");
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
       }
     }
 

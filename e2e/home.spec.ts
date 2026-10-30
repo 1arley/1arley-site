@@ -223,11 +223,16 @@ test.describe("320px viewport & 44px touch targets [AC1-AC6]", () => {
     page,
   }) => {
     await page.setViewportSize({ width: 320, height: 568 });
+    await page.context().addCookies([
+      {
+        name: "admin_session",
+        value: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IkFETUlOIn0.sig",
+        url: "http://localhost:3100",
+        httpOnly: true,
+        sameSite: "Strict",
+      },
+    ]);
     await page.addInitScript(() => {
-      const payload = btoa(
-        JSON.stringify({ sub: "1", role: "ADMIN", exp: Math.floor(Date.now() / 1000) + 3600 }),
-      );
-      window.sessionStorage.setItem("adminAuthToken", `h.${payload}.s`);
       window.sessionStorage.setItem(
         "adminUser",
         JSON.stringify({ id: "1", email: "admin@1arley.me", role: "ADMIN" }),
@@ -282,11 +287,16 @@ test.describe("320px viewport & 44px touch targets [AC1-AC6]", () => {
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.context().addCookies([
+      {
+        name: "admin_session",
+        value: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IkFETUlOIn0.sig",
+        url: "http://localhost:3100",
+        httpOnly: true,
+        sameSite: "Strict",
+      },
+    ]);
     await page.addInitScript(() => {
-      const payload = btoa(
-        JSON.stringify({ sub: "1", role: "ADMIN", exp: Math.floor(Date.now() / 1000) + 3600 }),
-      );
-      window.sessionStorage.setItem("adminAuthToken", `h.${payload}.s`);
       window.sessionStorage.setItem(
         "adminUser",
         JSON.stringify({ id: "1", email: "admin@1arley.me", role: "ADMIN" }),
@@ -334,5 +344,95 @@ test.describe("320px viewport & 44px touch targets [AC1-AC6]", () => {
 
     await page.goto("/sobre");
     await expect(page.getByText("Origem editada pelo CMS.")).toBeVisible();
+  });
+
+  test("enforces server-side /admin protection, httpOnly session cookie, safe ?next=, logout and 401 recovery [SEC-03]", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+
+    let usersStatus = 200;
+    await page.route("**/api/v1/site", async (route) => {
+      await route.fulfill({ json: { data: {} } });
+    });
+    await page.route("**/api/v1/users", async (route) => {
+      if (usersStatus === 401) {
+        await route.fulfill({
+          status: 401,
+          json: { message: "Token invalido ou expirado." },
+        });
+      } else {
+        await route.fulfill({ status: 200, json: { data: [] } });
+      }
+    });
+    await page.route("**/api/v1/auth/login", async (route) => {
+      const jwt =
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IkFETUlOIiwiZXhwIjo0MTAyNDQ0ODAwfQ.sig";
+      await route.fulfill({
+        status: 200,
+        headers: {
+          "content-type": "application/json",
+          "set-cookie": `admin_session=${jwt}; Path=/; Max-Age=28800; HttpOnly; SameSite=Strict`,
+        },
+        body: JSON.stringify({
+          user: { id: "1", email: "admin@1arley.me", role: "ADMIN" },
+        }),
+      });
+    });
+
+    // 1. Unauthenticated /admin/users redirects to /login?next=%2Fadmin%2Fusers
+    await page.goto("/admin/users");
+    await expect(page).toHaveURL(/\/login\?next=%2Fadmin%2Fusers$/);
+
+    // Seed a legacy token in sessionStorage to verify it gets purged
+    await page.evaluate(() => {
+      window.sessionStorage.setItem("adminAuthToken", "legacy-token-to-purge");
+    });
+
+    // 2. Valid login lands on the validated ?next= destination (/admin/users)
+    await page.getByLabel("Email").fill("admin@1arley.me");
+    await page.getByLabel("Senha").fill("secret123");
+    await page.getByRole("button", { name: /entrar/i }).click();
+    await expect(page).toHaveURL(/\/admin\/users$/);
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Usuários", exact: true }),
+    ).toBeVisible();
+
+    // 3. document.cookie does not contain admin_session (HttpOnly) and sessionStorage has no token
+    const docCookie = await page.evaluate(() => document.cookie);
+    expect(docCookie).not.toContain("admin_session");
+    const storedToken = await page.evaluate(() =>
+      window.sessionStorage.getItem("adminAuthToken"),
+    );
+    expect(storedToken).toBeNull();
+    const contextCookies = await page.context().cookies();
+    const adminCookie = contextCookies.find((c) => c.name === "admin_session");
+    expect(adminCookie).toBeDefined();
+    expect(adminCookie?.httpOnly).toBe(true);
+
+    // 4. Logout expires cookie via real POST /api/v1/auth/logout and blocks /admin/site again
+    await page.getByRole("button", { name: "Sair" }).click();
+    await expect(page).toHaveURL(/\/login$/);
+    await page.goto("/admin/site");
+    await expect(page).toHaveURL(/\/login\?next=%2Fadmin%2Fsite$/);
+
+    // 5. Malicious ?next=https://evil.com and ?next=//evil.com are ignored on login
+    for (const evilNext of ["https://evil.com", "//evil.com"]) {
+      await page.context().clearCookies();
+      await page.goto(`/login?next=${encodeURIComponent(evilNext)}`);
+      await page.getByLabel("Email").fill("admin@1arley.me");
+      await page.getByLabel("Senha").fill("secret123");
+      await page.getByRole("button", { name: /entrar/i }).click();
+      await expect(page).toHaveURL(/\/admin\/site$/);
+    }
+
+    // 6. 401 from backend clears local session, calls logout and redirects to /login?next=%2Fadmin%2Fusers
+    usersStatus = 401;
+    await page.goto("/admin/users");
+    await expect(page).toHaveURL(/\/login\?next=%2Fadmin%2Fusers$/);
+    const roleAfter401 = await page.evaluate(() =>
+      window.sessionStorage.getItem("adminRole"),
+    );
+    expect(roleAfter401).toBeNull();
   });
 });

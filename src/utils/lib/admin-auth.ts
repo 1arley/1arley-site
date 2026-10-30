@@ -1,17 +1,26 @@
 import type { AdminRole } from "@/types/auth";
+import { purgeLegacyAdminToken } from "@/utils/lib/adminSession";
 
 interface StoredAdminUser {
-  id?: string | number
-  name?: string
-  email?: string
-  role?: string
+  id?: string | number;
+  name?: string;
+  email?: string;
+  role?: string;
 }
 
 const isBrowser = (): boolean => typeof window !== "undefined";
 
+if (isBrowser()) {
+  purgeLegacyAdminToken();
+}
+
 const normalizeRole = (role: string): AdminRole | "" => {
   const normalizedRole = role.trim().toUpperCase();
-  if (normalizedRole === "USER" || normalizedRole === "ADMIN" || normalizedRole === "SUPERADMIN") {
+  if (
+    normalizedRole === "USER" ||
+    normalizedRole === "ADMIN" ||
+    normalizedRole === "SUPERADMIN"
+  ) {
     return normalizedRole;
   }
   return "";
@@ -19,6 +28,7 @@ const normalizeRole = (role: string): AdminRole | "" => {
 
 export const getStoredAdminRole = (): AdminRole | "" => {
   if (!isBrowser()) return "";
+  purgeLegacyAdminToken();
   const storedRole = window.sessionStorage.getItem("adminRole");
   if (storedRole) {
     const normalizedStoredRole = normalizeRole(storedRole);
@@ -36,6 +46,7 @@ export const getStoredAdminRole = (): AdminRole | "" => {
 
 export const getStoredAdminUser = (): StoredAdminUser | null => {
   if (!isBrowser()) return null;
+  purgeLegacyAdminToken();
   const rawUser = window.sessionStorage.getItem("adminUser");
   if (!rawUser) return null;
   try {
@@ -47,7 +58,9 @@ export const getStoredAdminUser = (): StoredAdminUser | null => {
 
 export const getStoredAdminUserId = (): string => {
   const storedUser = getStoredAdminUser();
-  return storedUser?.id !== undefined && storedUser?.id !== null ? String(storedUser.id) : "";
+  return storedUser?.id !== undefined && storedUser?.id !== null
+    ? String(storedUser.id)
+    : "";
 };
 
 export const hasAdminAccess = (role: string): boolean => {
@@ -60,14 +73,14 @@ export const hasSuperAdminAccess = (role: string): boolean => {
 
 export const isAdminSessionActive = (): boolean => {
   if (!isBrowser()) return false;
-  const token = window.sessionStorage.getItem("adminAuthToken");
+  purgeLegacyAdminToken();
   const role = getStoredAdminRole();
-  return Boolean(token) && hasAdminAccess(role);
+  return hasAdminAccess(role);
 };
 
 export const isSuperAdminSessionActive = (): boolean => {
   if (!isBrowser()) return false;
-  const token = window.sessionStorage.getItem("adminAuthToken");
+  purgeLegacyAdminToken();
   const role = getStoredAdminRole();
-  return Boolean(token) && hasSuperAdminAccess(role);
+  return hasSuperAdminAccess(role);
 };

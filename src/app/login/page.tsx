@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { sanitizeNextPath } from '@/lib/admin-cookie'
 import { login, setSession } from '@/services/auth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -20,10 +21,15 @@ export default function LoginPage() {
 
     try {
       const response = await login({ email, password })
-      if (response.access_token && response.user) {
-        setSession(response.access_token, response.user)
+      if (response.user) {
+        setSession(response.user)
         toast.success('Login realizado com sucesso')
-        router.push('/admin/site')
+        const rawNext =
+          typeof window !== 'undefined'
+            ? new URLSearchParams(window.location.search).get('next')
+            : null
+        const destination = sanitizeNextPath(rawNext, '/admin/site')
+        router.push(destination)
       } else {
         throw new Error('Resposta inválida')
       }

@@ -1,8 +1,11 @@
 import api from "@/utils/lib/api";
-import { LoginCredentials, LoginResponse } from "../types/auth";
+import { LoginCredentials, LoginResponse, LoginUser } from "../types/auth";
 import { AxiosError } from "axios";
+import { clearAdminSession, setAdminSession } from "@/utils/lib/adminSession";
 
-export async function login(credentials: LoginCredentials): Promise<LoginResponse> {
+export async function login(
+  credentials: LoginCredentials,
+): Promise<LoginResponse> {
   api.defaults.withCredentials = true;
   return api
     .post("/auth/login", { ...credentials })
@@ -12,10 +15,18 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
     });
 }
 
-export function setSession(token: string, user: { role: string }) {
+export function setSession(user: { role: string } & Partial<LoginUser>): void {
   if (typeof window === "undefined") return;
   api.defaults.withCredentials = true;
-  window.sessionStorage.setItem("adminAuthToken", token);
-  window.sessionStorage.setItem("adminUser", JSON.stringify(user));
-  window.sessionStorage.setItem("adminRole", user.role);
+  setAdminSession(user);
+}
+
+export async function logout(): Promise<void> {
+  clearAdminSession();
+  api.defaults.withCredentials = true;
+  try {
+    await api.post("/auth/logout");
+  } catch {
+    // Ignore network failures; local state is already cleared
+  }
 }

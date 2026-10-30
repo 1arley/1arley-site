@@ -3,7 +3,9 @@
 import { useEffect, useSyncExternalStore } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { FileText, Users, Link2, Shield, Globe } from 'lucide-react'
+import { FileText, Users, Link2, Shield, Globe, LogOut } from 'lucide-react'
+import { sanitizeNextPath } from '@/lib/admin-cookie'
+import { logout } from '@/services/auth'
 import { cn } from '@/utils/lib/utils'
 import { isAdminSessionActive } from '@/utils/lib/admin-auth'
 
@@ -37,9 +39,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!isAdminSessionActive()) {
-      router.replace('/login')
+      const nextPath = sanitizeNextPath(pathname, '/admin/site')
+      router.replace(`/login?next=${encodeURIComponent(nextPath)}`)
     }
-  }, [authed, router])
+  }, [authed, pathname, router])
+
+  async function handleLogout() {
+    await logout()
+    router.replace('/login')
+  }
 
   if (!authed) {
     return (
@@ -76,6 +84,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   )
                 })}
               </nav>
+              <div className="mt-4 pt-3 border-t border-border">
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  aria-label="Sair"
+                  className="flex min-h-11 w-full items-center gap-3 whitespace-nowrap px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Sair
+                </button>
+              </div>
             </div>
           </aside>
           <main className="flex-1 min-w-0">

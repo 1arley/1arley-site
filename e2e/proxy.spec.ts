@@ -14,6 +14,7 @@ import {
   sanitizeNextPath,
 } from "../src/lib/admin-cookie";
 import { deepMerge, resolveLocale } from "../src/lib/i18n";
+import { proxy } from "../src/proxy";
 
 test.describe("resolveLocale unit tests [DIR-02]", () => {
   test("prioritizes valid ?lang=pt|en over localStorage and navigator.language", () => {
@@ -422,5 +423,53 @@ test.describe("SEC-03 unit tests (next validation, Max-Age from exp, CSRF Origin
       headers: { origin: "https://attacker.example" },
     });
     expect(isSameOriginMutation(foreignOriginPost)).toBe(false);
+  });
+
+  test("src/proxy.ts redirects unauthenticated /admin/* to /login?next=... and redirects authenticated /login to safe destination", () => {
+    const unauthReq = new NextRequest("http://localhost:3100/admin/site");
+    const unauthRes = proxy(unauthReq);
+    expect(unauthRes.status).toBe(307);
+    expect(unauthRes.headers.get("location")).toBe(
+      "http://localhost:3100/login?next=%2Fadmin%2Fsite",
+    );
+
+    const malformedReq = new NextRequest("http://localhost:3100/admin/users", {
+      headers: { cookie: `${ADMIN_SESSION_COOKIE}=not-three-segments` },
+    });
+    const malformedRes = proxy(malformedReq);
+    expect(malformedRes.status).toBe(307);
+    expect(malformedRes.headers.get("location")).toBe(
+      "http://localhost:3100/login?next=%2Fadmin%2Fusers",
+    );
+
+    const validAdminReq = new NextRequest("http://localhost:3100/admin/site", {
+      headers: { cookie: `${ADMIN_SESSION_COOKIE}=eyJ.eyJ.sig` },
+    });
+    const validAdminRes = proxy(validAdminReq);
+    expect(validAdminRes.status).toBe(200);
+
+    const authedLoginReq = new NextRequest(
+      "http://localhost:3100/login?next=%2Fadmin%2Fusers",
+      {
+        headers: { cookie: `${ADMIN_SESSION_COOKIE}=eyJ.eyJ.sig` },
+      },
+    );
+    const authedLoginRes = proxy(authedLoginReq);
+    expect(authedLoginRes.status).toBe(307);
+    expect(authedLoginRes.headers.get("location")).toBe(
+      "http://localhost:3100/admin/users",
+    );
+
+    const authedEvilLoginReq = new NextRequest(
+      "http://localhost:3100/login?next=https://evil.com",
+      {
+        headers: { cookie: `${ADMIN_SESSION_COOKIE}=eyJ.eyJ.sig` },
+      },
+    );
+    const authedEvilLoginRes = proxy(authedEvilLoginReq);
+    expect(authedEvilLoginRes.status).toBe(307);
+    expect(authedEvilLoginRes.headers.get("location")).toBe(
+      "http://localhost:3100/admin/site",
+    );
   });
 });
