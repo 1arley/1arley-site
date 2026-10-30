@@ -86,40 +86,41 @@ export default function AdminUsersPage() {
         <h1 className="text-2xl font-bold text-white">Usuários</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
-            <Button className="btn-primary-gradient rounded-full">
+            <Button className="btn-brutal">
               <Plus className="w-4 h-4 mr-2" /> Novo usuário
             </Button>
           </DialogTrigger>
-          <DialogContent className="glass-card border-border max-w-lg">
+          <DialogContent className="border-border bg-black-4 max-w-lg">
             <DialogHeader>
               <DialogTitle className="text-white">{editing ? 'Editar' : 'Novo'} usuário</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 mt-4">
               <div>
-                <Label className="text-muted-foreground">Nome</Label>
-                <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1" />
+                <Label htmlFor="user-name" className="text-muted-foreground">Nome</Label>
+                <Input id="user-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Email</Label>
-                <Input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1" />
+                <Label htmlFor="user-email" className="text-muted-foreground">Email</Label>
+                <Input id="user-email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Cargo</Label>
-                <Input value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} className="mt-1" />
+                <Label htmlFor="user-position" className="text-muted-foreground">Cargo</Label>
+                <Input id="user-position" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Papel</Label>
+                <Label htmlFor="user-role" className="text-muted-foreground">Papel</Label>
                 <select
+                  id="user-role"
                   value={form.role}
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  className="mt-1 min-h-11 w-full border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="USER">Usuário</option>
                   <option value="ADMIN">Admin</option>
                   <option value="SUPERADMIN">Super Admin</option>
                 </select>
               </div>
-              <Button onClick={handleSave} disabled={saving} className="w-full btn-primary-gradient rounded-full">
+              <Button onClick={handleSave} disabled={saving} className="w-full btn-brutal">
                 {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 {editing ? 'Salvar' : 'Criar'}
               </Button>
@@ -130,30 +131,30 @@ export default function AdminUsersPage() {
 
       <div className="space-y-3">
         {loading && (
-          <div className="glass-card p-8 text-center flex justify-center">
+          <div className="border border-border bg-black-4 p-8 text-center flex justify-center">
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           </div>
         )}
         {!loading && users.length === 0 && (
-          <div className="glass-card p-8 text-center">
+          <div className="border border-border bg-black-4 p-8 text-center">
             <p className="text-muted-foreground">Nenhum usuário ainda.</p>
           </div>
         )}
         {users.map((user) => (
-          <div key={user.id} className="glass-card flex items-center justify-between gap-3 p-4">
+          <div key={user.id} className="border border-border bg-black-4 flex items-center justify-between gap-3 p-4">
             <div className="flex items-center gap-3 min-w-0 mr-4">
-              <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                <Shield className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 bg-white/10 border border-border flex items-center justify-center shrink-0">
+                <Shield className="w-5 h-5 text-white" />
               </div>
               <div className="min-w-0">
                 <h3 className="text-white font-medium truncate">{user.name}</h3>
                 <p className="text-muted-foreground text-sm truncate">{user.email}</p>
-                <span className="text-xs text-cyan">{user.role}</span>
+                <span className="font-mono text-xs text-muted-foreground">{user.role}</span>
               </div>
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(user)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(user.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Editar ${user.name}`} onClick={() => handleEdit(user)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Remover ${user.name}`} onClick={() => handleDelete(user.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}

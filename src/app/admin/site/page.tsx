@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -27,10 +27,11 @@ function Field({
   onChange: (v: string) => void
   placeholder?: string
 }) {
+  const id = useId()
   return (
     <div>
-      <Label className="text-xs text-muted-foreground">{label}</Label>
-      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="mt-1" />
+      <Label htmlFor={id} className="text-xs text-muted-foreground">{label}</Label>
+      <Input id={id} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="mt-1" />
     </div>
   )
 }
@@ -46,10 +47,11 @@ function AreaField({
   onChange: (v: string) => void
   rows?: number
 }) {
+  const id = useId()
   return (
     <div>
-      <Label className="text-xs text-muted-foreground">{label}</Label>
-      <Textarea value={value} rows={rows} onChange={(e) => onChange(e.target.value)} className="mt-1" />
+      <Label htmlFor={id} className="text-xs text-muted-foreground">{label}</Label>
+      <Textarea id={id} value={value} rows={rows} onChange={(e) => onChange(e.target.value)} className="mt-1" />
     </div>
   )
 }
@@ -84,6 +86,7 @@ function CmsImageField({
   onChange: (url: string) => void
   aspect?: string
 }) {
+  const urlInputId = useId()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [uploading, setUploading] = useState(false)
 
@@ -103,8 +106,8 @@ function CmsImageField({
 
   return (
     <div>
-      <Label className="text-xs text-muted-foreground">{label}</Label>
-      <div className={`mt-1 relative overflow-hidden rounded-lg border border-input bg-black/30 ${aspect}`}>
+      <Label htmlFor={urlInputId} className="text-xs text-muted-foreground">{label}</Label>
+      <div className={`mt-1 relative overflow-hidden border border-input bg-black/30 ${aspect}`}>
         {value ? (
           <Image src={value} alt="" fill className="object-cover" unoptimized />
         ) : (
@@ -120,6 +123,7 @@ function CmsImageField({
       </div>
       <div className="mt-2">
         <Input
+          id={urlInputId}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="/projects/exemplo.png ou https://..."
@@ -132,7 +136,7 @@ function CmsImageField({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="inline-flex items-center gap-1.5 rounded-md border border-input px-3 py-1.5 text-sm text-muted-foreground hover:text-white transition-colors disabled:opacity-50"
+          className="inline-flex min-h-11 items-center gap-1.5 border border-input px-4 py-2 text-sm text-muted-foreground hover:text-white transition-colors disabled:opacity-50"
         >
           <ImagePlus className="w-4 h-4" />
           Upload
@@ -141,7 +145,7 @@ function CmsImageField({
           <button
             type="button"
             onClick={() => onChange('')}
-            className="inline-flex items-center gap-1.5 rounded-md border border-input px-3 py-1.5 text-sm text-muted-foreground hover:text-destructive transition-colors"
+            className="inline-flex min-h-11 items-center gap-1.5 border border-input px-4 py-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
           >
             Remover
           </button>
@@ -153,8 +157,8 @@ function CmsImageField({
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="glass-card p-5">
-      <h2 className="text-sm font-bold uppercase tracking-widest text-cyan mb-4">{title}</h2>
+    <section className="border border-border bg-black-4 p-5">
+      <h2 className="font-mono text-xs font-bold uppercase tracking-widest text-white/80 mb-4">{title}</h2>
       <div className="space-y-4">{children}</div>
     </section>
   )
@@ -177,9 +181,9 @@ function ListControls({
 }) {
   return (
     <div className={`flex gap-1 ${className ?? ''}`}>
-      <Button variant="ghost" size="icon" className="h-11 w-11" onClick={onUp} disabled={first}><ArrowUp className="w-3.5 h-3.5" /></Button>
-      <Button variant="ghost" size="icon" className="h-11 w-11" onClick={onDown} disabled={last}><ArrowDown className="w-3.5 h-3.5" /></Button>
-      <Button variant="ghost" size="icon" className="h-11 w-11" onClick={onRemove}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
+      <Button variant="ghost" size="icon" className="h-11 w-11" aria-label="Mover para cima" onClick={onUp} disabled={first}><ArrowUp className="w-3.5 h-3.5" /></Button>
+      <Button variant="ghost" size="icon" className="h-11 w-11" aria-label="Mover para baixo" onClick={onDown} disabled={last}><ArrowDown className="w-3.5 h-3.5" /></Button>
+      <Button variant="ghost" size="icon" className="h-11 w-11" aria-label="Remover item" onClick={onRemove}><Trash2 className="w-3.5 h-3.5 text-destructive" /></Button>
     </div>
   )
 }
@@ -214,7 +218,7 @@ export default function AdminSitePage() {
 
   if (!state) {
     return (
-      <div className="glass-card p-8 flex justify-center">
+      <div className="border border-border bg-black-4 p-8 flex justify-center">
         <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
       </div>
     )
@@ -241,18 +245,18 @@ export default function AdminSitePage() {
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <h1 className="text-2xl font-bold text-white">Conteúdo do Site</h1>
         <div className="flex items-center gap-2">
-          <div className="flex items-center border border-input rounded-md overflow-hidden">
+          <div className="flex items-center border border-input overflow-hidden">
             {(['pt', 'en'] as Lang[]).map((l) => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
-                className={`px-3 py-2.5 text-sm uppercase ${lang === l ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-white'}`}
+                className={`min-h-11 min-w-11 px-3 py-2.5 text-sm uppercase ${lang === l ? 'bg-white/15 text-white' : 'text-muted-foreground hover:text-white'}`}
               >
                 {l}
               </button>
             ))}
           </div>
-          <Button onClick={handleSave} disabled={saving} className="btn-primary-gradient rounded-full">
+          <Button onClick={handleSave} disabled={saving} className="btn-brutal">
             {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
             Salvar
           </Button>
@@ -310,12 +314,12 @@ export default function AdminSitePage() {
               {d.about.stack.map((item, i) => (
                 <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:flex-1">
-                    <Input value={item.name} placeholder="Nome" onChange={(e) => {
+                    <Input aria-label={`Stack ${i + 1} nome`} value={item.name} placeholder="Nome" onChange={(e) => {
                       const stack = [...d.about.stack]
                       stack[i] = { ...stack[i], name: e.target.value }
                       patch('about', { stack })
                     }} />
-                    <Input value={item.desc} placeholder="Descrição" onChange={(e) => {
+                    <Input aria-label={`Stack ${i + 1} descrição`} value={item.desc} placeholder="Descrição" onChange={(e) => {
                       const stack = [...d.about.stack]
                       stack[i] = { ...stack[i], desc: e.target.value }
                       patch('about', { stack })
@@ -342,15 +346,15 @@ export default function AdminSitePage() {
           </div>
           <div className="space-y-4">
             {d.skills.categories.map((cat, i) => (
-              <div key={i} className="border border-input rounded-lg p-3 space-y-3">
+              <div key={i} className="border border-input p-3 space-y-3">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <div className="grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-2 sm:flex sm:flex-1">
-                    <Input value={cat.id} placeholder="01" className="w-16" onChange={(e) => {
+                    <Input aria-label={`Categoria ${i + 1} ID`} value={cat.id} placeholder="01" className="w-16" onChange={(e) => {
                       const categories = [...d.skills.categories]
                       categories[i] = { ...categories[i], id: e.target.value }
                       patch('skills', { categories })
                     }} />
-                    <Input value={cat.title} placeholder="Título" onChange={(e) => {
+                    <Input aria-label={`Categoria ${i + 1} título`} value={cat.title} placeholder="Título" onChange={(e) => {
                       const categories = [...d.skills.categories]
                       categories[i] = { ...categories[i], title: e.target.value }
                       patch('skills', { categories })
@@ -392,15 +396,15 @@ export default function AdminSitePage() {
           </div>
           <div className="space-y-4">
             {d.experience.timeline.map((item, i) => (
-              <div key={i} className="border border-input rounded-lg p-3 space-y-3">
+              <div key={i} className="border border-input p-3 space-y-3">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <div className="grid grid-cols-[6rem_minmax(0,1fr)] items-center gap-2 sm:flex sm:flex-1">
-                    <Input value={item.year} placeholder="ATUAL" className="w-24" onChange={(e) => {
+                    <Input aria-label={`Experiência ${i + 1} ano`} value={item.year} placeholder="ATUAL" className="w-24" onChange={(e) => {
                       const timeline = [...d.experience.timeline]
                       timeline[i] = { ...timeline[i], year: e.target.value }
                       patch('experience', { timeline })
                     }} />
-                    <Input value={item.title} placeholder="Cargo — Empresa" onChange={(e) => {
+                    <Input aria-label={`Experiência ${i + 1} cargo`} value={item.title} placeholder="Cargo — Empresa" onChange={(e) => {
                       const timeline = [...d.experience.timeline]
                       timeline[i] = { ...timeline[i], title: e.target.value }
                       patch('experience', { timeline })
@@ -444,11 +448,11 @@ export default function AdminSitePage() {
           </div>
           <div className="space-y-4">
             {d.projects.projects.map((proj, i) => (
-              <div key={i} className="border border-input rounded-lg p-3 space-y-3">
+              <div key={i} className="border border-input p-3 space-y-3">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 sm:flex sm:flex-1">
                     <span className="font-mono text-xs text-muted-foreground">{proj.id}</span>
-                    <Input value={proj.title} placeholder="Nome" onChange={(e) => {
+                    <Input aria-label={`Projeto ${i + 1} nome`} value={proj.title} placeholder="Nome" onChange={(e) => {
                       const projects = [...d.projects.projects]
                       projects[i] = { ...projects[i], title: e.target.value }
                       patch('projects', { projects })

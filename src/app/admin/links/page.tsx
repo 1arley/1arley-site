@@ -85,28 +85,28 @@ export default function AdminLinksPage() {
         <h1 className="text-2xl font-bold text-white">Links Rápidos</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
-            <Button className="btn-primary-gradient rounded-full">
+            <Button className="btn-brutal">
               <Plus className="w-4 h-4 mr-2" /> Novo link
             </Button>
           </DialogTrigger>
-          <DialogContent className="glass-card border-border max-w-lg">
+          <DialogContent className="border-border bg-black-4 max-w-lg">
             <DialogHeader>
               <DialogTitle className="text-white">{editing ? 'Editar' : 'Novo'} link</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 mt-4">
               <div>
-                <Label className="text-muted-foreground">Título</Label>
-                <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="mt-1" />
+                <Label htmlFor="link-title" className="text-muted-foreground">Título</Label>
+                <Input id="link-title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Descrição</Label>
-                <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="mt-1" />
+                <Label htmlFor="link-description" className="text-muted-foreground">Descrição</Label>
+                <Input id="link-description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">URL</Label>
-                <Input value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} placeholder="https://..." className="mt-1" />
+                <Label htmlFor="link-url" className="text-muted-foreground">URL</Label>
+                <Input id="link-url" value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} placeholder="https://..." className="mt-1" />
               </div>
-              <Button onClick={handleSave} disabled={saving} className="w-full btn-primary-gradient rounded-full">
+              <Button onClick={handleSave} disabled={saving} className="w-full btn-brutal">
                 {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 {editing ? 'Salvar' : 'Criar'}
               </Button>
@@ -117,27 +117,27 @@ export default function AdminLinksPage() {
 
       <div className="space-y-3">
         {loading && (
-          <div className="glass-card p-8 text-center flex justify-center">
+          <div className="border border-border bg-black-4 p-8 text-center flex justify-center">
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           </div>
         )}
         {!loading && links.length === 0 && (
-          <div className="glass-card p-8 text-center">
+          <div className="border border-border bg-black-4 p-8 text-center">
             <p className="text-muted-foreground">Nenhum link ainda.</p>
           </div>
         )}
         {links.map((link) => (
-          <div key={link.id} className="glass-card flex items-center justify-between gap-3 p-4">
+          <div key={link.id} className="border border-border bg-black-4 flex items-center justify-between gap-3 p-4">
             <div className="min-w-0 mr-4">
               <h3 className="text-white font-medium">{link.title}</h3>
               <p className="text-muted-foreground text-sm truncate">{link.description}</p>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan hover:underline inline-flex items-center gap-1 mt-1 break-all">
+              <a href={link.url} target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-white/80 hover:underline inline-flex min-h-11 items-center gap-1 mt-1 break-all">
                 {link.url} <ExternalLink className="w-3 h-3 shrink-0" />
               </a>
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(link)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(link.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Editar ${link.title}`} onClick={() => handleEdit(link)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Remover ${link.title}`} onClick={() => handleDelete(link.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}

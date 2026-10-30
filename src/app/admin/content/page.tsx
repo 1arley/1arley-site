@@ -105,11 +105,11 @@ export default function AdminContentPage() {
         <h1 className="text-2xl font-bold text-white">Conteúdo</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
-            <Button className="btn-primary-gradient rounded-full">
+            <Button className="btn-brutal">
               <Plus className="w-4 h-4 mr-2" /> Novo item
             </Button>
           </DialogTrigger>
-          <DialogContent className="glass-card border-border max-w-lg max-h-[85vh] overflow-y-auto">
+          <DialogContent className="border-border bg-black-4 max-w-lg max-h-[85vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-white">{editing ? 'Editar' : 'Novo'} item</DialogTitle>
             </DialogHeader>
@@ -121,30 +121,31 @@ export default function AdminContentPage() {
                 label="Imagem de capa"
               />
               <div>
-                <Label className="text-muted-foreground">Título</Label>
-                <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="mt-1" />
+                <Label htmlFor="content-title" className="text-muted-foreground">Título</Label>
+                <Input id="content-title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Descrição</Label>
-                <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="mt-1" />
+                <Label htmlFor="content-description" className="text-muted-foreground">Descrição</Label>
+                <Input id="content-description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Categoria</Label>
-                <Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="mt-1" />
+                <Label htmlFor="content-category" className="text-muted-foreground">Categoria</Label>
+                <Input id="content-category" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Conteúdo</Label>
-                <Textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} className="mt-1 min-h-[140px]" />
+                <Label htmlFor="content-body" className="text-muted-foreground">Conteúdo</Label>
+                <Textarea id="content-body" value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} className="mt-1 min-h-[140px]" />
               </div>
-              <label className="flex items-center gap-2 text-sm text-muted-foreground">
+              <label htmlFor="content-highlighted" className="flex min-h-11 items-center gap-2 text-sm text-muted-foreground">
                 <input
+                  id="content-highlighted"
                   type="checkbox"
                   checked={form.isHighlighted}
                   onChange={(e) => setForm({ ...form, isHighlighted: e.target.checked })}
                 />
                 Destaque
               </label>
-              <Button onClick={handleSave} disabled={saving} className="w-full btn-primary-gradient rounded-full">
+              <Button onClick={handleSave} disabled={saving} className="w-full btn-brutal">
                 {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 {editing ? 'Salvar' : 'Criar'}
               </Button>
@@ -155,25 +156,25 @@ export default function AdminContentPage() {
 
       <div className="space-y-3">
         {loading && (
-          <div className="glass-card p-8 text-center flex justify-center">
+          <div className="border border-border bg-black-4 p-8 text-center flex justify-center">
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           </div>
         )}
         {!loading && items.length === 0 && (
-          <div className="glass-card p-8 text-center">
+          <div className="border border-border bg-black-4 p-8 text-center">
             <p className="text-muted-foreground">Nenhum conteúdo ainda. Clique em &quot;Novo item&quot; para começar.</p>
           </div>
         )}
         {items.map((item) => (
-          <div key={item.id} className="glass-card flex items-center justify-between gap-3 p-4">
+          <div key={item.id} className="border border-border bg-black-4 flex items-center justify-between gap-3 p-4">
             <div className="min-w-0 mr-4">
               <h3 className="text-white font-medium truncate">{item.title}</h3>
               <p className="text-muted-foreground text-sm truncate">{item.description}</p>
-              {item.category && <span className="text-xs text-cyan mt-1 inline-block">{item.category}</span>}
+              {item.category && <span className="font-mono text-xs text-muted-foreground mt-1 inline-block">{item.category}</span>}
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(item)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(item.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Editar ${item.title}`} onClick={() => handleEdit(item)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Remover ${item.title}`} onClick={() => handleDelete(item.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}

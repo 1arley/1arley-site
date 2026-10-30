@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import Image from 'next/image'
 import { ImagePlus, X } from 'lucide-react'
+import { Label } from '@/components/ui/label'
 
 /**
  * Seletor de imagem local: devolve um File para o formulário.
- * O upload real acontece via FormData nos serviços (posts/team).
+ * O upload real acontece nos serviços (posts/team).
  */
 export function FileImagePicker({
   file,
@@ -21,6 +22,7 @@ export function FileImagePicker({
   aspect?: string
   label?: string
 }) {
+  const inputId = useId()
   const [objectUrl, setObjectUrl] = useState<string | null>(null)
   const shown = objectUrl || preview
 
@@ -33,8 +35,8 @@ export function FileImagePicker({
 
   return (
     <div>
-      <span className="text-sm text-muted-foreground">{label}</span>
-      <div className={`mt-1 relative overflow-hidden rounded-lg border border-input bg-black/30 ${aspect}`}>
+      <Label htmlFor={inputId} className="text-sm text-muted-foreground">{label}</Label>
+      <div className={`mt-1 relative overflow-hidden border border-input bg-black/30 ${aspect}`}>
         {shown ? (
           <Image src={shown} alt="" fill className="object-cover" unoptimized />
         ) : (
@@ -45,7 +47,7 @@ export function FileImagePicker({
       </div>
       <div className="mt-2 flex gap-2">
         <input
-          id="file-input"
+          id={inputId}
           type="file"
           accept="image/*"
           className="hidden"
@@ -53,8 +55,8 @@ export function FileImagePicker({
         />
         <button
           type="button"
-          onClick={() => document.getElementById('file-input')?.click()}
-          className="inline-flex items-center gap-1.5 rounded-md border border-input px-3 py-1.5 text-sm text-muted-foreground hover:text-white transition-colors"
+          onClick={() => document.getElementById(inputId)?.click()}
+          className="inline-flex min-h-11 items-center gap-1.5 border border-input px-4 py-2 text-sm text-muted-foreground hover:text-white transition-colors"
         >
           <ImagePlus className="w-4 h-4" />
           {file || preview ? 'Trocar' : 'Enviar'}
@@ -63,7 +65,7 @@ export function FileImagePicker({
           <button
             type="button"
             onClick={() => { if (objectUrl) URL.revokeObjectURL(objectUrl); setObjectUrl(null); onFile(null) }}
-            className="inline-flex items-center gap-1.5 rounded-md border border-input px-3 py-1.5 text-sm text-muted-foreground hover:text-destructive transition-colors"
+            className="inline-flex min-h-11 items-center gap-1.5 border border-input px-4 py-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
           >
             <X className="w-4 h-4" />
             Remover

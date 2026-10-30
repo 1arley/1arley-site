@@ -35,10 +35,9 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center gradient-bg">
-      <div className="absolute inset-0 bg-grid opacity-20" />
-      <div className="relative z-10 w-full max-w-md mx-auto px-6">
-        <div className="glass-card p-6 sm:p-8">
+    <main className="min-h-screen flex items-center justify-center bg-black-2 px-6">
+      <div className="relative z-10 w-full max-w-md mx-auto">
+        <div className="border border-border bg-black-4 p-6 sm:p-8">
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-white">Área Administrativa</h1>
             <p className="text-muted-foreground text-sm mt-2">Entre com suas credenciais</p>
@@ -72,7 +71,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary-gradient rounded-full"
+              className="w-full btn-brutal"
             >
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>

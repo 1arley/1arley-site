@@ -104,11 +104,11 @@ export default function AdminTeamPage() {
         <h1 className="text-2xl font-bold text-white">Equipe</h1>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setEditing(null); setForm(EMPTY) } }}>
           <DialogTrigger asChild>
-            <Button className="btn-primary-gradient rounded-full">
+            <Button className="btn-brutal">
               <Plus className="w-4 h-4 mr-2" /> Novo membro
             </Button>
           </DialogTrigger>
-          <DialogContent className="glass-card border-border max-w-lg max-h-[85vh] overflow-y-auto">
+          <DialogContent className="border-border bg-black-4 max-w-lg max-h-[85vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-white">{editing ? 'Editar' : 'Novo'} membro</DialogTitle>
             </DialogHeader>
@@ -121,26 +121,26 @@ export default function AdminTeamPage() {
                 label="Avatar"
               />
               <div>
-                <Label className="text-muted-foreground">Nome</Label>
-                <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1" />
+                <Label htmlFor="member-name" className="text-muted-foreground">Nome</Label>
+                <Input id="member-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Cargo</Label>
-                <Input value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="mt-1" />
+                <Label htmlFor="member-role" className="text-muted-foreground">Cargo</Label>
+                <Input id="member-role" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Email</Label>
-                <Input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1" />
+                <Label htmlFor="member-email" className="text-muted-foreground">Email</Label>
+                <Input id="member-email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Área</Label>
-                <Input value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-1" />
+                <Label htmlFor="member-area" className="text-muted-foreground">Área</Label>
+                <Input id="member-area" value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-1" />
               </div>
               <div>
-                <Label className="text-muted-foreground">Grupo</Label>
-                <Input value={form.group} onChange={(e) => setForm({ ...form, group: e.target.value })} className="mt-1" />
+                <Label htmlFor="member-group" className="text-muted-foreground">Grupo</Label>
+                <Input id="member-group" value={form.group} onChange={(e) => setForm({ ...form, group: e.target.value })} className="mt-1" />
               </div>
-              <Button onClick={handleSave} disabled={saving} className="w-full btn-primary-gradient rounded-full">
+              <Button onClick={handleSave} disabled={saving} className="w-full btn-brutal">
                 {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 {editing ? 'Salvar' : 'Criar'}
               </Button>
@@ -151,25 +151,25 @@ export default function AdminTeamPage() {
 
       <div className="space-y-3">
         {loading && (
-          <div className="glass-card p-8 text-center flex justify-center">
+          <div className="border border-border bg-black-4 p-8 text-center flex justify-center">
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           </div>
         )}
         {!loading && members.length === 0 && (
-          <div className="glass-card p-8 text-center">
+          <div className="border border-border bg-black-4 p-8 text-center">
             <p className="text-muted-foreground">Nenhum membro ainda.</p>
           </div>
         )}
         {members.map((member) => (
-          <div key={member.id} className="glass-card flex items-center justify-between gap-3 p-4">
+          <div key={member.id} className="border border-border bg-black-4 flex items-center justify-between gap-3 p-4">
             <div className="min-w-0 mr-4">
               <h3 className="text-white font-medium">{member.name}</h3>
               <p className="text-muted-foreground text-sm">{member.role}</p>
-              <p className="text-xs text-cyan truncate">{member.email}</p>
+              <p className="font-mono text-xs text-muted-foreground truncate">{member.email}</p>
             </div>
             <div className="flex gap-2 shrink-0">
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleEdit(member)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
-              <Button variant="ghost" size="icon" className="h-11 w-11" onClick={() => handleDelete(member.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Editar ${member.name}`} onClick={() => handleEdit(member)}><Pencil className="w-4 h-4 text-muted-foreground" /></Button>
+              <Button variant="ghost" size="icon" className="h-11 w-11" aria-label={`Remover ${member.name}`} onClick={() => handleDelete(member.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
             </div>
           </div>
         ))}
