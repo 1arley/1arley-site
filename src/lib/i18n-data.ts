@@ -311,7 +311,7 @@ export const dict: Record<Locale, Dict> = {
     projects: {
       label: "// PROJETOS · PORTFÓLIO",
       title: "Projetos reais",
-      count: "[ 04 PROJETOS ]",
+      count: "[ 06 PROJETOS ]",
       projects: [
         {
           id: "01",
@@ -352,6 +352,26 @@ export const dict: Record<Locale, Dict> = {
           alt: "Home do portal BCC UFRPE",
           tags: ["DEVOPS", "FRONTEND", "UFRPE"],
           href: "https://ufrpebcc.com.br",
+        },
+        {
+          id: "05",
+          title: "Jev Advisor Gateway",
+          kind: "DEV TOOL · ROTEAMENTO DE LLM",
+          body: "Gateway local que deixa o Jev escolher a próxima ferramenta de um agente de código, com advisor read-only opcional. Suporta Codex, Claude Code, OpenCode, Kilo, Gemini CLI e Devin, com dashboard de decisões, latência e custo.",
+          img: "/projects/jev-advisor-gateway.png",
+          alt: "Capa do Jev Advisor Gateway",
+          tags: ["TYPESCRIPT", "LLM ROUTING", "PROXY"],
+          href: "https://github.com/1arley/jev-advisor-gateway",
+        },
+        {
+          id: "06",
+          title: "Grill with JEV",
+          kind: "AGENT SKILL · REVISÃO DE DECISÕES",
+          body: "Skill de grilling guiada por JEV: o agente mapeia a árvore de decisões e o JEV responde cada rodada por um contrato Zod validado, com proveniência e teto de custo. Adapta a skill grilling de Matt Pocock.",
+          img: "/projects/grill-with-jev.png",
+          alt: "Capa do Grill with JEV",
+          tags: ["AGENT SKILL", "ZOD", "LLM"],
+          href: "https://github.com/1arley/grill-with-jev",
         },
       ],
     },
@@ -579,7 +599,7 @@ export const dict: Record<Locale, Dict> = {
     projects: {
       label: "// PROJECTS · PORTFOLIO",
       title: "Real projects",
-      count: "[ 04 PROJECTS ]",
+      count: "[ 06 PROJECTS ]",
       projects: [
         {
           id: "01",
@@ -620,6 +640,26 @@ export const dict: Record<Locale, Dict> = {
           alt: "BCC UFRPE portal home",
           tags: ["DEVOPS", "FRONTEND", "UFRPE"],
           href: "https://ufrpebcc.com.br",
+        },
+        {
+          id: "05",
+          title: "Jev Advisor Gateway",
+          kind: "DEV TOOL · LLM ROUTING",
+          body: "Local gateway that lets Jev choose a coding agent's next tool, with an optional read-only advisor. Supports Codex, Claude Code, OpenCode, Kilo, Gemini CLI, and Devin, with a dashboard for decisions, latency, and cost.",
+          img: "/projects/jev-advisor-gateway.png",
+          alt: "Jev Advisor Gateway cover",
+          tags: ["TYPESCRIPT", "LLM ROUTING", "PROXY"],
+          href: "https://github.com/1arley/jev-advisor-gateway",
+        },
+        {
+          id: "06",
+          title: "Grill with JEV",
+          kind: "AGENT SKILL · DECISION REVIEW",
+          body: "JEV-driven grilling skill: the agent maps the decision tree and JEV answers each round through a validated Zod contract, with provenance and a cost ceiling. Adapts Matt Pocock's grilling skill.",
+          img: "/projects/grill-with-jev.png",
+          alt: "Grill with JEV cover",
+          tags: ["AGENT SKILL", "ZOD", "LLM"],
+          href: "https://github.com/1arley/grill-with-jev",
         },
       ],
     },

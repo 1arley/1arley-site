@@ -10,6 +10,8 @@ const projectLayouts = [
   "lg:col-span-5 lg:col-start-8 lg:mt-28",
   "lg:col-span-7 lg:mt-8",
   "lg:col-span-6 lg:col-start-7 lg:mt-24",
+  "lg:col-span-6 lg:mt-8",
+  "lg:col-span-5 lg:col-start-8 lg:mt-32",
 ];
 
 const projectAspects = [
@@ -17,6 +19,8 @@ const projectAspects = [
   "aspect-[4/3]",
   "aspect-[3/2]",
   "aspect-[16/10]",
+  "aspect-[16/9]",
+  "aspect-[4/3]",
 ];
 
 export default function ProjectsSection() {
