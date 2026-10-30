@@ -44,7 +44,7 @@ export default function AboutSection() {
             </h2>
           </Reveal>
 
-          <Reveal className="mt-10 max-w-2xl" delay={0.04}>
+          <Reveal className="mt-10 max-w-2xl">
             <p className="prose-read text-lg leading-relaxed text-white/82">
               {t.about.p1Before}{" "}
               <strong className="font-semibold text-white">Arthur Iarley</strong>
@@ -55,7 +55,7 @@ export default function AboutSection() {
             </p>
           </Reveal>
 
-          <Reveal className="mt-12" delay={0.08}>
+          <Reveal className="mt-12">
             <div className="grid grid-cols-2 border-l border-t border-white/15 sm:grid-cols-4">
               {t.about.stack.map((tech) => (
                 <div
@@ -73,7 +73,7 @@ export default function AboutSection() {
             </div>
           </Reveal>
 
-          <Reveal className="mt-8" delay={0.1}>
+          <Reveal className="mt-8">
             <Link href="/sobre" className="text-link group">
               {t.about.cta}
               <ArrowRight

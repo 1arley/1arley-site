@@ -44,7 +44,7 @@ export default function SobrePage() {
             <BlurText as="span" text="Iarley." delay={160} wordClassName="text-outline-white" className="block" />
           </h1>
 
-          <Reveal delay={0.1}>
+          <Reveal>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <span className="border border-white/50 bg-white px-4 py-2 font-mono text-[11px] font-bold tracking-[0.15em] text-black">
                 {t.sobre.roleTag}
@@ -91,7 +91,7 @@ export default function SobrePage() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.05}>
+            <Reveal>
               <div className="mt-3 flex items-center justify-between border border-white/15 bg-black px-4 py-3">
                 <span className="font-mono text-[10px] tracking-[0.2em] text-white/60 uppercase">
                   {t.sobre.storyFigLabel}
@@ -117,7 +117,7 @@ export default function SobrePage() {
               </h2>
             </Reveal>
 
-            <Reveal delay={0.1}>
+            <Reveal>
               <div className="mt-10 max-w-2xl space-y-6 hard-border-l pl-6">
                 <p className="prose-read text-base leading-relaxed text-gray-80">
                   {t.sobre.storyP1}
@@ -154,7 +154,7 @@ export default function SobrePage() {
 
           <div className="mt-12 space-y-px">
             {t.sobre.philQuotes.map((q, i) => (
-              <Reveal key={i} delay={0.05 * (i + 1)}>
+              <Reveal key={i}>
                 <blockquote className="group border border-white/10 bg-black-4 px-6 py-8 transition-colors hover:bg-black-8 sm:px-10 sm:py-10">
                   <p className="font-headline text-xl font-bold uppercase leading-[1.1] tracking-tight text-white sm:text-3xl lg:text-4xl">
                     &ldquo;{q.text}&rdquo;
@@ -187,7 +187,7 @@ export default function SobrePage() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal>
             <div className="mt-10 grid grid-cols-1 gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
               {t.sobre.nowItems.map((item) => (
                 <div
@@ -225,7 +225,7 @@ export default function SobrePage() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal>
             <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {t.sobre.colophonItems.map((item) => (
                 <li
@@ -264,7 +264,7 @@ export default function SobrePage() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Link href={`mailto:arthuriarleydev@gmail.com?subject=${encodeURIComponent(t.sobre.emailSubject)}`} className="btn-brutal">
                 {t.contact.cta}

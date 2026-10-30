@@ -27,12 +27,11 @@ export default function ExperienceSection() {
         </Reveal>
 
         <ol className="lg:col-span-7 lg:col-start-6">
-          {t.experience.timeline.map((item, index) => (
+          {t.experience.timeline.map((item) => (
             <Reveal
               key={`${item.year}-${item.title}`}
               as="li"
               className="grid gap-4 border-t border-white/20 py-8 sm:grid-cols-[7rem_minmax(0,1fr)] sm:py-10"
-              delay={index * 0.03}
             >
               <p className="font-mono text-[10px] uppercase text-white/58">
                 {item.year}

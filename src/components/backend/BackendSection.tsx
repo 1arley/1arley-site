@@ -54,11 +54,10 @@ export default function BackendSection() {
           </Reveal>
 
           <div className="mt-10">
-            {t.backend.features.map((feature, index) => (
+            {t.backend.features.map((feature) => (
               <Reveal
                 key={feature.title}
                 className="border-t border-white/15 py-5"
-                delay={index * 0.03}
               >
                 <h3 className="font-headline text-lg uppercase text-white">
                   {feature.title}

@@ -28,7 +28,6 @@ export default function SkillsSection() {
               className={`border-b border-r border-white/15 p-5 sm:p-6 ${
                 index % 2 === 1 ? "lg:translate-y-8" : ""
               }`}
-              delay={index * 0.03}
             >
               <div className="flex items-start justify-between gap-4">
                 <h3 className="font-display text-3xl uppercase text-white">

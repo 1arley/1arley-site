@@ -34,7 +34,7 @@ export default function ContactSection() {
             </p>
           </Reveal>
 
-          <Reveal className="lg:col-span-6 lg:col-start-7" delay={0.04}>
+          <Reveal className="lg:col-span-6 lg:col-start-7">
             <a
               href="mailto:arthuriarleydev@gmail.com?subject=Contato%20via%20portfolio"
               className="contact-mail group flex min-h-20 items-center justify-between gap-6 border border-white bg-white px-5 font-headline text-2xl uppercase text-black sm:px-7 sm:text-3xl"

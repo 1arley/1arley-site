@@ -53,7 +53,6 @@ export default function ProjectsSection() {
             <Reveal
               key={project.id}
               className={`min-w-0 ${projectLayouts[index] ?? "lg:col-span-6"}`}
-              delay={index * 0.04}
             >
               <a
                 href={isHttpUrl(project.href) ? project.href : "#projetos"}

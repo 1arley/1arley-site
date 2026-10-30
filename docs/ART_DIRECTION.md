@@ -36,16 +36,16 @@ Regras:
 
 ## 3. Tipografia
 
+> **Decisão de reconciliação (`[PERF-02]`):** Alinhado a `DESIGN.md` (fonte canônica de verdade). `Titillium Web` e escalas `clamp(..., vw, ...)` com tracking negativo e line-height `< 1` foram substituídos por `Anton` (display), `Oswald` (headline), `Geist Sans` (body) e `JetBrains Mono` (labels/código), com tamanhos definidos por breakpoint, `line-height: 1` e sem sobreposição de linhas.
+
 | Papel | Fonte | Tratamento |
 |---|---|---|
-| Display / Hero | Titillium Web 900 (variable) | caixa alta, tracking -0.03em, clamp(4rem→13rem) |
-| Display secundário | Titillium Web 700 | caixa alta |
-| Body | Geist Sans / Space Grotesk 400-500 | 15-17px, lh 1.6 |
-| Mono / UI técnica | JetBrains Mono / Geist Mono | labels 10-12px, tracking 0.18em, caixa alta |
+| Display / Hero (`--font-anton`) | Anton 400 | caixa alta, `line-height: 1`, `letter-spacing: 0`, tamanhos por breakpoint |
+| Headline / Subtítulos (`--font-oswald`) | Oswald 400–700 | caixa alta, `line-height: 1` |
+| Body (`--font-geist-sans`) | Geist Sans 400–500 | 15-17px, `line-height: 1.6` |
+| Mono / UI técnica (`--font-mono`) | JetBrains Mono 400–700 | labels 10-12px, tracking `0.18em`, caixa alta |
 
-Tratamentos especiais: `text-outline` (stroke only, para números gigantes),
-letras recortadas por `clip-path`, `text-stroke` invertido, caracteres
-"rasterizados" (ASCII via Canvas UI no hero).
+Tratamentos especiais: `text-outline` / `text-outline-white` (stroke monocromático) e alvo tipográfico rasterizado em canvas offscreen para o morph de partículas da guitarra (`IdentityObject`).
 
 ## 4. Forma & Geometria
 
@@ -58,19 +58,20 @@ letras recortadas por `clip-path`, `text-stroke` invertido, caracteres
 
 ## 5. Texturas (layers)
 
-1. **Grain** — overlay global sutil (opacity ~0.05-0.08), animado em steps (8s).
-2. **Scanlines** — CRT, só em blocos específicos (hero, terminal), z-40.
+> **Decisão de reconciliação (`[PERF-02]`):** Conforme `DESIGN.md`, efeitos WebGL extras (`Asciify`, `VHS`, `RetroDither`, `ParticleReveal`) e cursor substituto foram removidos; o único canvas WebGL é o `ParticleObject` (guitarra Ibanez JEM ↔ nome) restrito ao hero desktop (`≥ 1024px`, sem `prefers-reduced-motion`).
+
+1. **Grain** — overlay global sutil (`noise.png` 180×180), desativado em `prefers-reduced-motion` e viewports estreitos.
+2. **Scanlines** — CRT discreto apenas em blocos específicos (terminal).
 3. **Halftone dots** — em imagens P&B (retrato, projetos).
-4. **Blueprint grid** — grades técnicas de 64px, opacity 0.06.
-5. **Asciify (Canvas UI)** — lente ASCII sob o cursor no hero (WebGL, com fallback).
+4. **ParticleObject (Hero Desktop)** — nuvem de partículas WebGL carregada sob demanda (`requestIdleCallback` + import dinâmico) que alterna entre `guitar.glb` e o lockup tipográfico.
 
 ## 6. Motion language
 
-- **Reveal:** blocos sobem com clip/máscara (Framer Motion `whileInView`), não fade simples.
-- **Marquee:** ticker de texto mono (WORKS — EXPERIENCE — STACK) contínuo, 28s linear, pausa em reduced-motion.
+- **Hero:** título separado da imagem por scroll e parallax oposto de ponteiro limitado a poucos pixels com mola amortecida; estático em `prefers-reduced-motion`.
+- **Demais seções (`Reveal`):** conforme `DESIGN.md`, as demais seções não repetem reveals acionados por scroll em JS; `Reveal.tsx` aplica apenas `.reveal-block` via CSS puro (e `animation: none` em `prefers-reduced-motion`).
+- **Marquee:** ticker de texto mono contínuo, pausado em `prefers-reduced-motion`.
 - **Hover:** borda que acende de `#2A2A2A`→`#F2F2F2`, leve deslocamento do bloco.
-- **Custom cursor:** crosshair/reticle com label contextual (VIEW/DRAG/OPEN/EXPLORE), só em hover:pointer.
-- **Entrada do hero:** máscara wipe (barra que sobe), titulo com split/reveal por linha.
+- **Sem cursor substituto ou scroll hijack:** cursor nativo preservado em todo o site.
 - **Tudo < 300ms** de resposta (Doherty), **nada** de bounce/elastic (slop).
 
 ## 7. Grid & Layout
