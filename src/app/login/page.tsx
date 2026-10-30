@@ -23,7 +23,7 @@ export default function LoginPage() {
       if (response.access_token && response.user) {
         setSession(response.access_token, response.user)
         toast.success('Login realizado com sucesso')
-        router.push('/admin/content')
+        router.push('/admin/site')
       } else {
         throw new Error('Resposta inválida')
       }

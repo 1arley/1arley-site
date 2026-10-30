@@ -7,13 +7,20 @@ import { FileText, Users, Link2, Shield, Globe } from 'lucide-react'
 import { cn } from '@/utils/lib/utils'
 import { isAdminSessionActive } from '@/utils/lib/admin-auth'
 
-const adminLinks = [
-  { label: 'Site', href: '/admin/site', icon: Globe },
-  { label: 'Conteúdo', href: '/admin/content', icon: FileText },
-  { label: 'Equipe', href: '/admin/team', icon: Users },
-  { label: 'Links', href: '/admin/links', icon: Link2 },
-  { label: 'Usuários', href: '/admin/users', icon: Shield },
+export const ENABLE_EXTRA_ADMIN_TABS =
+  process.env.NEXT_PUBLIC_ENABLE_EXTRA_ADMIN_TABS === 'true'
+
+const allAdminLinks = [
+  { label: 'Site', href: '/admin/site', icon: Globe, extra: false },
+  { label: 'Conteúdo', href: '/admin/content', icon: FileText, extra: true },
+  { label: 'Equipe', href: '/admin/team', icon: Users, extra: true },
+  { label: 'Links', href: '/admin/links', icon: Link2, extra: true },
+  { label: 'Usuários', href: '/admin/users', icon: Shield, extra: false },
 ]
+
+const adminLinks = allAdminLinks.filter(
+  (link) => !link.extra || ENABLE_EXTRA_ADMIN_TABS,
+)
 
 function subscribeSession() {
   return () => {}

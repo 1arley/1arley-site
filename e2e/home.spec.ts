@@ -244,6 +244,16 @@ test.describe("320px viewport & 44px touch targets [AC1-AC6]", () => {
       }
     });
 
+    // Verify /admin redirects to /admin/site and hides unused tabs by default [DIR-03]
+    await page.goto("/admin");
+    await expect(page).toHaveURL(/\/admin\/site$/);
+    const adminNav = page.locator("aside nav");
+    await expect(adminNav.getByRole("link", { name: "Site", exact: true })).toBeVisible();
+    await expect(adminNav.getByRole("link", { name: "Usuários", exact: true })).toBeVisible();
+    await expect(adminNav.getByRole("link", { name: "Conteúdo", exact: true })).toHaveCount(0);
+    await expect(adminNav.getByRole("link", { name: "Equipe", exact: true })).toHaveCount(0);
+    await expect(adminNav.getByRole("link", { name: "Links", exact: true })).toHaveCount(0);
+
     for (const [adminRoute, heading] of [
       ["/admin/site", "Conteúdo do Site"],
       ["/admin/content", "Conteúdo"],
