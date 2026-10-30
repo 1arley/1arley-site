@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { cappedDpr } from "@/lib/webgl/utils";
 import { createRectCache } from "../rect-cache";
 
 export interface ParticleObjectOptions {
@@ -63,6 +64,8 @@ export interface ParticleObjectOptions {
   cameraDistance?: number;
   /** Base URL of the Draco decoder, fetched only when a model needs it. */
   dracoDecoderPath?: string;
+  /** Pause the render and simulation loop when true. */
+  paused?: boolean;
   /** Called after an asset finishes loading. */
   onLoad?: (() => void) | null;
   /** Called when an asset fails to load. */
@@ -111,6 +114,7 @@ const DEFAULTS: Required<ParticleObjectOptions> = {
   fov: 65,
   cameraDistance: 4.2,
   dracoDecoderPath: "https://www.gstatic.com/draco/versioned/decoders/1.5.7/",
+  paused: false,
   onLoad: null,
   onError: null,
 };
@@ -801,7 +805,7 @@ export function createParticleObject(
   function resize() {
     const width = Math.max(canvas.clientWidth, 1);
     const height = Math.max(canvas.clientHeight, 1);
-    const pr = Math.min(window.devicePixelRatio || 1, 2);
+    const pr = cappedDpr();
     renderer.setPixelRatio(pr);
     renderer.setSize(width, height, false);
     material.uniforms.uDpr.value = pr;
@@ -998,10 +1002,14 @@ export function createParticleObject(
   }
 
   let inView = true;
+  let docVisible =
+    typeof document === "undefined"
+      ? true
+      : document.visibilityState !== "hidden";
   let loopRunning = false;
 
   function tick(time: number) {
-    if (!inView) {
+    if (!inView || !docVisible || config.paused) {
       lastTime = 0;
       stopLoop();
       return;
@@ -1032,22 +1040,35 @@ export function createParticleObject(
   }
 
   function startLoop() {
-    if (loopRunning || !inView || disposed) return;
+    if (loopRunning || !inView || !docVisible || config.paused || disposed)
+      return;
     loopRunning = true;
+    lastTime = 0;
     renderer.setAnimationLoop(tick);
   }
 
   function stopLoop() {
     if (!loopRunning) return;
     loopRunning = false;
+    lastTime = 0;
     renderer.setAnimationLoop(null);
   }
+
+  function onVisibilityChange() {
+    docVisible = document.visibilityState !== "hidden";
+    if (docVisible && inView && !config.paused) {
+      startLoop();
+    } else {
+      stopLoop();
+    }
+  }
+  document.addEventListener("visibilitychange", onVisibilityChange);
 
   const viewObserver =
     typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver((entries) => {
           inView = entries[entries.length - 1]?.isIntersecting ?? true;
-          if (inView) {
+          if (inView && docVisible && !config.paused) {
             startLoop();
           } else {
             stopLoop();
@@ -1063,29 +1084,47 @@ export function createParticleObject(
 
   return {
     setOptions(next: ParticleObjectOptions) {
-      let changed = false;
+      const changedKeys: (keyof ParticleObjectOptions)[] = [];
       for (const [key, value] of Object.entries(next)) {
-        if (typeof value === "function") continue;
-        if (config[key as keyof ParticleObjectOptions] !== value) {
-          changed = true;
-          break;
+        if (typeof value === "function" || value === undefined) continue;
+        const k = key as keyof ParticleObjectOptions;
+        if (config[k] !== value) {
+          changedKeys.push(k);
         }
       }
-      if (!changed) {
+      if (changedKeys.length === 0) {
         Object.assign(config, next);
+        return;
+      }
+
+      // Fast-path: morph-only frame updates should never re-apply uniforms or re-check assets.
+      if (changedKeys.length === 1 && changedKeys[0] === "morph") {
+        config.morph = next.morph ?? config.morph;
         return;
       }
 
       const previousDistance = config.cameraDistance;
       const previousCount = config.count;
+      const previousSrc = config.src;
+      const previousMorphSrc = config.morphSrc;
       Object.assign(config, next);
       if (config.cameraDistance !== previousDistance) {
         camera.position.copy(CAMERA_DIR).multiplyScalar(config.cameraDistance);
       }
       applyOptions();
       if (config.count !== previousCount) buildCloud();
-      loadAsset();
-      startLoop();
+      if (
+        config.src !== previousSrc ||
+        config.morphSrc !== previousMorphSrc ||
+        config.count !== previousCount
+      ) {
+        loadAsset();
+      }
+      if (config.paused) {
+        stopLoop();
+      } else {
+        startLoop();
+      }
     },
     resize,
     destroy() {
@@ -1095,6 +1134,7 @@ export function createParticleObject(
       stopLoop();
       observer.disconnect();
       viewObserver?.disconnect();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       motionQuery.removeEventListener("change", onMotionChange);
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerleave", onPointerLeave);

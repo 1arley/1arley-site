@@ -14,6 +14,7 @@ export function createRectCache(element: HTMLElement): RectCache {
   }
   const observer = new ResizeObserver(invalidate)
   observer.observe(element)
+  window.addEventListener('scroll', invalidate, { passive: true, capture: true })
 
   return {
     get current(): DOMRect {
@@ -24,6 +25,7 @@ export function createRectCache(element: HTMLElement): RectCache {
     },
     destroy() {
       observer.disconnect()
+      window.removeEventListener('scroll', invalidate, { capture: true })
       rect = null
     },
   }

@@ -303,6 +303,7 @@ export default function IdentityObject() {
               drift: 0,
               floatIntensity: 0,
               rotationIntensity: 0,
+              paused: true,
             });
             return;
           }
@@ -310,6 +311,7 @@ export default function IdentityObject() {
             drift: MARK_DRIFT,
             floatIntensity: MARK_FLOAT,
             rotationIntensity: MARK_ROCK,
+            paused: false,
           });
           current = 0;
           run();
