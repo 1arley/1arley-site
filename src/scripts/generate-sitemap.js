@@ -10,7 +10,9 @@ const baseUrl = (
 
 const routes = [
   { path: "/", changefreq: "daily", priority: "1.0" },
+  { path: "/?lang=en", changefreq: "daily", priority: "0.9" },
   { path: "/sobre", changefreq: "monthly", priority: "0.7" },
+  { path: "/sobre?lang=en", changefreq: "monthly", priority: "0.6" },
 ];
 
 const outputPath = path.resolve("public", "sitemap.xml");

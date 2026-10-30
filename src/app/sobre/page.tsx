@@ -14,7 +14,7 @@ import { useLocale } from "@/lib/i18n";
  * Sections: Opening → Story → Philosophy → Now → Colophon → CTA
  */
 export default function SobrePage() {
-  const { t } = useLocale();
+  const { t, localizeHref } = useLocale();
 
   return (
     <main className="bg-black-2">
@@ -269,7 +269,7 @@ export default function SobrePage() {
               <Link href={`mailto:arthuriarleydev@gmail.com?subject=${encodeURIComponent(t.sobre.emailSubject)}`} className="btn-brutal">
                 {t.contact.cta}
               </Link>
-              <Link href="/" className="btn-outline">
+              <Link href={localizeHref("/")} className="btn-outline">
                 {t.navbar.home}
               </Link>
             </div>

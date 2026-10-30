@@ -159,7 +159,7 @@ test("reduced motion never mounts the particle identity mark", async ({ page }) 
   await expect(page.locator("h1")).toBeVisible();
 });
 
-test("Sobre h1 BlurText animates into view with opacity 1 and toggles PT/EN", async ({
+test("Sobre h1 BlurText animates into view with opacity 1 and toggles PT/EN with ?lang sync [DIR-02]", async ({
   page,
 }) => {
   await page.goto("/sobre");
@@ -172,9 +172,25 @@ test("Sobre h1 BlurText animates into view with opacity 1 and toggles PT/EN", as
   const langGroup = page.getByRole("group", { name: "Idioma / Language" });
   await langGroup.getByRole("button", { name: "en" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page).toHaveURL(/\/sobre\?lang=en$/);
 
   await langGroup.getByRole("button", { name: "pt" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+  await expect(page).toHaveURL(/\/sobre\?lang=pt$/);
+});
+
+test("supports shareable ?lang=en URLs on / and /sobre and preserves ?lang in internal links [DIR-02]", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/?lang=en");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByText(/See projects/i).first()).toBeVisible();
+  await expect(page.locator('#sobre a[href="/sobre?lang=en"]')).toBeVisible();
+
+  await page.goto("/sobre?lang=en");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByText(/Origin/i).first()).toBeVisible();
 });
 
 test.describe("320px viewport & 44px touch targets [AC1-AC6]", () => {

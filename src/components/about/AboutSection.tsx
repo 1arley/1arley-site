@@ -7,7 +7,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { useLocale } from "@/lib/i18n";
 
 export default function AboutSection() {
-  const { t } = useLocale();
+  const { t, localizeHref } = useLocale();
 
   return (
     <section
@@ -74,7 +74,7 @@ export default function AboutSection() {
           </Reveal>
 
           <Reveal className="mt-8">
-            <Link href="/sobre" className="text-link group">
+            <Link href={localizeHref("/sobre")} className="text-link group">
               {t.about.cta}
               <ArrowRight
                 size={17}

@@ -1,7 +1,46 @@
 import { test, expect } from "@playwright/test";
 import { NextRequest } from "next/server";
 import { GET } from "../src/app/api/[...path]/route";
-import { deepMerge } from "../src/lib/i18n";
+import { deepMerge, resolveLocale } from "../src/lib/i18n";
+
+test.describe("resolveLocale unit tests [DIR-02]", () => {
+  test("prioritizes valid ?lang=pt|en over localStorage and navigator.language", () => {
+    expect(
+      resolveLocale({ search: "?lang=en", stored: "pt", navigatorLanguage: "pt-BR" }),
+    ).toEqual({ locale: "en", fromUrl: true });
+    expect(
+      resolveLocale({ search: "?lang=pt", stored: "en", navigatorLanguage: "en-US" }),
+    ).toEqual({ locale: "pt", fromUrl: true });
+  });
+
+  test("ignores invalid ?lang values and falls back to localStorage", () => {
+    expect(
+      resolveLocale({ search: "?lang=fr", stored: "en", navigatorLanguage: "pt-BR" }),
+    ).toEqual({ locale: "en", fromUrl: false });
+    expect(
+      resolveLocale({ search: "?lang=javascript:alert(1)", stored: "pt" }),
+    ).toEqual({ locale: "pt", fromUrl: false });
+  });
+
+  test("uses navigator.language (pt* -> pt, others -> en) when URL and storage are absent or invalid", () => {
+    expect(
+      resolveLocale({ search: "?lang=invalid", stored: "invalid", navigatorLanguage: "pt-BR" }),
+    ).toEqual({ locale: "pt", fromUrl: false });
+    expect(
+      resolveLocale({ search: "", stored: null, navigatorLanguage: "en-GB" }),
+    ).toEqual({ locale: "en", fromUrl: false });
+    expect(
+      resolveLocale({ search: "", stored: null, navigatorLanguage: "es-ES" }),
+    ).toEqual({ locale: "en", fromUrl: false });
+  });
+
+  test("falls back to pt when all inputs are missing or invalid", () => {
+    expect(resolveLocale({})).toEqual({ locale: "pt", fromUrl: false });
+    expect(
+      resolveLocale({ search: "?foo=bar", stored: "de", navigatorLanguage: "" }),
+    ).toEqual({ locale: "pt", fromUrl: false });
+  });
+});
 
 test.describe("deepMerge unit tests [BUG-04 / TEST-02]", () => {
   const base = {

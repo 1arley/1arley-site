@@ -5,14 +5,14 @@ import { BriefcaseBusiness, Code2, Mail } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
 
 export default function Footer() {
-  const { t } = useLocale();
+  const { t, localizeHref } = useLocale();
   const year = new Date().getFullYear();
 
   return (
     <footer className="border-t border-white/15 bg-black">
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-10 px-5 py-10 sm:px-8 md:grid-cols-12 md:items-end">
         <div className="md:col-span-6">
-          <Link href="/" className="inline-flex min-h-11 items-center gap-3">
+          <Link href={localizeHref("/")} className="inline-flex min-h-11 items-center gap-3">
             <span className="grid h-9 w-9 place-items-center bg-white font-mono text-xs font-bold text-black">
               &gt;_
             </span>

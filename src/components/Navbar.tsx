@@ -21,7 +21,7 @@ function getDesktopServerSnapshot() {
 }
 
 export default function Navbar() {
-  const { t, locale, setLocale } = useLocale();
+  const { t, locale, setLocale, localizeHref } = useLocale();
   const [openOnPath, setOpenOnPath] = useState<string | null>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -34,8 +34,8 @@ export default function Navbar() {
   const mobileOpen = !isDesktop && openOnPath === pathname;
 
   const navItems = [
-    { label: t.navbar.home, href: "/" },
-    { label: t.navbar.about, href: "/sobre" },
+    { label: t.navbar.home, path: "/", href: localizeHref("/") },
+    { label: t.navbar.about, path: "/sobre", href: localizeHref("/sobre") },
   ];
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-30 border-b border-white/15 bg-black/95">
       <div className="mx-auto flex h-16 max-w-[1600px] items-stretch justify-between px-4 sm:px-6 lg:px-8">
         <Link
-          href="/"
+          href={localizeHref("/")}
           className="group flex min-h-11 items-center gap-3 pr-4"
           aria-label="1arley, início"
         >
@@ -116,11 +116,11 @@ export default function Navbar() {
             aria-label={t.navbar.ariaNav}
           >
             {navItems.map((item) => {
-              const active = pathname === item.href;
+              const active = pathname === item.path;
 
               return (
                 <Link
-                  key={item.href}
+                  key={item.path}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={`flex min-w-24 items-center justify-center border-r border-white/15 px-5 text-xs font-semibold uppercase transition-colors ${
@@ -165,11 +165,11 @@ export default function Navbar() {
           </button>
           <nav aria-label={t.navbar.ariaMobile}>
             {navItems.map((item) => {
-              const active = pathname === item.href;
+              const active = pathname === item.path;
 
               return (
                 <Link
-                  key={item.href}
+                  key={item.path}
                   href={item.href}
                   onClick={() => setOpenOnPath(null)}
                   aria-current={active ? "page" : undefined}

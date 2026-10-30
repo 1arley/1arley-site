@@ -33,6 +33,14 @@ export const metadata: Metadata = {
     },
     description: 'Portfólio de Arthur Iarley com experiências reais, projetos, skills, links e contato. Design Rockstar 2 em P&B.',
     metadataBase: baseUrl ? new URL(baseUrl) : undefined,
+    alternates: {
+        canonical: '/',
+        languages: {
+            'pt-BR': '/?lang=pt',
+            en: '/?lang=en',
+            'x-default': '/',
+        },
+    },
     applicationName: 'Arthur Iarley Portfolio',
     keywords: ['portfolio', 'arthur iarley', 'desenvolvedor', 'full-stack', 'backend', 'frontend', 'typescript', 'nodejs', 'nestjs', 'postgresql'],
     openGraph: {
