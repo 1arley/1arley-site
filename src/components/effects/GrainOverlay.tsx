@@ -1,7 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { isBrowser, prefersReducedMotion } from '@/lib/webgl/utils'
+import { useSyncExternalStore } from 'react'
+import { prefersReducedMotion } from '@/lib/webgl/utils'
+
+function subscribe(onStoreChange: () => void) {
+  const coarse = window.matchMedia('(pointer: coarse)')
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+  coarse.addEventListener('change', onStoreChange)
+  reduced.addEventListener('change', onStoreChange)
+  return () => {
+    coarse.removeEventListener('change', onStoreChange)
+    reduced.removeEventListener('change', onStoreChange)
+  }
+}
+
+function getSnapshot(): boolean {
+  // Only enable on fine pointers — grain adds nothing on touch
+  return !prefersReducedMotion() && !window.matchMedia('(pointer: coarse)').matches
+}
+
+function getServerSnapshot(): boolean {
+  return false
+}
 
 /**
  * Grain overlay — film grain / noise texture.
@@ -9,15 +29,7 @@ import { isBrowser, prefersReducedMotion } from '@/lib/webgl/utils'
  * Disabled on touch (pointer: coarse) and reduced motion.
  */
 export function GrainOverlay() {
-  const [enabled, setEnabled] = useState(false)
-
-  useEffect(() => {
-    if (!isBrowser()) return
-    if (prefersReducedMotion()) return
-    // Only enable on fine pointers — grain adds nothing on touch
-    if (window.matchMedia('(pointer: coarse)').matches) return
-    setEnabled(true)
-  }, [])
+  const enabled = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
   if (!enabled) return null
 

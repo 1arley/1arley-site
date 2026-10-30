@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { FileText, Users, Link2, Shield, Globe } from 'lucide-react'
@@ -15,18 +15,24 @@ const adminLinks = [
   { label: 'Usuários', href: '/admin/users', icon: Shield },
 ]
 
+function subscribeSession() {
+  return () => {}
+}
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
-  const [authed, setAuthed] = useState(false)
+  const authed = useSyncExternalStore(
+    subscribeSession,
+    isAdminSessionActive,
+    () => false,
+  )
 
   useEffect(() => {
-    if (!isAdminSessionActive()) {
+    if (!authed) {
       router.replace('/login')
-    } else {
-      setAuthed(true)
     }
-  }, [router])
+  }, [authed, router])
 
   if (!authed) {
     return (

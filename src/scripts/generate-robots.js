@@ -1,7 +1,12 @@
 const path = require("path");
 const fs = require("fs");
+const { loadEnvConfig } = require("@next/env");
 
-const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://example.com").replace(/\/$/, "");
+loadEnvConfig(process.cwd());
+
+const baseUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://1arley.me"
+).replace(/\/+$/, "");
 const sitemapUrl = `${baseUrl}/sitemap.xml`;
 
 const robotsTxt = `User-agent: *

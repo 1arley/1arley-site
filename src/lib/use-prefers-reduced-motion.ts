@@ -1,6 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribe(onStoreChange: () => void) {
+  const mq = window.matchMedia(QUERY);
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function getSnapshot(): boolean {
+  return window.matchMedia(QUERY).matches;
+}
+
+function getServerSnapshot(): boolean {
+  return false;
+}
 
 /**
  * prefers-reduced-motion como estado React.
@@ -13,15 +29,5 @@ export function usePrefersReducedMotion(): boolean {
   // O primeiro render precisa ser idêntico no servidor e no navegador. Ler
   // matchMedia no inicializador fazia clientes com movimento reduzido gerar
   // uma árvore diferente do HTML SSR e disparava o erro de hidratação #418.
-  const [reduce, setReduce] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = (e: MediaQueryListEvent) => setReduce(e.matches);
-    setReduce(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  return reduce;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

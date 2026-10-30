@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Pause, Play } from "lucide-react";
 import {
   createParticleObject,
@@ -179,32 +179,35 @@ function morphAt(elapsed: number) {
   return 1 - smoothstep((t - (HOLD_MS + TRAVEL_MS + HOLD_MS)) / TRAVEL_MS);
 }
 
+function subscribeMountQuery(onStoreChange: () => void) {
+  const query = window.matchMedia(MOUNT_QUERY);
+  query.addEventListener("change", onStoreChange);
+  return () => query.removeEventListener("change", onStoreChange);
+}
+
+function getMountQuerySnapshot() {
+  return window.matchMedia(MOUNT_QUERY).matches && webglSupported();
+}
+
+function getMountQueryServerSnapshot() {
+  return false;
+}
+
 export default function IdentityObject() {
   const { t } = useLocale();
   const reduce = usePrefersReducedMotion();
   const [paused, setPaused] = useState(false);
-  const [armed, setArmed] = useState(false);
+  const canMount = useSyncExternalStore(
+    subscribeMountQuery,
+    getMountQuerySnapshot,
+    getMountQueryServerSnapshot,
+  );
+  const armed = !reduce && canMount;
 
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pausedRef = useRef(paused);
   const controlRef = useRef<{ setPaused: (value: boolean) => void } | null>(null);
-
-  /* Whether this visitor gets the mark at all: desktop, WebGL, motion allowed.
-   * Resolved after mount so the server-rendered HTML and the first client render
-   * agree — reading matchMedia in an initialiser would hydrate two different
-   * trees for exactly the visitors who need the smaller one. */
-  useEffect(() => {
-    if (reduce) {
-      setArmed(false);
-      return;
-    }
-    const query = window.matchMedia(MOUNT_QUERY);
-    const sync = () => setArmed(query.matches && webglSupported());
-    sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, [reduce]);
 
   /* Pause is routed through the imperative handle rather than the boot effect:
    * as a dependency it would tear down the GL context and refetch 4 MB every

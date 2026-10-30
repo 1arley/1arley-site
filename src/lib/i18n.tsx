@@ -49,15 +49,17 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const [overrides, setOverrides] = useState<Partial<Record<Locale, Partial<Dict>>>>({});
 
   useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(STORAGE_KEY);
-      if (saved === "pt" || saved === "en") {
-        setLocaleState(saved);
-        document.documentElement.lang = saved === "pt" ? "pt-BR" : "en";
+    queueMicrotask(() => {
+      try {
+        const saved = window.localStorage.getItem(STORAGE_KEY);
+        if (saved === "pt" || saved === "en") {
+          setLocaleState(saved);
+          document.documentElement.lang = saved === "pt" ? "pt-BR" : "en";
+        }
+      } catch {
+        /* noop */
       }
-    } catch {
-      /* noop */
-    }
+    });
     // Conteúdo editável do portfólio (CMS). Sem backend, cai no dicionário estático.
     getSiteContent()
       .then((data) => {

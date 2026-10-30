@@ -22,7 +22,7 @@ export default function TickerDivider({
               {text.split("·").map((part, i) => (
                 <span key={i} className="flex items-center">
                   <span>{part.trim()}</span>
-                  <span className="px-10 text-white/40">///</span>
+                  <span className="px-10 text-white/40">{"///"}</span>
                 </span>
               ))}
             </span>

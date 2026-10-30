@@ -1,17 +1,24 @@
-import nextPlugin from "@next/eslint-plugin-next";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
 const eslintConfig = [
+  ...nextVitals,
+  ...nextTs,
   {
-    plugins: {
-      "@next/next": nextPlugin,
-    },
-    rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
-    },
-  },
-  {
-    ignores: [".next/**", ".next-build/**", "node_modules/**", "public/**"],
+    ignores: [
+      ".next/**",
+      ".next-build/**",
+      ".agents/**",
+      ".codex/**",
+      ".serena/**",
+      "node_modules/**",
+      "public/**",
+      "graphify-out/**",
+      "services/**",
+      "scripts/**",
+      "src/scripts/**",
+      "tailwind.config.js",
+    ],
   },
 ];
 

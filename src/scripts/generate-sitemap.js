@@ -1,14 +1,27 @@
 const path = require("path");
 const fs = require("fs");
+const { loadEnvConfig } = require("@next/env");
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+loadEnvConfig(process.cwd());
+
+const baseUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://1arley.me"
+).replace(/\/+$/, "");
 
 const routes = [
   { path: "/", changefreq: "daily", priority: "1.0" },
   { path: "/sobre", changefreq: "monthly", priority: "0.7" },
 ];
 
-const now = new Date().toISOString().slice(0, 10);
+const outputPath = path.resolve("public", "sitemap.xml");
+let existingLastMod = null;
+if (fs.existsSync(outputPath)) {
+  const existing = fs.readFileSync(outputPath, "utf8");
+  const match = existing.match(/<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/);
+  if (match) existingLastMod = match[1];
+}
+
+const now = existingLastMod || new Date().toISOString().slice(0, 10);
 
 const formatUrl = (routePath) => {
   const normalizedPath = routePath === "/" ? "/" : routePath.replace(/\/+$/, "");
@@ -37,7 +50,6 @@ const sitemapXml = [
   "",
 ].join("\n");
 
-const outputPath = path.resolve("public", "sitemap.xml");
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, sitemapXml, "utf8");
 

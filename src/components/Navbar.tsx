@@ -1,17 +1,37 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
 
+function subscribeDesktop(onStoreChange: () => void) {
+  const mq = window.matchMedia("(min-width: 768px)");
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function getDesktopSnapshot() {
+  return window.matchMedia("(min-width: 768px)").matches;
+}
+
+function getDesktopServerSnapshot() {
+  return false;
+}
+
 export default function Navbar() {
   const { t, locale, setLocale } = useLocale();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openOnPath, setOpenOnPath] = useState<string | null>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const pathname = usePathname();
+  const isDesktop = useSyncExternalStore(
+    subscribeDesktop,
+    getDesktopSnapshot,
+    getDesktopServerSnapshot,
+  );
+  const mobileOpen = !isDesktop && openOnPath === pathname;
 
   const navItems = [
     { label: t.navbar.home, href: "/" },
@@ -19,13 +39,13 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
+    const dialog = dialogRef.current;
     document.documentElement.style.overflow = mobileOpen ? "hidden" : "";
-    if (mobileOpen) dialogRef.current?.showModal();
-    else dialogRef.current?.close();
+    if (mobileOpen) {
+      if (dialog && !dialog.open) dialog.showModal();
+    } else if (dialog?.open) {
+      dialog.close();
+    }
 
     if (!mobileOpen) {
       return () => {
@@ -35,7 +55,7 @@ export default function Navbar() {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setMobileOpen(false);
+        setOpenOnPath(null);
       }
     };
 
@@ -43,6 +63,7 @@ export default function Navbar() {
 
     return () => {
       document.documentElement.style.overflow = "";
+      if (dialog?.open) dialog.close();
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [mobileOpen]);
@@ -119,7 +140,11 @@ export default function Navbar() {
           <button
             ref={toggleRef}
             className="grid h-11 w-11 place-items-center border-x border-white/15 text-white md:hidden"
-            onClick={() => setMobileOpen((open) => !open)}
+            onClick={() =>
+              setOpenOnPath((current) =>
+                current === pathname ? null : pathname,
+              )
+            }
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? t.navbar.ariaClose : t.navbar.ariaOpen}
           >
@@ -130,12 +155,12 @@ export default function Navbar() {
 
         <dialog
           ref={dialogRef}
-          onClose={() => { setMobileOpen(false); toggleRef.current?.focus(); }}
+          onClose={() => { setOpenOnPath(null); toggleRef.current?.focus(); }}
           className="mobile-nav fixed inset-0 m-0 h-[100dvh] max-h-none w-full max-w-none border-0 bg-black px-4 py-8 text-white"
           role="dialog"
           aria-label={t.navbar.ariaMobile}
         >
-          <button onClick={() => setMobileOpen(false)} aria-label={t.navbar.ariaClose} className="mb-6 ml-auto grid h-11 w-11 place-items-center border border-white/30">
+          <button onClick={() => setOpenOnPath(null)} aria-label={t.navbar.ariaClose} className="mb-6 ml-auto grid h-11 w-11 place-items-center border border-white/30">
             <X size={18} />
           </button>
           <nav aria-label={t.navbar.ariaMobile}>
@@ -146,7 +171,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => setOpenOnPath(null)}
                   aria-current={active ? "page" : undefined}
                   className={`flex min-h-16 items-center border-b border-white/15 font-headline text-4xl uppercase ${
                     active ? "text-white" : "text-white/55 hover:text-white"
