@@ -1,6 +1,49 @@
 import { test, expect } from "@playwright/test";
 import { NextRequest } from "next/server";
 import { GET } from "../src/app/api/[...path]/route";
+import { deepMerge } from "../src/lib/i18n";
+
+test.describe("deepMerge unit tests [BUG-04 / TEST-02]", () => {
+  const base = {
+    title: "Arthur",
+    count: 6,
+    tags: ["ts", "go"],
+    nested: {
+      subtitle: "Backend",
+      items: [{ id: "01", name: "API" }],
+    },
+  };
+
+  test("preserves base when override is null, undefined or non-object", () => {
+    expect(deepMerge(base, null)).toEqual(base);
+    expect(deepMerge(base, undefined)).toEqual(base);
+    expect(deepMerge(base, "invalid")).toEqual(base);
+    expect(deepMerge(base, 42)).toEqual(base);
+  });
+
+  test("does not overwrite arrays or nested objects with null or wrong types", () => {
+    const merged = deepMerge(base, {
+      title: null,
+      tags: null,
+      nested: {
+        subtitle: "Full-Stack",
+        items: null,
+      },
+    });
+
+    expect(merged.title).toBe("Arthur");
+    expect(merged.tags).toEqual(["ts", "go"]);
+    expect(merged.nested.subtitle).toBe("Full-Stack");
+    expect(merged.nested.items).toEqual([{ id: "01", name: "API" }]);
+  });
+
+  test("replaces arrays when override provides a valid array", () => {
+    const merged = deepMerge(base, {
+      tags: ["rust"],
+    });
+    expect(merged.tags).toEqual(["rust"]);
+  });
+});
 
 test.describe("proxyRequest unit tests [SEC-01]", () => {
   const originalEnv = process.env.API_BASE_URL;

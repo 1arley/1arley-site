@@ -15,6 +15,13 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'mobile-320',
+      use: {
+        ...devices['Pixel 7'],
+        viewport: { width: 320, height: 568 },
+      },
+    },
+    {
       name: 'mobile',
       use: { ...devices['Pixel 7'] },
     },

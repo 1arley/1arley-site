@@ -106,16 +106,35 @@ test("intro skips reduced motion and recovers from missing media", async ({ page
 // Asserting the model is never requested is the assertion that would actually
 // catch a regression, because a `hidden` class or a CSS-only guard still leaves
 // the 4 MB download and the context behind the curtain.
+async function waitForIdleCycles(page: import("@playwright/test").Page) {
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) => {
+        const idle =
+          (
+            window as Window & {
+              requestIdleCallback?: (cb: () => void) => number;
+            }
+          ).requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 50));
+        idle(() => idle(() => resolve()));
+      }),
+  );
+}
+
 test("particle identity mark is absent on narrow viewports", async ({ page, viewport }) => {
   test.skip((viewport?.width ?? 0) >= 1024, "Narrow viewports only");
 
+  let guitarRequested = false;
+  page.on("request", (req) => {
+    if (req.url().includes("guitar.glb")) guitarRequested = true;
+  });
+
   await page.goto("/");
+  await waitForIdleCycles(page);
+
   await expect(page.locator("[data-identity-object] canvas")).toHaveCount(0);
   await expect(page.locator('button[title*="guitarra"]')).toHaveCount(0);
-
-  // Past the idle-callback ceiling (2s) plus a fetch that would have started by
-  // then if the guard were wrong.
-  await page.waitForTimeout(3000);
+  expect(guitarRequested).toBe(false);
   expect(
     await page.evaluate(() =>
       performance
@@ -125,20 +144,111 @@ test("particle identity mark is absent on narrow viewports", async ({ page, view
   ).toBe(0);
 });
 
-  test("reduced motion never mounts the particle identity mark", async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/");
-    await page.waitForTimeout(3000);
-
-    await expect(page.locator("[data-identity-object] canvas")).toHaveCount(0);
-    await expect(page.locator("h1")).toBeVisible();
+test("reduced motion never mounts the particle identity mark", async ({ page }) => {
+  let guitarRequested = false;
+  page.on("request", (req) => {
+    if (req.url().includes("guitar.glb")) guitarRequested = true;
   });
 
-test("Sobre h1 BlurText animates into view with opacity 1", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await waitForIdleCycles(page);
+
+  await expect(page.locator("[data-identity-object] canvas")).toHaveCount(0);
+  expect(guitarRequested).toBe(false);
+  await expect(page.locator("h1")).toBeVisible();
+});
+
+test("Sobre h1 BlurText animates into view with opacity 1 and toggles PT/EN", async ({
+  page,
+}) => {
   await page.goto("/sobre");
   const h1 = page.locator("#sobre-title");
   await expect(h1).toBeVisible();
   await expect(h1.locator("span > span").first()).toHaveCSS("opacity", "1", {
     timeout: 5000,
+  });
+
+  const langGroup = page.getByRole("group", { name: "Idioma / Language" });
+  await langGroup.getByRole("button", { name: "en" }).click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+
+  await langGroup.getByRole("button", { name: "pt" }).click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
+});
+
+test.describe("320px viewport & 44px touch targets [AC1-AC6]", () => {
+  test("public routes (/, /sobre, /login) have no horizontal overflow and >=44px targets at 320px", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+
+    for (const route of ["/", "/sobre", "/login"]) {
+      await page.goto(route);
+      await expect(page.locator("h1")).toBeVisible();
+
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+      );
+      expect(overflow, `Horizontal overflow on ${route}`).toBe(false);
+    }
+
+    // Verify key interactive touch targets on /login and Navbar at 320px
+    const menuBtnBox = await page.getByLabel("Abrir menu").boundingBox();
+    expect(menuBtnBox?.width ?? 0).toBeGreaterThanOrEqual(44);
+    expect(menuBtnBox?.height ?? 0).toBeGreaterThanOrEqual(44);
+
+    const submitBox = await page.getByRole("button", { name: /entrar/i }).boundingBox();
+    expect(submitBox?.height ?? 0).toBeGreaterThanOrEqual(44);
+  });
+
+  test("admin routes (/admin/site, content, team, links, users) have no overflow and >=44px targets at 320px", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.addInitScript(() => {
+      const payload = btoa(
+        JSON.stringify({ sub: "1", role: "ADMIN", exp: Math.floor(Date.now() / 1000) + 3600 }),
+      );
+      window.sessionStorage.setItem("adminAuthToken", `h.${payload}.s`);
+      window.sessionStorage.setItem(
+        "adminUser",
+        JSON.stringify({ id: "1", email: "admin@1arley.me", role: "ADMIN" }),
+      );
+      window.sessionStorage.setItem("adminRole", "ADMIN");
+    });
+
+    await page.route("**/api/v1/**", async (route) => {
+      const url = route.request().url();
+      if (url.endsWith("/site")) {
+        await route.fulfill({ json: { data: {} } });
+      } else {
+        await route.fulfill({ json: { data: [] } });
+      }
+    });
+
+    for (const [adminRoute, heading] of [
+      ["/admin/site", "Conteúdo do Site"],
+      ["/admin/content", "Conteúdo"],
+      ["/admin/team", "Equipe"],
+      ["/admin/links", "Links Rápidos"],
+      ["/admin/users", "Usuários"],
+    ] as const) {
+      await page.goto(adminRoute);
+      await expect(
+        page.getByRole("heading", { level: 1, name: heading, exact: true }),
+      ).toBeVisible();
+
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+      );
+      expect(overflow, `Horizontal overflow on ${adminRoute}`).toBe(false);
+
+      const primaryBtn = page.locator("main button").first();
+      await expect
+        .poll(async () => (await primaryBtn.boundingBox())?.height ?? 0)
+        .toBeGreaterThanOrEqual(44);
+    }
   });
 });
