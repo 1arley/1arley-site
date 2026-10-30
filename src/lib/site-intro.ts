@@ -54,8 +54,14 @@ const FAILSAFE_MS = 6000;
  * component re-checks it after hydration, which is where a restored scroll
  * position can actually be seen.
  */
+declare global {
+  interface Window {
+    __introFailsafe?: number;
+  }
+}
+
 export const INTRO_BOOT = `!function(){try{var d=document.documentElement,F=${JSON.stringify(
   INTRO_FLAG,
-)};if(matchMedia(${JSON.stringify(
+)};if(location.pathname!=="/"||matchMedia(${JSON.stringify(
   INTRO_SKIP_QUERY,
-)}).matches||location.hash)return;d.setAttribute(F,"on");setTimeout(function(){d.removeAttribute(F)},${FAILSAFE_MS})}catch(e){}}()`;
+)}).matches||location.hash)return;d.setAttribute(F,"on");window.__introFailsafe=setTimeout(function(){d.removeAttribute(F)},${FAILSAFE_MS})}catch(e){}}()`;

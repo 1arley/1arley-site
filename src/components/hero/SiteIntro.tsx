@@ -79,6 +79,10 @@ export default function SiteIntro() {
       clearTimeout(startTimer);
       const from = mark.getBoundingClientRect();
       const to = target.getBoundingClientRect();
+      if (!from.width || !to.width) {
+        reveal();
+        return;
+      }
       const travel = mark.animate(
         [
           { transform: "translate3d(0,0,0) scale(1)" },
@@ -137,6 +141,10 @@ export default function SiteIntro() {
     // A file that never reaches "playing" must not leave the visitor staring at
     // a black page: leave through the same designed exit, mark and all.
     startTimer = window.setTimeout(depart, START_GRACE_MS);
+    if (window.__introFailsafe !== undefined) {
+      clearTimeout(window.__introFailsafe);
+      delete window.__introFailsafe;
+    }
 
     void video.play().catch(reveal);
 
