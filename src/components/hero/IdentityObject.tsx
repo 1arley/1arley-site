@@ -2,10 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Pause, Play } from "lucide-react";
-import {
-  createParticleObject,
-  type ParticleObjectInstance,
-} from "@/components/canvasui/ParticleObject";
+import type { ParticleObjectInstance } from "@/components/canvasui/ParticleObject";
 import { useLocale } from "@/lib/i18n";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { observeLifecycle, webglSupported } from "@/lib/webgl/utils";
@@ -248,7 +245,10 @@ export default function IdentityObject() {
     };
 
     const boot = async () => {
-      const morphSrc = await buildNameTarget();
+      const [{ createParticleObject }, morphSrc] = await Promise.all([
+        import("@/components/canvasui/ParticleObject"),
+        buildNameTarget(),
+      ]);
       // No target, no morph. The guitar on its own is not the identity mark, and
       // a half-built state would leave the visitor watching a cloud that never
       // resolves — so the layer stays empty instead.
