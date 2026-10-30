@@ -277,4 +277,62 @@ test.describe("320px viewport & 44px touch targets [AC1-AC6]", () => {
         .toBeGreaterThanOrEqual(44);
     }
   });
+
+  test("saves /admin/site content (including Sobre & Backend) and renders overrides on public pages while falling back on empty fields [DIR-01]", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.addInitScript(() => {
+      const payload = btoa(
+        JSON.stringify({ sub: "1", role: "ADMIN", exp: Math.floor(Date.now() / 1000) + 3600 }),
+      );
+      window.sessionStorage.setItem("adminAuthToken", `h.${payload}.s`);
+      window.sessionStorage.setItem(
+        "adminUser",
+        JSON.stringify({ id: "1", email: "admin@1arley.me", role: "ADMIN" }),
+      );
+      window.sessionStorage.setItem("adminRole", "ADMIN");
+    });
+
+    let savedSite: Record<string, unknown> = {};
+    await page.route("**/api/v1/site", async (route) => {
+      if (route.request().method() === "PUT") {
+        savedSite = JSON.parse(route.request().postData() ?? "{}");
+        await route.fulfill({ json: { data: savedSite } });
+      } else {
+        await route.fulfill({ json: { data: savedSite } });
+      }
+    });
+
+    await page.goto("/admin/site");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Conteúdo do Site", exact: true }),
+    ).toBeVisible();
+
+    const heroCard = page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Hero", exact: true }) });
+    await heroCard.getByLabel("Subtítulo").fill("");
+    await heroCard.getByLabel("CTA Projetos").fill("EXPLORAR PROJETOS CMS");
+
+    const sobreCard = page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Página /sobre", exact: true }) });
+    await sobreCard.getByLabel("Título origem").fill("Origem editada pelo CMS.");
+
+    const saveResponse = page.waitForResponse(
+      (res) => res.url().includes("/api/v1/site") && res.request().method() === "PUT",
+    );
+    await page.getByRole("button", { name: /salvar/i }).click();
+    await saveResponse;
+
+    await page.goto("/");
+    await expect(page.getByText("EXPLORAR PROJETOS CMS")).toBeVisible();
+    await expect(
+      page.getByText(/Desenvolvedor full-stack e analista de projetos/i),
+    ).toBeVisible();
+
+    await page.goto("/sobre");
+    await expect(page.getByText("Origem editada pelo CMS.")).toBeVisible();
+  });
 });

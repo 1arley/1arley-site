@@ -82,6 +82,17 @@ test.describe("deepMerge unit tests [BUG-04 / TEST-02]", () => {
     });
     expect(merged.tags).toEqual(["rust"]);
   });
+
+  test("falls back to base string when override string is empty or whitespace [DIR-01]", () => {
+    const merged = deepMerge(base, {
+      title: "",
+      nested: {
+        subtitle: "   ",
+      },
+    });
+    expect(merged.title).toBe("Arthur");
+    expect(merged.nested.subtitle).toBe("Backend");
+  });
 });
 
 test.describe("proxyRequest unit tests [SEC-01]", () => {

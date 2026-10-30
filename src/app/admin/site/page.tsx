@@ -277,39 +277,22 @@ export default function AdminSitePage() {
       <div className="space-y-6 max-w-3xl">
         {/* HERO */}
         <Card title="Hero">
-          <Field label="Label (cargo)" value={d.hero.label} onChange={(v) => patch('hero', { label: v })} />
           <AreaField label="Subtítulo" value={d.hero.subtitle} onChange={(v) => patch('hero', { subtitle: v })} />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="CTA Projetos" value={d.hero.ctaProjects} onChange={(v) => patch('hero', { ctaProjects: v })} />
-            <Field label="CTA Sobre" value={d.hero.ctaAbout} onChange={(v) => patch('hero', { ctaAbout: v })} />
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Field label="Link Sobre" value={d.hero.aboutLink} onChange={(v) => patch('hero', { aboutLink: v })} />
-            <Field label="Coordenadas" value={d.hero.coords} onChange={(v) => patch('hero', { coords: v })} />
-            <Field label="Local" value={d.hero.place} onChange={(v) => patch('hero', { place: v })} />
-          </div>
+          <Field label="CTA Projetos" value={d.hero.ctaProjects} onChange={(v) => patch('hero', { ctaProjects: v })} />
         </Card>
 
         {/* ABOUT */}
         <Card title="Sobre">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="Label intro" value={d.about.intro} onChange={(v) => patch('about', { intro: v })} />
-            <Field label="CTA" value={d.about.cta} onChange={(v) => patch('about', { cta: v })} />
-          </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Título linha 1" value={d.about.title1} onChange={(v) => patch('about', { title1: v })} />
             <Field label="Título linha 2" value={d.about.title2} onChange={(v) => patch('about', { title2: v })} />
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Texto antes do nome" value={d.about.p1Before} onChange={(v) => patch('about', { p1Before: v })} />
-            <AreaField label="Texto depois do nome" value={d.about.p1After} onChange={(v) => patch('about', { p1After: v })} />
+            <Field label="CTA" value={d.about.cta} onChange={(v) => patch('about', { cta: v })} />
           </div>
+          <AreaField label="Texto depois do nome" value={d.about.p1After} onChange={(v) => patch('about', { p1After: v })} />
           <AreaField label="Segundo parágrafo" value={d.about.p2} onChange={(v) => patch('about', { p2: v })} />
-          <Field label="Label da stack" value={d.about.stackLabel} onChange={(v) => patch('about', { stackLabel: v })} />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="Legenda da foto" value={d.about.figLabel} onChange={(v) => patch('about', { figLabel: v })} />
-            <Field label="Spec da foto" value={d.about.figSpec} onChange={(v) => patch('about', { figSpec: v })} />
-          </div>
 
           <div>
             <div className="flex items-center justify-between mb-2">
@@ -349,12 +332,157 @@ export default function AdminSitePage() {
           </div>
         </Card>
 
+        {/* PÁGINA /SOBRE */}
+        <Card title="Página /sobre">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Label topo" value={d.sobre.label} onChange={(v) => patch('sobre', { label: v })} />
+            <Field label="Role tag" value={d.sobre.roleTag} onChange={(v) => patch('sobre', { roleTag: v })} />
+          </div>
+          <Field label="Subtítulo hero" value={d.sobre.heroSubtitle} onChange={(v) => patch('sobre', { heroSubtitle: v })} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Label origem" value={d.sobre.storyLabel} onChange={(v) => patch('sobre', { storyLabel: v })} />
+            <Field label="Título origem" value={d.sobre.storyTitle} onChange={(v) => patch('sobre', { storyTitle: v })} />
+          </div>
+          <AreaField label="Origem — Parágrafo 1" value={d.sobre.storyP1} onChange={(v) => patch('sobre', { storyP1: v })} />
+          <AreaField label="Origem — Parágrafo 2" value={d.sobre.storyP2} onChange={(v) => patch('sobre', { storyP2: v })} />
+          <AreaField label="Origem — Parágrafo 3" value={d.sobre.storyP3} onChange={(v) => patch('sobre', { storyP3: v })} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Legenda da foto" value={d.sobre.storyFigLabel} onChange={(v) => patch('sobre', { storyFigLabel: v })} />
+            <Field label="Spec da foto" value={d.sobre.storyFigSpec} onChange={(v) => patch('sobre', { storyFigSpec: v })} />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Label filosofia" value={d.sobre.philLabel} onChange={(v) => patch('sobre', { philLabel: v })} />
+            <Field label="Título filosofia" value={d.sobre.philTitle} onChange={(v) => patch('sobre', { philTitle: v })} />
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <Label className="text-xs text-muted-foreground">Frases de filosofia</Label>
+              <Button
+                variant="ghost" size="sm"
+                onClick={() => patch('sobre', { philQuotes: [...d.sobre.philQuotes, { text: '', note: '' }] })}
+              >
+                <Plus className="w-3.5 h-3.5 mr-1" /> Adicionar
+              </Button>
+            </div>
+            <div className="space-y-2">
+              {d.sobre.philQuotes.map((q, i) => (
+                <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:flex-1">
+                    <Input aria-label={`Filosofia ${i + 1} frase`} value={q.text} placeholder="Frase" onChange={(e) => {
+                      const philQuotes = [...d.sobre.philQuotes]
+                      philQuotes[i] = { ...philQuotes[i], text: e.target.value }
+                      patch('sobre', { philQuotes })
+                    }} />
+                    <Input aria-label={`Filosofia ${i + 1} nota`} value={q.note} placeholder="Nota" onChange={(e) => {
+                      const philQuotes = [...d.sobre.philQuotes]
+                      philQuotes[i] = { ...philQuotes[i], note: e.target.value }
+                      patch('sobre', { philQuotes })
+                    }} />
+                  </div>
+                  <ListControls
+                    className="shrink-0"
+                    first={i === 0} last={i === d.sobre.philQuotes.length - 1}
+                    onUp={() => patch('sobre', { philQuotes: move(d.sobre.philQuotes, i, -1) })}
+                    onDown={() => patch('sobre', { philQuotes: move(d.sobre.philQuotes, i, 1) })}
+                    onRemove={() => patch('sobre', { philQuotes: d.sobre.philQuotes.filter((_, j) => j !== i) })}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Label agora" value={d.sobre.nowLabel} onChange={(v) => patch('sobre', { nowLabel: v })} />
+            <Field label="Título agora" value={d.sobre.nowTitle} onChange={(v) => patch('sobre', { nowTitle: v })} />
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <Label className="text-xs text-muted-foreground">Itens (Agora)</Label>
+              <Button
+                variant="ghost" size="sm"
+                onClick={() => patch('sobre', { nowItems: [...d.sobre.nowItems, { label: '', value: '' }] })}
+              >
+                <Plus className="w-3.5 h-3.5 mr-1" /> Adicionar
+              </Button>
+            </div>
+            <div className="space-y-2">
+              {d.sobre.nowItems.map((item, i) => (
+                <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:flex-1">
+                    <Input aria-label={`Agora ${i + 1} rótulo`} value={item.label} placeholder="Rótulo" onChange={(e) => {
+                      const nowItems = [...d.sobre.nowItems]
+                      nowItems[i] = { ...nowItems[i], label: e.target.value }
+                      patch('sobre', { nowItems })
+                    }} />
+                    <Input aria-label={`Agora ${i + 1} valor`} value={item.value} placeholder="Valor" onChange={(e) => {
+                      const nowItems = [...d.sobre.nowItems]
+                      nowItems[i] = { ...nowItems[i], value: e.target.value }
+                      patch('sobre', { nowItems })
+                    }} />
+                  </div>
+                  <ListControls
+                    className="shrink-0"
+                    first={i === 0} last={i === d.sobre.nowItems.length - 1}
+                    onUp={() => patch('sobre', { nowItems: move(d.sobre.nowItems, i, -1) })}
+                    onDown={() => patch('sobre', { nowItems: move(d.sobre.nowItems, i, 1) })}
+                    onRemove={() => patch('sobre', { nowItems: d.sobre.nowItems.filter((_, j) => j !== i) })}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Label colophon" value={d.sobre.colophonLabel} onChange={(v) => patch('sobre', { colophonLabel: v })} />
+            <Field label="Título colophon" value={d.sobre.colophonTitle} onChange={(v) => patch('sobre', { colophonTitle: v })} />
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <Label className="text-xs text-muted-foreground">Itens (Colophon)</Label>
+              <Button
+                variant="ghost" size="sm"
+                onClick={() => patch('sobre', { colophonItems: [...d.sobre.colophonItems, { label: '', value: '' }] })}
+              >
+                <Plus className="w-3.5 h-3.5 mr-1" /> Adicionar
+              </Button>
+            </div>
+            <div className="space-y-2">
+              {d.sobre.colophonItems.map((item, i) => (
+                <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:flex-1">
+                    <Input aria-label={`Colophon ${i + 1} rótulo`} value={item.label} placeholder="Rótulo" onChange={(e) => {
+                      const colophonItems = [...d.sobre.colophonItems]
+                      colophonItems[i] = { ...colophonItems[i], label: e.target.value }
+                      patch('sobre', { colophonItems })
+                    }} />
+                    <Input aria-label={`Colophon ${i + 1} valor`} value={item.value} placeholder="Valor" onChange={(e) => {
+                      const colophonItems = [...d.sobre.colophonItems]
+                      colophonItems[i] = { ...colophonItems[i], value: e.target.value }
+                      patch('sobre', { colophonItems })
+                    }} />
+                  </div>
+                  <ListControls
+                    className="shrink-0"
+                    first={i === 0} last={i === d.sobre.colophonItems.length - 1}
+                    onUp={() => patch('sobre', { colophonItems: move(d.sobre.colophonItems, i, -1) })}
+                    onDown={() => patch('sobre', { colophonItems: move(d.sobre.colophonItems, i, 1) })}
+                    onRemove={() => patch('sobre', { colophonItems: d.sobre.colophonItems.filter((_, j) => j !== i) })}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field label="Título CTA contato" value={d.sobre.ctaContact} onChange={(v) => patch('sobre', { ctaContact: v })} />
+            <Field label="Assunto do e-mail" value={d.sobre.emailSubject} onChange={(v) => patch('sobre', { emailSubject: v })} />
+          </div>
+        </Card>
+
         {/* SKILLS */}
         <Card title="Skills">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="Label" value={d.skills.label} onChange={(v) => patch('skills', { label: v })} />
-            <Field label="Título" value={d.skills.title} onChange={(v) => patch('skills', { title: v })} />
-          </div>
+          <Field label="Título" value={d.skills.title} onChange={(v) => patch('skills', { title: v })} />
           <div className="space-y-4">
             {d.skills.categories.map((cat, i) => (
               <div key={i} className="border border-input p-3 space-y-3">
@@ -401,10 +529,7 @@ export default function AdminSitePage() {
 
         {/* EXPERIÊNCIA */}
         <Card title="Experiência">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="Label" value={d.experience.label} onChange={(v) => patch('experience', { label: v })} />
-            <Field label="Título" value={d.experience.title} onChange={(v) => patch('experience', { title: v })} />
-          </div>
+          <Field label="Título" value={d.experience.title} onChange={(v) => patch('experience', { title: v })} />
           <div className="space-y-4">
             {d.experience.timeline.map((item, i) => (
               <div key={i} className="border border-input p-3 space-y-3">
@@ -452,8 +577,7 @@ export default function AdminSitePage() {
 
         {/* PROJETOS */}
         <Card title="Projetos">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Field label="Label" value={d.projects.label} onChange={(v) => patch('projects', { label: v })} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Título" value={d.projects.title} onChange={(v) => patch('projects', { title: v })} />
             <Field label="Contador" value={d.projects.count} onChange={(v) => patch('projects', { count: v })} />
           </div>
@@ -525,12 +649,96 @@ export default function AdminSitePage() {
           </div>
         </Card>
 
+        {/* BACKEND */}
+        <Card title="Backend">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <Field label="Título linha 1" value={d.backend.title1} onChange={(v) => patch('backend', { title1: v })} />
+            <Field label="Título linha 2" value={d.backend.title2} onChange={(v) => patch('backend', { title2: v })} />
+            <Field label="CTA GitHub" value={d.backend.cta} onChange={(v) => patch('backend', { cta: v })} />
+          </div>
+          <AreaField label="Descrição" value={d.backend.body} onChange={(v) => patch('backend', { body: v })} />
+
+          <div className="space-y-4">
+            <Label className="text-xs text-muted-foreground block">Features</Label>
+            {d.backend.features.map((feat, i) => (
+              <div key={i} className="border border-input p-3 space-y-3">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <Input aria-label={`Feature ${i + 1} título`} value={feat.title} placeholder="Título da feature" className="sm:flex-1" onChange={(e) => {
+                    const features = [...d.backend.features]
+                    features[i] = { ...features[i], title: e.target.value }
+                    patch('backend', { features })
+                  }} />
+                  <ListControls
+                    className="shrink-0"
+                    first={i === 0} last={i === d.backend.features.length - 1}
+                    onUp={() => patch('backend', { features: move(d.backend.features, i, -1) })}
+                    onDown={() => patch('backend', { features: move(d.backend.features, i, 1) })}
+                    onRemove={() => patch('backend', { features: d.backend.features.filter((_, j) => j !== i) })}
+                  />
+                </div>
+                <AreaField label="Descrição" value={feat.body} rows={2} onChange={(v) => {
+                  const features = [...d.backend.features]
+                  features[i] = { ...features[i], body: v }
+                  patch('backend', { features })
+                }} />
+              </div>
+            ))}
+            <Button
+              variant="ghost" size="sm"
+              onClick={() => patch('backend', { features: [...d.backend.features, { title: '', body: '' }] })}
+            >
+              <Plus className="w-3.5 h-3.5 mr-1" /> Nova feature
+            </Button>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <Label className="text-xs text-muted-foreground">Endpoints (terminal)</Label>
+              <Button
+                variant="ghost" size="sm"
+                onClick={() => patch('backend', { endpoints: [...d.backend.endpoints, { method: 'GET', path: '', note: '' }] })}
+              >
+                <Plus className="w-3.5 h-3.5 mr-1" /> Novo endpoint
+              </Button>
+            </div>
+            <div className="space-y-2">
+              {d.backend.endpoints.map((ep, i) => (
+                <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-[5rem_minmax(0,1fr)_minmax(0,1fr)] sm:flex-1">
+                    <Input aria-label={`Endpoint ${i + 1} método`} value={ep.method} placeholder="GET" onChange={(e) => {
+                      const endpoints = [...d.backend.endpoints]
+                      endpoints[i] = { ...endpoints[i], method: e.target.value }
+                      patch('backend', { endpoints })
+                    }} />
+                    <Input aria-label={`Endpoint ${i + 1} rota`} value={ep.path} placeholder="/api/v1/..." onChange={(e) => {
+                      const endpoints = [...d.backend.endpoints]
+                      endpoints[i] = { ...endpoints[i], path: e.target.value }
+                      patch('backend', { endpoints })
+                    }} />
+                    <Input aria-label={`Endpoint ${i + 1} nota`} value={ep.note} placeholder="Nota" onChange={(e) => {
+                      const endpoints = [...d.backend.endpoints]
+                      endpoints[i] = { ...endpoints[i], note: e.target.value }
+                      patch('backend', { endpoints })
+                    }} />
+                  </div>
+                  <ListControls
+                    className="shrink-0"
+                    first={i === 0} last={i === d.backend.endpoints.length - 1}
+                    onUp={() => patch('backend', { endpoints: move(d.backend.endpoints, i, -1) })}
+                    onDown={() => patch('backend', { endpoints: move(d.backend.endpoints, i, 1) })}
+                    onRemove={() => patch('backend', { endpoints: d.backend.endpoints.filter((_, j) => j !== i) })}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
+
         {/* CONTATO */}
         <Card title="Contato">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Field label="Label" value={d.contact.label} onChange={(v) => patch('contact', { label: v })} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="CTA e-mail" value={d.contact.cta} onChange={(v) => patch('contact', { cta: v })} />
-            <Field label="CTA sobre" value={d.contact.aboutCta} onChange={(v) => patch('contact', { aboutCta: v })} />
+            <Field label="Status (terminal)" value={d.contact.status} onChange={(v) => patch('contact', { status: v })} />
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Field label="Título linha 1" value={d.contact.title1} onChange={(v) => patch('contact', { title1: v })} />
@@ -538,27 +746,16 @@ export default function AdminSitePage() {
             <Field label="Título linha 3" value={d.contact.title3} onChange={(v) => patch('contact', { title3: v })} />
           </div>
           <AreaField label="Subtítulo" value={d.contact.subtitle} onChange={(v) => patch('contact', { subtitle: v })} />
-          <Field label="Status (terminal)" value={d.contact.status} onChange={(v) => patch('contact', { status: v })} />
         </Card>
 
         {/* TICKERS + FOOTER + NAVBAR */}
         <Card title="Divisórias (tickers)">
-          <div className="grid grid-cols-1 gap-4">
-            {(['t1', 't2', 't3', 't4', 't5'] as const).map((k) => (
-              <Field key={k} label={k.toUpperCase()} value={d.tickers[k]} onChange={(v) => patch('tickers', { [k]: v })} />
-            ))}
-          </div>
+          <Field label="T1" value={d.tickers.t1} onChange={(v) => patch('tickers', { t1: v })} />
         </Card>
 
         <Card title="Rodapé">
           <AreaField label="Descrição" value={d.footer.desc} rows={2} onChange={(v) => patch('footer', { desc: v })} />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Field label="Coluna navegação" value={d.footer.navLabel} onChange={(v) => patch('footer', { navLabel: v })} />
-            <Field label="Link Home" value={d.footer.home} onChange={(v) => patch('footer', { home: v })} />
-            <Field label="Link Sobre" value={d.footer.about} onChange={(v) => patch('footer', { about: v })} />
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Field label="Coluna contato" value={d.footer.contactLabel} onChange={(v) => patch('footer', { contactLabel: v })} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Botão e-mail" value={d.footer.sendEmail} onChange={(v) => patch('footer', { sendEmail: v })} />
             <Field label="Direitos" value={d.footer.rights} onChange={(v) => patch('footer', { rights: v })} />
           </div>

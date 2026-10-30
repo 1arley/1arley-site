@@ -36,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   )
 
   useEffect(() => {
-    if (!authed) {
+    if (!isAdminSessionActive()) {
       router.replace('/login')
     }
   }, [authed, router])

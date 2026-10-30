@@ -107,6 +107,14 @@ export function deepMerge<T>(base: T, override: unknown): T {
   if (base !== undefined && typeof override !== typeof base) {
     return base;
   }
+  if (
+    typeof base === "string" &&
+    typeof override === "string" &&
+    override.trim() === "" &&
+    base !== ""
+  ) {
+    return base;
+  }
   return override as T;
 }
 
